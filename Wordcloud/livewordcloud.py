@@ -32,9 +32,13 @@ def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
     # the below level of normalisation will give access to abstract and the title -
     # authors requires further 'digging' in the .json
     df = pd.json_normalize(txt["publications"])
+    df.replace('antibody', 'antibodies',regex=True, inplace=True)
 
     # add whatever words you'd like to exclude
-    stopwords = list(STOPWORDS) + ["None", "s"]
+    stopwords = list(STOPWORDS) + ["None", "s", "may", "two", "P", "CI",
+        "n", "one", "three", "Conclusion", "will", "use", "using", "used",
+        "likely", "April", "day", "days,""March", "year", "week", "possible",
+        "due", "v"]
 
     # pick the column you want to import words from df.columnname
     title_words = " ".join(" ".join(str(val).split()) for val in df[field])
