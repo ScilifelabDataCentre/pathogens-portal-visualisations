@@ -84,3 +84,15 @@ def gen_wordcloud(field: str = "title"):
     plt.savefig(img, dpi=300)
 
     return img
+
+
+def write_file(filename: str, data: io.BytesIO):
+    """
+    Write a byte object (e.g. an image) to a file.
+
+    Args:
+        filename (str): The filename.
+        data (io.BytesIO): The data object
+    """
+    with open(filename, 'wb') as outfile:
+        outfile.write(data.getbuffer())
