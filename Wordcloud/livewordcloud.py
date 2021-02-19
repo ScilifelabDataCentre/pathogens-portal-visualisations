@@ -1,9 +1,8 @@
-"""
-Generate wordclouds
-"""
+"""Functions for generating wordclouds for the covid publications."""
 
 # importing all necessary modules
 import io
+import os
 
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
@@ -12,12 +11,17 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(field: str = "title"):
+def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
     """
     Generate a wordcloud file.
 
+    Args:
+        field (str): The field to evaluate.
+        data_pos (str): Path to the folder containing imgs/fonts.
+
     Returns:
-       BytesIO: the image as bytes
+        io.BytesIO: The image as a byte stream.
+
     """
     # imports the .json from the publications library:
     # https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab.json
@@ -36,11 +40,11 @@ def gen_wordcloud(field: str = "title"):
     title_words = " ".join(" ".join(str(val).split()) for val in df[field])
 
     # to make a square shaped wordcloud
-    mask = np.array(Image.open("SciLifeLab_symbol_POS.png"))
+    mask = np.array(Image.open(os.path.join(data_folder, "SciLifeLab_symbol_POS.png")))
 
     # COVID portal visual identity
     # add font
-    font_path = "IBMPlexSans-Bold.ttf"
+    font_path = os.path.join(data_folder, "IBMPlexSans-Bold.ttf")
 
     # give colours
     # pylint: disable=unused-argument
@@ -93,6 +97,7 @@ def write_file(filename: str, data: io.BytesIO):
     Args:
         filename (str): The filename.
         data (io.BytesIO): The data object
+
     """
     with open(filename, 'wb') as outfile:
         outfile.write(data.getbuffer())
