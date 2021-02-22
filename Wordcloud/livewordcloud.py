@@ -21,14 +21,14 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
         data_pos (str): Path to the folder containing imgs/fonts.
         json_path (str): Path to the .json file which contains the relevant publications
         xsize (int): Size on the x axis
-        xsize (int): Size on the y axis
+        ysize (int): Size on the y axis
         dpi (int): DPI of the generated image. The size in pixels is determined by x*dpi x y*dpi; default: 150*5 x 150*5 = 750 x 750.
 
     Returns:
         io.BytesIO: The image as a byte stream.
 
     """
-    # imports the .json file give in the path. e.g.,
+    # imports the .json file given in the path. e.g.,
     # https://publications-covid19.scilifelab.se/publications.json - all publications
     # https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab.json - just scilifelab funded papers
     resp = requests.get(json_path)
@@ -106,6 +106,3 @@ def write_file(filename: str, data: io.BytesIO):
     """
     with open(filename, 'wb') as outfile:
         outfile.write(data.getbuffer())
-
-titles = gen_wordcloud(data_folder="/Users/arnold/Documents/Covid_portal_vis/Wordcloud")
-write_file("titles.png",titles)
