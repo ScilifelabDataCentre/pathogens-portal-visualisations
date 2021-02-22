@@ -11,7 +11,7 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
+def gen_wordcloud(json_path: str, field: str = "title", data_folder='./') -> io.BytesIO:
     """
     Generate a wordcloud file.
 
@@ -23,10 +23,10 @@ def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
         io.BytesIO: The image as a byte stream.
 
     """
-    # imports the .json from the publications library:
-    # https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab.json
-    # (will give just scilifelab funded papers)
-    resp = requests.get("https://publications-covid19.scilifelab.se/publications.json")
+    # imports the .json file give in the path. e.g.,
+    # https://publications-covid19.scilifelab.se/publications.json - all publications
+    # https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab.json - just scilifelab funded papers
+    resp = requests.get(json_path)
     txt = resp.json()
 
     # the below level of normalisation will give access to abstract and the title -
