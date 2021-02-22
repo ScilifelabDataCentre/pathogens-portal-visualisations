@@ -1,3 +1,4 @@
+
 """Functions for generating wordclouds for the covid publications."""
 
 # importing all necessary modules
@@ -11,13 +12,14 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(json_path: str, field: str = "title", data_folder='./') -> io.BytesIO:
+def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "https://publications-covid19.scilifelab.se/publications.json") -> io.BytesIO:
     """
     Generate a wordcloud file.
 
     Args:
         field (str): The field to evaluate.
         data_pos (str): Path to the folder containing imgs/fonts.
+        json_path (str): Path to the .json file which contains the relevant publications
 
     Returns:
         io.BytesIO: The image as a byte stream.
@@ -77,7 +79,7 @@ def gen_wordcloud(json_path: str, field: str = "title", data_folder='./') -> io.
                           max_words=200).generate(title_words)
 
     # plot the WordCloud image
-    plt.figure(figsize=(10, 10), facecolor=None)
+    plt.figure(figsize=(5, 5), facecolor=None)
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.tight_layout(pad=0)
@@ -85,7 +87,7 @@ def gen_wordcloud(json_path: str, field: str = "title", data_folder='./') -> io.
     img = io.BytesIO()
 
     # savefig will save the figure (at resolution 300dpi - good enoough for print)
-    plt.savefig(img, dpi=300)
+    plt.savefig(img, dpi=150)
 
     return img
 
