@@ -11,7 +11,7 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
+def gen_wordcloud(field: str = "title", data_folder="./") -> io.BytesIO:
     """
     Generate a wordcloud file.
 
@@ -37,7 +37,7 @@ def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
     # add whatever words you'd like to exclude
     stopwords = list(STOPWORDS) + ["None", "s", "may", "two", "P", "CI",
                                    "n", "one", "three", "Conclusion", "will",
-                                   "likely", "April", "day", "days" ,"March",
+                                   "likely", "April", "day", "days", "March",
                                    "used", "due", "v", "possible", "use",
                                    "using", "year", "week",]
 
@@ -104,5 +104,5 @@ def write_file(filename: str, data: io.BytesIO):
         data (io.BytesIO): The data object
 
     """
-    with open(filename, 'wb') as outfile:
+    with open(filename, "wb") as outfile:
         outfile.write(data.getbuffer())
