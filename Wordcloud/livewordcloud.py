@@ -37,7 +37,7 @@ def gen_wordcloud(field: str = "title", data_folder='./') -> io.BytesIO:
     # add whatever words you'd like to exclude
     stopwords = list(STOPWORDS) + ["None", "s", "may", "two", "P", "CI",
                                    "n", "one", "three", "Conclusion", "will",
-                                   "likely", "April", "day", "days,""March",
+                                   "likely", "April", "day", "days" ,"March",
                                    "used", "due", "v", "possible", "use",
                                    "using", "year", "week",]
 
