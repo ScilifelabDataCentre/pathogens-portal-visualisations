@@ -11,6 +11,7 @@ __pycache__
 node_modules
 /dist
 
+pylintrc
 # local env files
 .env.local
 .env.*.local
