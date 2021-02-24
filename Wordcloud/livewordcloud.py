@@ -1,4 +1,3 @@
-
 """Functions for generating wordclouds for the covid publications."""
 
 # importing all necessary modules
@@ -12,7 +11,7 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "https://publications-covid19.scilifelab.se/publications.json", xsize: int = 5, ysize: int = 5, dpi: int = 150) -> io.BytesIO:
+def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "https://publications-covid19.scilifelab.se/publications.json", xsize: int = 5, ysize: int = 5, dpi: int = 150, maxwords: int = 200, shape: str = "square") -> io.BytesIO:
 
     """
     Generate a wordcloud file.
@@ -24,6 +23,8 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
         xsize (int): Size on the x axis
         ysize (int): Size on the y axis
         dpi (int): DPI of the generated image. The size in pixels is determined by x*dpi x y*dpi; default: 150*5 x 150*5 = 750 x 750.
+        maxwords (int): the maximum number of words that should be included in the word cloud
+        shape (str): either "square" or "rectangle". the rectangle shape requires xsize double the ysize (e.g., xsize=10, ysize=5)
 
     Returns:
         io.BytesIO: The image as a byte stream.
@@ -45,13 +46,18 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
                                    "n", "one", "three", "Conclusion", "will",
                                    "likely", "April", "day", "days", "March",
                                    "used", "due", "v", "possible", "use",
-                                   "using", "year", "week",]
+                                   "using", "year", "week", "covid-19", "sars-cov-2", "study"]
 
     # pick the column you want to import words from df.columnname
     title_words = " ".join(" ".join(str(val).split()) for val in df[field])
 
-    # to make a square shaped wordcloud
-    mask = np.array(Image.open(os.path.join(data_folder, "SciLifeLab_symbol_POS.png")))
+    # set the shape of the wordcloud
+    if shape == "square":
+      # to make a square shaped wordcloud
+      mask = np.array(Image.open(os.path.join(data_folder, "SciLifeLab_symbol_POS_square.png")))
+    elif shape == "rectangle":
+      # to make a rectangle shaped wordcloud
+      mask = np.array(Image.open(os.path.join(data_folder, "SciLifeLab_symbol_POS_rectangle.png")))
 
     # COVID portal visual identity
     # add font
@@ -65,8 +71,7 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
                          orientation=None,
                          font_path=None,
                          random_state=None):
-        colors = [[338, 73, 52], [211, 56, 41],
-                  [206, 62, 50], [208, 7, 46]]
+        colors = [[208, 7, 46]]
         rand = random_state.randint(0, len(colors) - 1)
         return f"hsl({colors[rand][0]}, {colors[rand][1]}%, {colors[rand][2]}%)"
 
@@ -85,7 +90,7 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
                           # This now includes hyphens in punctuation
                           regexp=r"\w(?:[-\w])*\w?",
                           # max word default is 200, can change
-                          max_words=200).generate(title_words)
+                          max_words=maxwords).generate(title_words)
 
     # plot the WordCloud image
     plt.figure(figsize=(xsize, ysize), facecolor=None)
