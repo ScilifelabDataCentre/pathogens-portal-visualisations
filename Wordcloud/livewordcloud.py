@@ -71,7 +71,13 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
                          orientation=None,
                          font_path=None,
                          random_state=None):
-        colors = [[208, 7, 46]]
+        if field == "title":
+            colors = [[211, 56, 41]]
+        elif field == "abstract":
+            colors = [[208, 7, 46]]
+        else:
+            colors= [[338, 73, 52], [211, 56, 41],
+                  [206, 62, 50], [208, 7, 46]]
         rand = random_state.randint(0, len(colors) - 1)
         return f"hsl({colors[rand][0]}, {colors[rand][1]}%, {colors[rand][2]}%)"
 
