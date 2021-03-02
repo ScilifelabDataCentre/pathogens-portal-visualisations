@@ -7,7 +7,7 @@ import requests
 
 #map
 with open('sverige-lan-counties-of-sweden.geojson', 'r') as sw:
-  data = json.load(sw)
+  jdata = json.load(sw)
 
 #to check the properties of your geojson
 # for f in jdata['features'][:5]:
@@ -82,4 +82,4 @@ fig.update_layout(legend = dict(x = 0.65, y = 1))
 #to write the file as .png
 #fig.write_image('map_with_factor.png', scale=2)
 #write out as html for web
-#fig.write_html('map_with_factor.html', include_plotlyjs=False, full_html=False)
+fig.write_html('map_with_factor.html', include_plotlyjs=False, full_html=False)
