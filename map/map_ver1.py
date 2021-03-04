@@ -6,18 +6,14 @@ import csv
 import requests
 
 #map
-with open('sverige-lan-counties-of-sweden.geojson', 'r') as sw:
+with open('sweden-counties.json', 'r') as sw:
   jdata = json.load(sw)
-
-#to check the properties of your geojson
-# for f in jdata['features'][:5]:
-#     print(f['properties'])
 
 #dictionary to match data and map
 counties_id_map = {}
 for feature in jdata['features']:
-  feature['id'] = feature['properties']['id']
-  counties_id_map[feature['properties']['lan_namn']] = feature['id']
+  feature['id'] = feature['properties']['cartodb_id']
+  counties_id_map[feature['properties']['name']] = feature['id']
 
 #data
 req = requests.get('https://urls.dckube.scilifelab.se/goto/csss/')
@@ -34,48 +30,77 @@ df1['Uppskattning'] = pd.to_numeric(df1['Uppskattning'], errors = 'coerce')
 df1['Uppskattning'] = df1['Uppskattning'].fillna(-0.1)
 #comment out next row when Dalarna fixed
 df1['Lan'] = df1['Lan'].replace('Dalar', 'Dalarna')
-df1['Lan'] = df1['Lan']+'s län'
-df1['Lan'] = df1['Lan'].replace('Skånes län', 'Skåne län')
-df1['Lan'] = df1['Lan'].replace('Blekinges län', 'Blekinge län')
-df1['Lan'] = df1['Lan'].replace('Örebros län', 'Örebro län')
-df1['Lan'] = df1['Lan'].replace('Kalmars län', 'Kalmar län')
-df1['Lan'] = df1['Lan'].replace('Uppsalas län', 'Uppsala län')
 df1['id'] = df1['Lan'].apply(lambda x: counties_id_map[x])
 
-#bin the data to create discrete colour options
-bins = [-0.20, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 10.0]
-labels = ['Otillräckligt underlag', '0.00-0.10 %', '0.10-0.20 %', '0.20-0.30 %',
-        '0.30-0.40 %', '0.40-0.50 %', '0.50-0.60 %', '0.60-0.70 %',
-        '0.70-0.80 %', '0.80-0.90 %', '>0.90 %']
-df1['binned'] = pd.cut(df1['Uppskattning'], bins = bins, labels = labels)
-df1.sort_values('binned', ascending = False, inplace = True)
+#colour theme
+colour=px.colors.sequential.tempo
+splits=[0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
+
+language='Swedish'
+
+if language == 'Swedish':
+  cbtit = 'Uppskattning'
+elif language == 'English':
+  cbtit = 'Estimate'
+else:
+  cbtit = 'lang_error'
+
+if language == 'Swedish':
+  insuff='Otillräckligt underlag'
+elif language == 'English':
+  insuff='Insufficient data'
+else:
+  cbtit = 'lang_error'
+
 
 #make figure
 fig = px.choropleth(df1, geojson = jdata,
                     locations = 'id',
-                    color = df1['binned'],
-                    color_discrete_map = {'Otillräckligt underlag':'black',
-                                    '0.00-0.10 %':px.colors.sequential.tempo[0],
-                                    '0.10-0.20 %':px.colors.sequential.tempo[1],
-                                    '0.20-0.30 %':px.colors.sequential.tempo[2],
-                                    '0.30-0.40 %':px.colors.sequential.tempo[3],
-                                    '0.40-0.50 %':px.colors.sequential.tempo[4],
-                                    '0.50-0.60 %':px.colors.sequential.tempo[5],
-                                    '0.60-0.70 %':px.colors.sequential.tempo[6],
-                                    '0.70-0.80 %':px.colors.sequential.tempo[7],
-                                    '0.80-0.90 %':px.colors.sequential.tempo[8],
-                                    '>0.90 %':px.colors.sequential.tempo[9]},
+                    color = df1['Uppskattning'],
+#Below gives discrete colours for ranges of Uppskattning values
+                    color_continuous_scale = [
+                                        (splits[0], colour[0]),
+                                        (splits[1], colour[0]),
+                                        (splits[1], colour[1]),
+                                        (splits[2], colour[1]),
+                                        (splits[2], colour[2]),
+                                        (splits[3], colour[2]),
+                                        (splits[3], colour[3]),
+                                        (splits[4], colour[3]),
+                                        (splits[4], colour[4]),
+                                        (splits[5], colour[4]),
+                                        (splits[5], colour[5]),
+                                        (splits[6], colour[5]),
+                                        (splits[6], colour[6]),
+                                        (splits[7], colour[6]),
+                                        (splits[7], colour[7]),
+                                        (splits[8], colour[7]),
+                                        (splits[8], colour[8]),
+                                        (splits[9], colour[8]),
+                                        (splits[9], colour[9]),
+                                        (splits[10], colour[9])],
+#this keeps the range of colours constant regrdless of data
+                    range_color=[-0.1, 1],
                     scope = 'europe',
                     hover_name = 'Lan',
+                    labels = {'Uppskattning':cbtit, 'id': 'ID'},
                     hover_data = ['Uppskattning'])
-
 fig.update_geos(fitbounds = 'locations',
                 visible = False)
 fig.update_layout(margin = {'r':0, 't':0, 'l':0, 'b':0},
-                width = 1000, height = 1000)
-fig.update_layout(legend_title_text = '<b>Uppskattning</b>',
-                dragmode = False)
-fig.update_layout(legend = dict(x = 0.65, y = 1))
+                width = 700, height = 700)
+fig.update_layout(dragmode = False)
+#The below labels the colourbar, essentially categorises Uppskattning
+fig.update_layout(coloraxis_colorbar=dict(
+    title='<b>'+cbtit+'</b>',
+    tickvals=[-0.045, 0.065, 0.175, 0.285, 0.395,
+            0.505, 0.615, 0.725, 0.835, 0.945],
+    ticktext=[insuff, '0.00-0.10 %', '0.10-0.20 %',
+            '0.20-0.30 %', '0.30-0.40 %', '0.40-0.50 %', '0.50-0.60 %',
+            '0.60-0.70 %', '0.70-0.80 %', '>0.80 %'],
+    x = 0.70,
+    lenmode='pixels', len=600
+))
 
 #to 'show' the figure in browser
 #fig.show()
