@@ -6,7 +6,7 @@ import csv
 import requests
 
 #map
-with open('sweden-counties.json', 'r') as sw:
+with open('sweden-counties.geojson', 'r') as sw:
   jdata = json.load(sw)
 
 #dictionary to match data and map
@@ -85,23 +85,33 @@ fig = px.choropleth(df1, geojson = jdata,
                     hover_name = 'Lan',
                     labels = {'Uppskattning':cbtit, 'id': 'ID'},
                     hover_data = ['Uppskattning'])
-fig.update_geos(fitbounds = 'locations',
-                visible = False)
+#this section deals with the exact focus on the map
+lat_foc = 62.45
+lon_foc = 22.5
+fig.update_layout(
+        geo = dict(
+          lonaxis_range=[20, 90], #the logitudinal range to consider
+          projection_scale=4.55, #this is kind of like zoom
+          center=dict(lat=lat_foc, lon=lon_foc), # this will center on the point
+          visible = False
+        ))
 fig.update_layout(margin = {'r':0, 't':0, 'l':0, 'b':0},
-                width = 700, height = 700)
+                width = 290, height = 348)
 fig.update_layout(dragmode = False)
 #The below labels the colourbar, essentially categorises Uppskattning
 fig.update_layout(coloraxis_colorbar=dict(
     title='<b>'+cbtit+'</b>',
     tickvals=[-0.045, 0.065, 0.175, 0.285, 0.395,
             0.505, 0.615, 0.725, 0.835, 0.945],
-    ticktext=[insuff, '0.00-0.10 %', '0.10-0.20 %',
-            '0.20-0.30 %', '0.30-0.40 %', '0.40-0.50 %', '0.50-0.60 %',
-            '0.60-0.70 %', '0.70-0.80 %', '>0.80 %'],
-    x = 0.70,
-    lenmode='pixels', len=600
-))
-
+    ticktext=[insuff, '0.00 - 0.10 %', '0.10 - 0.20 %',
+            '0.20 - 0.30 %', '0.30 - 0.40 %', '0.40 - 0.50 %', '0.50 - 0.60 %',
+            '0.60 - 0.70 %', '0.70 - 0.80 %', '> 0.80 %'],
+    x = 0.55,
+    y = 0.8,
+    thicknessmode="pixels", thickness=10,
+    lenmode='pixels', len=150),
+    font=dict(size=9)
+)
 #to 'show' the figure in browser
 #fig.show()
 #to write the file as .png
