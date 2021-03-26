@@ -101,7 +101,7 @@ fig.update_layout(
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=280, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar, essentially categorises Uppskattning
 fig.update_layout(
