@@ -47,12 +47,22 @@ else:
     cbtit = "lang_error"
 
 if language == "Swedish":
+    overwrite = "Uppskattning för Län"
+elif language == "English":
+    overwrite = "Estimate for County"
+else:
+    overwrite = "lang_error"
+
+if language == "Swedish":
     insuff = "Otillräckligt underlag"
 elif language == "English":
     insuff = "Insufficient data"
 else:
     cbtit = "lang_error"
 
+
+df1["Uppskattning_Lan"] = df1["Uppskattning"].astype(str)
+df1["Uppskattning_Lan"].replace(str(-0.1), insuff, inplace=True)
 
 # make figure
 fig = px.choropleth(
@@ -87,8 +97,8 @@ fig = px.choropleth(
     range_color=[-0.1, 1],
     scope="europe",
     hover_name="Lan",
-    labels={"Uppskattning": cbtit, "id": "ID"},
-    hover_data=["Uppskattning"],
+    labels={"Uppskattning_Lan": overwrite},
+    hover_data={"Uppskattning_Lan": True, "Uppskattning": False, "id": False},
 )
 # this section deals with the exact focus on the map
 lat_foc = 62.45
@@ -101,7 +111,7 @@ fig.update_layout(
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=280, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar, essentially categorises Uppskattning
 fig.update_layout(
@@ -141,8 +151,8 @@ fig.update_layout(
     font=dict(size=9),
 )
 # to 'show' the figure in browser
-fig.show()
+# fig.show()
 # to write the file as .png
 # fig.write_image('map_with_factor.png', scale=2)
 # write out as html for web
-# fig.write_html("map_with_factor.html", include_plotlyjs=False, full_html=False)
+fig.write_html("map_with_factor.html", include_plotlyjs=False, full_html=False)
