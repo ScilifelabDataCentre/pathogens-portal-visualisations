@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,200;0,400;0,500;0,700;1,400&display=swap');
+
+body {
+    font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+}
+a {
+    color: #3E75C1;
+}
+img {
+    max-width: 100%;
+}
+blockquote {
+    border-left: 5px solid rgba(46, 104, 165, 0.3);
+    padding-left: 1rem;
+    margin-left: 1rem;
+    color: #666;
+}
+img[src$='#floatleft'], img[src$='#floatright'], img[src$='#floatleftbig'], img[src$='#floatrightbig']{
+    max-width: 250px;
+    max-height: 100px;
+    margin: 0 1rem 1rem;
+}
+img[src$='#floatleft'], img[src$='#floatleftbig']{
+    float: left;
+    margin-left: 0;
+}
+img[src$='#floatright'], img[src$='#floatrightbig']{
+    float: right;
+    margin-right: 0;
+}
+img[src$='#floatleftbig'], img[src$='#floatrightbig']{
+    max-width: 350px;
+    max-height: 200px;
+}
+
+h2,h3 {
+    margin-top: 3rem;
+}
+h4 {
+    margin-top: 1rem;
+}
+h5, h6 {
+    margin-top: 0.5rem;
+}
+div > h2:first-of-type,
+aside > h5 {
+    margin-top: 0;
+}
+li:empty {
+    display: none;
+}
+
+.navbar .navbar-brand {
+    max-width: 60%;
+}
+.navbar .navbar-brand img {
+    height: 55px;
+    max-width: 100%;
+}
+.navbar .navbar-primary-links a.nav-link {
+    color: rgba(46, 104, 165, 0.8);
+    font-weight: 600;
+    font-size: 1.15em;
+}
+
+@media all and (min-width: 992px) {
+    .navbar .navbar-nav a.nav-link {
+        padding: 0.8rem;
+    }
+}
+.navbar .navbar-primary-links a.nav-link:hover,
+.navbar .navbar-primary-links a.nav-link:focus,
+.navbar .navbar-primary-links a.nav-link:active {
+    color: rgba(46, 104, 165, 1);
+}
+
+.navbar .navbar-primary-links .dropdown-menu a{
+    color: rgba(46, 104, 165, 0.8);
+    font-weight: 500;
+}
+
+.navbar .navbar-primary-links .dropdown-menu a:hover,
+.navbar .navbar-primary-links .dropdown-menu a:focus,
+.navbar .navbar-primary-links .dropdown-menu a:active {
+    color: rgba(46, 104, 165, 1);
+    background-color: transparent;
+}
+
+
+.navbar .navbar-secondary-links a.nav-link {
+    color: rgba(77, 77, 77, 0.8);
+    font-weight: 500;
+    font-size: 1.15em;
+}
+
+.navbar .navbar-secondary-links a.nav-link:hover,
+.navbar .navbar-secondary-links a.nav-link:focus,
+.navbar .navbar-secondary-links a.nav-link:active {
+    color: rgba(77, 77, 77, 1);
+}
+
+.navbar .navbar-secondary-links .dropdown-menu a{
+    color: rgba(77, 77, 77, 0.8);
+    font-weight: 500;
+}
+
+.navbar .navbar-secondary-links .dropdown-menu a:hover,
+.navbar .navbar-secondary-links .dropdown-menu a:focus,
+.navbar .navbar-secondary-links .dropdown-menu a:active {
+    color: rgba(77, 77, 77, 1);
+    background-color: transparent;
+}
+
+.navbar .nav-menu-other {
+    color: rgba(77, 77, 77, 0.8);
+    font-weight: 500;
+    font-size: 1.15em;
+    margin: 0.8rem 0;
+}
+
+@media (max-width: 991px) {
+    .navbar .text-vert { display: none; }
+}
+
+.navbar .navbar-nav.navbar-languages {
+    margin-left: 1rem;
+}
+.navbar .navbar-nav.navbar-languages li:not(:first-child) a {
+    padding-left: 0;
+}
+.navbar-languages li:not(:first-child) a span {
+    border-left: 1px solid #ccc;
+    padding-left: 1rem;
+}
+.navbar-languages a img {
+    width: 1rem;
+    opacity: 0.2;
+}
+.nav-languages a img {
+    width: 1.2rem;
+    opacity: 0.5;
+    margin-left: 0.5rem;
+    margin-bottom: 0.1rem;
+}
+.navbar-languages a:hover img,
+.navbar-languages a:focus img,
+.navbar-languages a:active img,
+.nav-languages a:hover img,
+.nav-languages a:focus img,
+.nav-languages a:active img {
+    opacity: 1;
+}
+.navbar .navbar-nav a.nav-link.highlight {
+    border: 1px solid rgba(46, 104, 165, 0.8);
+    color: rgba(46, 104, 165, 0.8);
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 2px;
+}
+.navbar .navbar-nav a.nav-link.highlight:hover,
+.navbar .navbar-nav a.nav-link.highlight:focus,
+.navbar .navbar-nav a.nav-link.highlight:active {
+    background-color: #de2c6c;
+    border-color: #de2c6c;
+    color: #ffffff;
+}
+
+.header {
+    background-image: url('../img/csm_coronavirus_mc.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 3rem 0;
+}
+
+.breadcrumbs {
+    background-color: rgba(46, 104, 165, 0.1);
+    font-size: 0.8rem;
+}
+.breadcrumbs .breadcrumb {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+}
+.breadcrumbs .breadcrumb a {
+    color: #6c757d;
+}
+
+.toc ul {
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.toc ul ul {
+    font-size: 0.9rem;
+}
+
+.content ul:not([class]), .content ul[class=""] {
+    margin-bottom: 1rem;
+}
+
+footer .col-md {
+    padding: 0.5rem;
+}
+footer h2.small {
+    margin-top: 1rem;
+}
+footer img {
+    max-height: 60px;
+}
+
+
+.homepage-accordions .card-header a i {
+    color: #555;
+    text-decoration: none;
+    text-align: center;
+    width: 1.25em;
+}
+
+.plot_wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #2e68a5;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #2e68a5;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #2e68a5 !important;
+    border: solid 1px #2e68a5 !important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #2e68a5 !important;
+    border: solid 1px #2e68a5;
+}
+
+/* Styling pagination for the biobanks registry */
+
+.page-item.active .page-link {
+    background-color: #2e68a5;
+    color: white;
+    border-color: #2e68a5;
+}
+
+.page-link {
+    background-color: white;
+    color: #2e68a5;
+}
+
+.back-text {
+  color: #2e68a5 !important;
+}
+
+.back-text:hover {
+    text-decoration: underline;
+}
+
+/* There is a bug in Safari whereby it stretches an image nested in a flexbox element to its natural height. I use the class below for rows with images to fix that. */
+
+.row_cor {
+  display: -ms-flexbox;
+  display: flex;
+  align-items: flex-start !important;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px ;
+}
+
+#dwbuttons .collapsed {
+  background-color: white !important;
+  color: #5a626a !important;
+}
+
+.preprint-icon {
+  color: white;
+  background-color: rgba(77, 77, 77, 0.8);
+  border-radius: 5px;
+  padding: 4px;
+  font-size: small;
+  font-weight: 500;
+}
+
+.data-available-icon {
+  color: white;
+  background-color: #de2c6c;
+  border-radius: 5px;
+  padding: 4px;
+  font-size: small;
+  font-weight: 500;
+}
+
+/* Override a default for the datatables. */
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 0 !important;
+}
+
+/* Vertical line for the homepage */
+
+@media all and (min-width: 992px) {
+    .vert-line-right {
+      border-right: 1px;
+      border-right-style: solid;
+      border-color: #ccc;
+    }
+}
+
+/* Share your data block for the homepage */
+.share-new-data {
+    background-color: #de2c6c!important;
+}

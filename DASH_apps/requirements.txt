@@ -1,34 +1,23 @@
 appdirs==1.4.4
-black==20.8b1
-Brotli==1.0.9
+brotlipy==0.7.0
 certifi==2020.12.5
-chardet==4.0.0
-click==7.1.2
-dash==1.19.0
-dash-core-components==1.15.0
-dash-html-components==1.1.2
-dash-renderer==1.9.0
-dash-table==4.11.2
-Flask==1.1.2
-Flask-Compress==1.9.0
-future==0.18.2
-idna==2.10
-itsdangerous==1.1.0
-Jinja2==2.11.3
-MarkupSafe==1.1.1
-mypy-extensions==0.4.3
-numpy==1.20.2
-pandas==1.2.3
-pathspec==0.8.1
-plotly==4.14.3
-python-dateutil==2.8.1
-pytz==2021.1
-regex==2021.3.17
-requests==2.25.1
-retrying==1.3.3
-six==1.15.0
-toml==0.10.2
-typed-ast==1.4.2
-typing-extensions==3.7.4.3
-urllib3==1.26.4
-Werkzeug==1.0.1
+cffi @ file:///opt/concourse/worker/volumes/live/0ef369cc-6ba0-47e7-75da-208c6400381d/volume/cffi_1613246948181/work
+chardet @ file:///opt/concourse/worker/volumes/live/c798b2ee-88b1-4341-6830-161a92c2399e/volume/chardet_1607706832595/work
+conda==4.9.2
+conda-package-handling @ file:///opt/concourse/worker/volumes/live/a7e34989-4c54-4cb6-4156-4e58ee270730/volume/conda-package-handling_1603018121300/work
+cryptography @ file:///opt/concourse/worker/volumes/live/c515855a-effc-46df-74dc-542901b701da/volume/cryptography_1616769282442/work
+distlib==0.3.1
+filelock==3.0.12
+idna @ file:///home/linux1/recipes/ci/idna_1610986105248/work
+Pillow==8.1.2
+pycosat==0.6.3
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1608057966937/work
+PySocks @ file:///opt/concourse/worker/volumes/live/85a5b906-0e08-41d9-6f59-084cee4e9492/volume/pysocks_1594394636991/work
+reportlab==3.5.66
+requests @ file:///tmp/build/80754af9/requests_1608241421344/work
+ruamel-yaml-conda @ file:///opt/concourse/worker/volumes/live/53b096c9-f5b7-4029-7f1b-056927554e08/volume/ruamel_yaml_1616016691174/work
+six @ file:///opt/concourse/worker/volumes/live/5b31cb27-1e37-4ca5-6e9f-86246eb206d2/volume/six_1605205320872/work
+tqdm @ file:///tmp/build/80754af9/tqdm_1615925068909/work
+urllib3 @ file:///tmp/build/80754af9/urllib3_1615837158687/work
+virtualenv==20.4.3
