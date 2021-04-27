@@ -305,5 +305,5 @@ def update_intensive_graph(value, start_date, end_date):
 
 
 # server clause
-
-app.run_server(debug=False)
+if __name__ == "__main__":
+    app.run_server(debug=False)
