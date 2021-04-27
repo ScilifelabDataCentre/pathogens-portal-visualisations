@@ -9,7 +9,7 @@ import requests
 import csv
 import pandas as pd
 from datetime import datetime as dt
-
+import flask
 
 # data import and sort
 df1 = pd.read_excel(
@@ -42,8 +42,11 @@ dfi_swe.insert(loc=1, column="Region", value="Sweden")
 
 df1_intense = pd.concat([df1_intense, dfi_swe])
 
+server = flask.Flask(__name__)
+
 app = dash.Dash(
     __name__,
+    server=server,
     suppress_callback_exceptions=True,
     meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1.0"}
@@ -302,5 +305,5 @@ def update_intensive_graph(value, start_date, end_date):
 
 
 # server clause
-
-app.run_server(debug=False)
+if __name__ == "__main__":
+    app.run_server(debug=False)
