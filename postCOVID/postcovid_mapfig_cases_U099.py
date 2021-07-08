@@ -7,7 +7,7 @@ import csv
 
 
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open("/Users/arnold/Documents/Covid_portal_vis/postCOVID/sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -31,33 +31,33 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # language information
-language = "Swedish"
+language = "English"
 
 if language == "Swedish":
     cbtit = "procent fall U.09.9"
 elif language == "English":
-    cbtit = "percentage case U.09.9"
+    cbtit = "Number of people who received the U09.9 diagnosis relative to all confirmed cases of COVID-19"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av fall"
 elif language == "English":
-    perc_postcov_title = "Percent of cases"
+    perc_postcov_title = "Number of people who received the U09.9 diagnosis relative to all confirmed cases of COVID-19"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number post-COVID cases"
+    raw_number_title = "Number of people who received the U09.9 diagnosis"
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
     covid_cases = "Antal covid fall"
 elif language == "English":
-    covid_cases = "Number COVID cases"
+    covid_cases = "Number of all confirmed COVID-19 cases"
 else:
     covid_cases = "lang_error"
 
@@ -96,15 +96,15 @@ fig = px.choropleth(
     scope="europe",
     hover_name="Lan",
     labels={
-        "proc_kodU099_fall": perc_postcov_title,
-        "Antal_kodU099": raw_number_title,
         "Kum_antal_fall": covid_cases,
+        "Antal_kodU099": raw_number_title,
+        "proc_kodU099_fall": perc_postcov_title,
     },
     hover_data={
+        "Kum_antal_fall": True,
+        "Antal_kodU099": True,
         "proc_kodU099_fall": True,
         "proc_kodU099_fall": ":.2f",
-        "Antal_kodU099": True,
-        "Kum_antal_fall": True,
         "id": False,
     },
 )
@@ -163,6 +163,6 @@ fig.update_layout(
 # fig.show()
 fig.write_html(
     "map_postcovid_percent_of_covidcases_U099.html",
-    include_plotlyjs=False,
-    full_html=False,
+    include_plotlyjs=True,
+    full_html=True,
 )

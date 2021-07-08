@@ -7,7 +7,7 @@ import csv
 
 
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open("/Users/arnold/Documents/Covid_portal_vis/postCOVID/sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -30,33 +30,33 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # information related to languages
-language = "Swedish"
+language = "English"
 
 if language == "Swedish":
     cbtit = "procent folk U.09.9"
 elif language == "English":
-    cbtit = "percentage pop U.09.9"
+    cbtit = "Percentage of population which received the U09.9 diagnosis"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av folk"
 elif language == "English":
-    perc_postcov_title = "Percent of population"
+    perc_postcov_title = "Percentage of population which received the U09.9 diagnosis"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number post-COVID cases"
+    raw_number_title = "Number of people who received the U09.9 diagnosis"
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
     Population = "Folkmängd"
 elif language == "English":
-    Population = "Population size"
+    Population = "Total population"
 else:
     Population = "lang_error"
 
@@ -100,10 +100,10 @@ fig = px.choropleth(
         "Population": Population,
     },
     hover_data={
+        "Population": True,
+        "Antal_kodU099": True,
         "proc_kodU099_pop": True,
         "proc_kodU099_pop": ":.2f",
-        "Antal_kodU099": True,
-        "Population": True,
         "id": False,
     },
 )
@@ -162,6 +162,6 @@ fig.update_layout(
 # fig.show()
 fig.write_html(
     "map_postcovid_percent_of_population_U099.html",
-    include_plotlyjs=False,
-    full_html=False,
+    include_plotlyjs=True,
+    full_html=True,
 )

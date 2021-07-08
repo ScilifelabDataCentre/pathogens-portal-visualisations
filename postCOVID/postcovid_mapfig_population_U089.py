@@ -7,7 +7,7 @@ import csv
 
 
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open("/Users/arnold/Documents/Covid_portal_vis/postCOVID/sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -35,28 +35,28 @@ language = "Swedish"
 if language == "Swedish":
     cbtit = "procent av folk U.08.9"
 elif language == "English":
-    cbtit = "percentage of population U.08.9"
+    cbtit = "Percentage of population which received the Z86.1A or U09.9 diagnoses"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av folk"
 elif language == "English":
-    perc_postcov_title = "Percent of population"
+    perc_postcov_title = "Percentage of population which received the Z86.1A or U09.9 diagnoses"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number post-COVID cases"
+    raw_number_title = "Number of people who received the Z86.1A or U09.9 diagnoses"
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
     Population = "Folkmängd"
 elif language == "English":
-    Population = "Population size"
+    Population = "Total population"
 else:
     Population = "lang_error"
 
@@ -100,10 +100,10 @@ fig = px.choropleth(
         "Population": Population,
     },
     hover_data={
+        "Population": True,
+        "Antal_kodU089": True,
         "proc_kodU089_pop": True,
         "proc_kodU089_pop": ":.2f",
-        "Antal_kodU089": True,
-        "Population": True,
         "id": False,
     },
 )
