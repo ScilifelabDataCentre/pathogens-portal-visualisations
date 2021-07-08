@@ -7,7 +7,7 @@ import csv
 
 
 # map
-with open("/Users/arnold/Documents/Covid_portal_vis/postCOVID/sweden-counties.geojson", "r") as sw:
+with open("sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
