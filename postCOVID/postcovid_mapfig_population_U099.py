@@ -35,21 +35,23 @@ language = "English"
 if language == "Swedish":
     cbtit = "procent folk U.09.9"
 elif language == "English":
-    cbtit = "Percentage of population which received the U09.9 diagnosis"
+    cbtit = "Percentage of the population<br>that received a U09.9 diagnosis"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av folk"
 elif language == "English":
-    perc_postcov_title = "Percentage of population which received the U09.9 diagnosis"
+    perc_postcov_title = (
+        "<br>Percentage of the population<br>that received a U09.9 diagnosis"
+    )
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number of people who received the U09.9 diagnosis"
+    raw_number_title = "<br>Number of people that<br>received a U09.9 diagnosis"
 else:
     raw_number_title = "lang_error"
 
@@ -91,7 +93,7 @@ fig = px.choropleth(
         (splits[10], colour[9]),
     ],
     # this keeps the range of colours constant regardless of data
-    range_color=[0, 1.0],
+    range_color=[0, 0.1],
     scope="europe",
     hover_name="Lan",
     labels={
@@ -110,51 +112,52 @@ fig = px.choropleth(
 # this section deals with the exact focus on the map
 
 lat_foc = 62.45
-lon_foc = 22.5
+lon_foc = 20.5
 fig.update_layout(
     geo=dict(
         lonaxis_range=[20, 90],  # the logitudinal range to consider
+        lataxis_range=[48, 100],  # the logitudinal range to consider
         projection_scale=4.55,  # this is kind of like zoom
         center=dict(lat=lat_foc, lon=lon_foc),  # this will center on the point
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=400, height=500)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar categories
 fig.update_layout(
     coloraxis_colorbar=dict(
         title="<b>" + cbtit + "</b>",
         tickvals=[
-            0.05,
-            0.15,
-            0.25,
-            0.35,
-            0.45,
-            0.55,
-            0.65,
-            0.75,
-            0.85,
-            0.95,
+            0.005,
+            0.015,
+            0.025,
+            0.035,
+            0.045,
+            0.055,
+            0.065,
+            0.075,
+            0.085,
+            0.095,
         ],
         ticktext=[
-            "0.00 - 0.10 %",
-            "0.10 - 0.20 %",
-            "0.20 - 0.30 %",
-            "0.30 - 0.40 %",
-            "0.40 - 0.50 %",
-            "0.50 - 0.60 %",
-            "0.60 - 0.70 %",
-            "0.70 - 0.80 %",
-            "0.80 - 0.90 %",
-            "> 0.90 %",
+            "0.00 - 0.01 %",
+            "0.01 - 0.02 %",
+            "0.02 - 0.03 %",
+            "0.03 - 0.04 %",
+            "0.04 - 0.05 %",
+            "0.05 - 0.06 %",
+            "0.06 - 0.07 %",
+            "0.07 - 0.08 %",
+            "0.08 - 0.09 %",
+            "> 0.09 %",
         ],
-        x=0.55,
-        y=0.8,
+        x=0.51,
+        y=0.40,
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=150,
+        len=195,
     ),
     font=dict(size=9),
 )

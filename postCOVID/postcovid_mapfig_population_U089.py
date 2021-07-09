@@ -30,26 +30,30 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # language info
-language = "Swedish"
+language = "English"
 
 if language == "Swedish":
     cbtit = "procent av folk U.08.9"
 elif language == "English":
-    cbtit = "Percentage of population which received the Z86.1A or U09.9 diagnoses"
+    cbtit = (
+        "Percentage of the population<br>that received a Z86.1A<br>or U08.9 diagnosis"
+    )
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av folk"
 elif language == "English":
-    perc_postcov_title = "Percentage of population which received the Z86.1A or U09.9 diagnoses"
+    perc_postcov_title = "<br>Percentage of the population<br>that received a Z86.1A<br>or U08.9 diagnosis"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number of people who received the Z86.1A or U09.9 diagnoses"
+    raw_number_title = (
+        "<br>Number of people that<br>received a Z86.1A<br>or U08.9 diagnosis"
+    )
 else:
     raw_number_title = "lang_error"
 
@@ -110,18 +114,19 @@ fig = px.choropleth(
 # this section deals with the exact focus on the map
 
 lat_foc = 62.45
-lon_foc = 22.5
+lon_foc = 20.5
 fig.update_layout(
     geo=dict(
         lonaxis_range=[20, 90],  # the logitudinal range to consider
+        lataxis_range=[48, 100],  # the logitudinal range to consider
         projection_scale=4.55,  # this is kind of like zoom
         center=dict(lat=lat_foc, lon=lon_foc),  # this will center on the point
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=400, height=500)
 fig.update_layout(dragmode=False)
-# The below labels the colourbar
+# The below labels the colourbar categories
 fig.update_layout(
     coloraxis_colorbar=dict(
         title="<b>" + cbtit + "</b>",
@@ -149,16 +154,17 @@ fig.update_layout(
             "0.80 - 0.90 %",
             "> 0.90 %",
         ],
-        x=0.55,
-        y=0.8,
+        x=0.51,
+        y=0.40,
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=150,
+        len=195,
     ),
     font=dict(size=9),
 )
 # write out as html for web
+#fig.show()
 fig.write_html(
     "map_postcovid_percent_of_population_U089.html",
     include_plotlyjs=False,

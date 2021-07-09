@@ -36,14 +36,14 @@ language = "English"
 if language == "Swedish":
     cbtit = "procent fall U.08.9"
 elif language == "English":
-    cbtit = "Number of people that received<br>a U08.9 ot Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
+    cbtit = "Number of people that received<br>a U08.9 or Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av fall"
 elif language == "English":
-    perc_postcov_title = "<br>Number of people that received<br>a U08.9 ot Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
+    perc_postcov_title = "<br>Number of people that received<br>a U08.9 or Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     perc_postcov_title = "lang_error"
 
@@ -164,9 +164,9 @@ fig.update_layout(
 )
 # fig.update_layout(coloraxis_colorbar_x=0.53, coloraxis_colorbar_y=0.53)
 # write out as html for web
-fig.show()
-# fig.write_html(
-#     "map_postcovid_percent_of_covidcases_U089.html",
-#     include_plotlyjs=False,
-#     full_html=False,
-# )
+# fig.show()
+fig.write_html(
+    "map_postcovid_percent_of_covidcases_U089.html",
+    include_plotlyjs=False,
+    full_html=False,
+)

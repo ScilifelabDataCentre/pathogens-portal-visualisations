@@ -36,28 +36,28 @@ language = "English"
 if language == "Swedish":
     cbtit = "procent fall U.09.9"
 elif language == "English":
-    cbtit = "Number of people who received the U09.9 diagnosis relative to all confirmed cases of COVID-19"
+    cbtit = "Number of people that received<br>a U09.9 diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av fall"
 elif language == "English":
-    perc_postcov_title = "Number of people who received the U09.9 diagnosis relative to all confirmed cases of COVID-19"
+    perc_postcov_title = "<br>Number of people that received<br>a U09.9 diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number of people who received the U09.9 diagnosis"
+    raw_number_title = "<br>Number of people that received<br>a U09.9 diagnosis"
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
     covid_cases = "Antal covid fall"
 elif language == "English":
-    covid_cases = "Number of all confirmed COVID-19 cases"
+    covid_cases = "Cumulative number of<br>confirmed COVID-19 cases"
 else:
     covid_cases = "lang_error"
 
@@ -111,16 +111,17 @@ fig = px.choropleth(
 # this section deals with the exact focus on the map
 
 lat_foc = 62.45
-lon_foc = 22.5
+lon_foc = 20.5
 fig.update_layout(
     geo=dict(
         lonaxis_range=[20, 90],  # the logitudinal range to consider
+        lataxis_range=[48, 100],  # the logitudinal range to consider
         projection_scale=4.55,  # this is kind of like zoom
         center=dict(lat=lat_foc, lon=lon_foc),  # this will center on the point
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=400, height=500)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar categories
 fig.update_layout(
@@ -150,12 +151,12 @@ fig.update_layout(
             "4.00 - 4.50 %",
             "> 4.50 %",
         ],
-        x=0.55,
-        y=0.8,
+        x=0.51,
+        y=0.40,
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=150,
+        len=195,
     ),
     font=dict(size=9),
 )
