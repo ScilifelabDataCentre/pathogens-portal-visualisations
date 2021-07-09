@@ -113,16 +113,17 @@ fig = px.choropleth(
 # this section deals with the exact focus on the map
 
 lat_foc = 62.45
-lon_foc = 22.5
+lon_foc = 20.5
 fig.update_layout(
     geo=dict(
         lonaxis_range=[20, 90],  # the logitudinal range to consider
+        lataxis_range=[48, 100],  # the logitudinal range to consider
         projection_scale=4.55,  # this is kind of like zoom
         center=dict(lat=lat_foc, lon=lon_foc),  # this will center on the point
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=510, height=696)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=400, height=500)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar categories
 fig.update_layout(
@@ -152,15 +153,16 @@ fig.update_layout(
             "4.00 - 4.50 %",
             "> 4.50 %",
         ],
-        x=0.55,
-        y=0.8,
+        x=0.51,
+        y=0.40,
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=250,
+        len=195,
     ),
-    font=dict(size=12),
+    font=dict(size=9),
 )
+# fig.update_layout(coloraxis_colorbar_x=0.53, coloraxis_colorbar_y=0.53)
 # write out as html for web
 fig.show()
 # fig.write_html(
