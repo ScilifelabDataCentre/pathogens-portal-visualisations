@@ -36,28 +36,30 @@ language = "English"
 if language == "Swedish":
     cbtit = "procent fall U.08.9"
 elif language == "English":
-    cbtit = "Number of people who received the U08.9 or Z86.1A diagnoses relative to all confirmed cases of COVID-19"
+    cbtit = "Number of people that received<br>a U08.9 ot Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
     perc_postcov_title = "Procent av fall"
 elif language == "English":
-    perc_postcov_title = "Number of people who received the U08.9 or Z86.1A diagnoses relative to all confirmed cases of COVID-19"
+    perc_postcov_title = "<br>Number of people that received<br>a U08.9 ot Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
     raw_number_title = "Antal postcovid fall"
 elif language == "English":
-    raw_number_title = "Number of people who received the U08.9 or Z86.1A diagnoses"
+    raw_number_title = (
+        "<br>Number of people that received<br>a U08.9 or Z86.1A diagnosis"
+    )
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
     covid_cases = "Antal covid fall"
 elif language == "English":
-    covid_cases = "Number of all confirmed COVID-19 cases"
+    covid_cases = "Cumulative number of<br>confirmed COVID-19 cases"
 else:
     covid_cases = "lang_error"
 
@@ -120,7 +122,7 @@ fig.update_layout(
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=510, height=696)
 fig.update_layout(dragmode=False)
 # The below labels the colourbar categories
 fig.update_layout(
@@ -155,13 +157,14 @@ fig.update_layout(
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=150,
+        len=250,
     ),
-    font=dict(size=9),
+    font=dict(size=12),
 )
 # write out as html for web
-fig.write_html(
-    "map_postcovid_percent_of_covidcases_U089.html",
-    include_plotlyjs=False,
-    full_html=False,
-)
+fig.show()
+# fig.write_html(
+#     "map_postcovid_percent_of_covidcases_U089.html",
+#     include_plotlyjs=False,
+#     full_html=False,
+# )
