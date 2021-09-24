@@ -98,7 +98,7 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>?Value</b><br>",
+    title="<b>Relative N gene normalised by PMMoV</b><br>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -112,7 +112,7 @@ fig.update_yaxes(
 # fig.show()
 # Below prints as html
 fig.write_html(
-    "wastewater_combined_stockholm.html", include_plotlyjs=True, full_html=True
+    "wastewater_combined_stockholm.html", include_plotlyjs=False, full_html=False
 )
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
