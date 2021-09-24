@@ -140,9 +140,9 @@ fig.update_layout(
     autosize=False,
     font=dict(size=14),
     margin=dict(r=150, t=0, b=0, l=0),
-    width=1000,
+    width=900,
     height=500,
-    legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=20)),
+    legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
 )
 fig.update_xaxes(
@@ -152,13 +152,14 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>Relative copy number of<br>SARS-CoV-2 to PPMMoV (%)</b><br>",
+    title="<b>Relative copy number of<br>SARS-CoV-2 to PPMMoV (%), log</b><br>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     zeroline=True,
     zerolinecolor="black",
+    type="log",
     # Below will set the y-axis range to constant, if you wish
     # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
 )
@@ -166,7 +167,7 @@ fig.update_yaxes(
 # fig.show()
 # Below prints as html
 fig.write_html(
-    "wastewater_combined_graph.html", include_plotlyjs=False, full_html=False
+    "wastewater_combined_slu_logyaxis.html", include_plotlyjs=False, full_html=False
 )
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
