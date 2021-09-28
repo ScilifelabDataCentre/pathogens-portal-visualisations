@@ -21,11 +21,21 @@ wastewater_data["date"] = wastewater_data.apply(
 )
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
-bromma_wwtp_jarva = wastewater_data[(wastewater_data["wwtp"] == "Bromma WWTP, Järva Inlet")]
-bromma_wwtp_riksby = wastewater_data[(wastewater_data["wwtp"] == "Bromma WWTP, Riksby Inlet")]
-henriksdal_wwtp_hasselby = wastewater_data[(wastewater_data["wwtp"] == "Henriksdal WWTP, Hässelby Inlet")]
-henriksdal_wwtp_henriksdal = wastewater_data[(wastewater_data["wwtp"] == "Henriksdal WWTP, Henriksdal Inlet")]
-henriksdal_wwtp_sickla = wastewater_data[(wastewater_data["wwtp"] == "Henriksdal WWTP, Sickla Inlet")]
+bromma_wwtp_jarva = wastewater_data[
+    (wastewater_data["wwtp"] == "Bromma WWTP, Järva Inlet")
+]
+bromma_wwtp_riksby = wastewater_data[
+    (wastewater_data["wwtp"] == "Bromma WWTP, Riksby Inlet")
+]
+henriksdal_wwtp_hasselby = wastewater_data[
+    (wastewater_data["wwtp"] == "Henriksdal WWTP, Hässelby Inlet")
+]
+henriksdal_wwtp_henriksdal = wastewater_data[
+    (wastewater_data["wwtp"] == "Henriksdal WWTP, Henriksdal Inlet")
+]
+henriksdal_wwtp_sickla = wastewater_data[
+    (wastewater_data["wwtp"] == "Henriksdal WWTP, Sickla Inlet")
+]
 kappala_wwtp = wastewater_data[(wastewater_data["wwtp"] == "Käppala WWTP")]
 
 fig = go.Figure(
@@ -85,11 +95,12 @@ fig.update_layout(
     plot_bgcolor="white",
     autosize=False,
     font=dict(size=14),
-    margin=dict(r=150, t=0, b=0, l=0),
+    margin=dict(r=150, t=65, b=0, l=0),
     width=900,
     height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
+    hoverdistance=1,
 )
 fig.update_xaxes(
     title="<br><b>Date (Week Commencing)</b>",
@@ -108,11 +119,36 @@ fig.update_yaxes(
     # Below will set the y-axis range to constant, if you wish
     # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
 )
-# Below can show figure locally in tests
-# fig.show()
-# Below prints as html
-fig.write_html(
-    "wastewater_combined_stockholm.html", include_plotlyjs=False, full_html=False
+fig.update_layout(
+    updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            active=0,
+            x=1.1,
+            y=1.1,
+            xanchor="right",
+            yanchor="top",
+            buttons=list(
+                [
+                    dict(
+                        label="Reset",
+                        method="update",
+                        args=[
+                            {"visible": [True]},
+                            # {"title": "", "annotations": []},
+                        ],
+                    ),
+                ]
+            ),
+        )
+    ]
 )
+# Below can show figure locally in tests
+fig.show()
+# Below prints as html
+# fig.write_html(
+#     "wastewater_combined_stockholm.html", include_plotlyjs=False, full_html=False
+# )
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
