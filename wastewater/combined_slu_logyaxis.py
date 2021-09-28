@@ -191,10 +191,10 @@ fig.update_layout(
     ]
 )
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 # Below prints as html
-# fig.write_html(
-#     "wastewater_combined_slu_logyaxis.html", include_plotlyjs=False, full_html=False
-# )
+fig.write_html(
+    "wastewater_combined_slu_logyaxis.html", include_plotlyjs=False, full_html=False
+)
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
