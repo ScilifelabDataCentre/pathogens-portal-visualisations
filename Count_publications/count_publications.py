@@ -58,8 +58,9 @@ fig = go.Figure(data = data)
 fig.update_layout(plot_bgcolor = 'white',
                 font=dict(size = 14),
                 margin=dict(r = 150),
-                width = 1000,
-                height = 500)
+                # width = 1000,
+                # height = 500
+                )
 #modify x-axis
 fig.update_xaxes(title = '<b>Date</b>',
     showgrid = True,
@@ -76,5 +77,8 @@ fig.update_yaxes(title = '<b>Number of Publications</b>',
 #change range to envelope the appropriate range
     range = [0, max(df1['cumulativecount'] + 50)])
 
-#Produce .html file for web
-fig.write_html('Count_by_today.html', include_plotlyjs=False, full_html=False)
+# Below produces a .html file
+#fig.write_html('Count_by_today.html', include_plotlyjs=False, full_html=False)
+
+#Below produces a .json file now used on the portal
+fig.write_json("Count_by_today.json")
