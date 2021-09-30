@@ -2,6 +2,7 @@ import pandas as pd
 import datetime
 import plotly.graph_objects as go
 from datetime import datetime as dt
+from plotly.io import write_image
 
 
 wastewater_data = pd.read_csv(
@@ -137,7 +138,7 @@ fig = go.Figure(
 )
 fig.update_layout(
     plot_bgcolor="white",
-    autosize=False,
+    autosize=True,
     font=dict(size=14),
     margin=dict(r=150, t=65, b=0, l=0),
     # width=900,
@@ -176,7 +177,7 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="Reset",
+                        label="Reset selected cities",
                         method="update",
                         args=[
                             {"visible": [True]},
@@ -192,8 +193,10 @@ fig.update_layout(
 # fig.show()  # renderer="json")
 # fig.write_json("wastewater_test.json")
 # Below prints as html
-fig.write_html(
-    "wastewater_combined_slu_regular.html", include_plotlyjs=False, full_html=False
-)
+#fig.write_html(
+#    "wastewater_combined_slu_regular.html", include_plotlyjs=True, full_html=True
+#)
+# Prints as a json file
+fig.write_json("wastewater_combined_slu_regular.json")
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
