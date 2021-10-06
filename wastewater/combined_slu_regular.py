@@ -154,7 +154,7 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>Relative copy number of<br>SARS-CoV-2 to PPMMoV (%)</b><br>",
+    title="<b>Relative copy number of<br>SARS-CoV-2 to PPMMoV (%)</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",

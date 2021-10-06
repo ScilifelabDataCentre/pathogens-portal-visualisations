@@ -108,7 +108,7 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>Relative N gene normalised by PMMoV</b><br>",
+    title="<b>Relative copy number of<br>SARS-CoV-2 to PPMMoV (%), log</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -146,9 +146,8 @@ fig.update_layout(
 # Below can show figure locally in tests
 # fig.show()
 # Below prints as html
-#fig.write_html(
-#    "wastewater_combined_stockholm.html", include_plotlyjs=False, full_html=False
-#)
+fig.write_html(
+    "wastewater_combined_stockholm.html", include_plotlyjs=True, full_html=True)
 # Prints as a json file
 fig.write_json(
     "wastewater_combined_stockholm.json"
