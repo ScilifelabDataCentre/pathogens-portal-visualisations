@@ -1,8 +1,9 @@
 import pandas as pd
 
+## REMEMBER THAT WEEK NUMBER WILL AND POPULATION DATA MIGHT REQUIRE UPDATE
 # Import and sort data
 postcovid_df = pd.read_excel(
-    "https://www.socialstyrelsen.se/globalassets/1-globalt/covid-19-statistik/statistik-om-covid-19/statistik-postcovid.xlsx",
+    "https://www.socialstyrelsen.se/globalassets/sharepoint-dokument/dokument-webb/statistik/statistik-postcovid.xlsx",
     sheet_name="Postcovid - län",
     header=6,
     engine="openpyxl",
@@ -25,19 +26,18 @@ postcovid_df.rename(
 
 SCB_population = pd.read_excel(
     "SCB_pop_data.xlsx",
-    sheet_name="Total",
+    sheet_name="Sheet 1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
-SCB_population.drop(SCB_population.columns[[0]], axis=1, inplace=True)
+# SCB_population.drop(SCB_population.columns[[0]], axis=1, inplace=True)
 # print(SCB_population)
 
-postcov_pop = pd.merge(
-    postcovid_df, SCB_population, how="left", left_on="Lan", right_on="County"
-)
+postcov_pop = pd.merge(postcovid_df, SCB_population, how="left", on="Lan")
 
-postcov_pop.drop(postcov_pop.columns[[3]], axis=1, inplace=True)
+
+# postcov_pop.drop(postcov_pop.columns[[3]], axis=1, inplace=True)
 postcov_pop["proc_kodU099_pop"] = (
     postcov_pop["Antal_kodU099"] / postcov_pop["Population"]
 ) * 100
@@ -54,7 +54,9 @@ cases_df = pd.read_excel(
     keep_default_na=False,
 )
 
-total_cases = cases_df[(cases_df["år"] == 2021) & (cases_df["veckonummer"] == 22)]
+total_cases = cases_df[
+    (cases_df["år"] == 2021) & (cases_df["veckonummer"] == 39)
+]  # week social data until
 keep_cols = ["Region", "Kum_antal_fall"]
 total_cases = total_cases[keep_cols]
 
@@ -70,7 +72,7 @@ total_cases = total_cases.replace(
 )
 
 
-# total_cases.drop(total_cases.columns[0], axis=1, inplace=True)
+# # total_cases.drop(total_cases.columns[0], axis=1, inplace=True)
 
 postcov_summary = pd.merge(postcov_pop, total_cases, how="left", on="Lan")
 
@@ -80,5 +82,5 @@ postcov_summary["proc_kodU099_fall"] = (
 postcov_summary["proc_kodU089_fall"] = (
     postcov_summary["Antal_kodU089"] / postcov_summary["Kum_antal_fall"]
 ) * 100
-
+# print(postcov_summary)
 postcov_summary.to_csv("Summary_postcovid_statistics.csv")
