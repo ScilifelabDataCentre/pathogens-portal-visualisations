@@ -30,17 +30,19 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # information related to languages
-language = "English"
+language = "Swedish"
 
 if language == "Swedish":
-    cbtit = "procent folk U.09.9"
+    cbtit = "Andel personer angivet i<br>procent som fått diagnosen<br>U09.9 relativt populationen"
 elif language == "English":
     cbtit = "Percentage of the population<br>that received a U09.9 diagnosis"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
-    perc_postcov_title = "Procent av folk"
+    perc_postcov_title = (
+        "<br>Andel personer angivet i<br>procent som fått diagnosen<br>U09.9"
+    )
 elif language == "English":
     perc_postcov_title = (
         "<br>Percentage of the population<br>that received a U09.9 diagnosis"
@@ -49,14 +51,14 @@ else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
-    raw_number_title = "Antal postcovid fall"
+    raw_number_title = "<br>Antal personer som<br>fått diagnosen U09.9"
 elif language == "English":
     raw_number_title = "<br>Number of people that<br>received a U09.9 diagnosis"
 else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
-    Population = "Folkmängd"
+    Population = "Total population"
 elif language == "English":
     Population = "Total population"
 else:
@@ -163,8 +165,4 @@ fig.update_layout(
 )
 # write out as html for web
 # fig.show()
-fig.write_html(
-    "map_postcovid_percent_of_population_U099.html",
-    include_plotlyjs=True,
-    full_html=True,
-)
+fig.write_json("map_postcovid_percent_of_population_U099_{}.json".format(language))

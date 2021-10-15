@@ -31,24 +31,24 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # language information
-language = "English"
+language = "Swedish"
 
 if language == "Swedish":
-    cbtit = "procent fall U.08.9"
+    cbtit = "Antal personer som fått<br>diagnosen U08.9/Z86.1A<br>relativt antal<br>bekräftade fall"
 elif language == "English":
     cbtit = "Number of people that received<br>a U08.9 or Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     cbtit = "lang_error"
 
 if language == "Swedish":
-    perc_postcov_title = "Procent av fall"
+    perc_postcov_title = "<br>Antal personer som fått<br>diagnosen U08.9/Z86.1A<br>relativt antal<br>bekräftade fall"
 elif language == "English":
     perc_postcov_title = "<br>Number of people that received<br>a U08.9 or Z86.1A diagnosis as<br>a percentage of confirmed<br>COVID-19 cases"
 else:
     perc_postcov_title = "lang_error"
 
 if language == "Swedish":
-    raw_number_title = "Antal postcovid fall"
+    raw_number_title = "<br>Antal personer som fått<br>diagnosen U08.9/Z86.1A"
 elif language == "English":
     raw_number_title = (
         "<br>Number of people that received<br>a U08.9 or Z86.1A diagnosis"
@@ -57,7 +57,7 @@ else:
     raw_number_title = "lang_error"
 
 if language == "Swedish":
-    covid_cases = "Antal covid fall"
+    covid_cases = "Kumulativt antal bekräftade<br>fall av Covid-19"
 elif language == "English":
     covid_cases = "Cumulative number of<br>confirmed COVID-19 cases"
 else:
@@ -165,8 +165,4 @@ fig.update_layout(
 # fig.update_layout(coloraxis_colorbar_x=0.53, coloraxis_colorbar_y=0.53)
 # write out as html for web
 # fig.show()
-fig.write_html(
-    "map_postcovid_percent_of_covidcases_U089.html",
-    include_plotlyjs=False,
-    full_html=False,
-)
+fig.write_json("map_postcovid_percent_of_covidcases_U089_{}.json".format(language))
