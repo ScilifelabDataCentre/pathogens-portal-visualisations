@@ -24,8 +24,6 @@ wastewater_data["date"] = wastewater_data.apply(
 # Restrict data to only 2021 for the purpose of this plot
 wastewater_data = wastewater_data[(wastewater_data["year"] > 2020)]
 
-print(wastewater_data)
-
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
 bromma_wwtp_jarva = wastewater_data[
