@@ -19,7 +19,16 @@ df_vacc_age = pd.read_excel(
 # initial processing
 df_vacc_age = df_vacc_age.replace("| Sverige |", "Sweden")
 df_vacc_age = df_vacc_age[(df_vacc_age["Region"] == "Sweden")]
-df_vacc_age = df_vacc_age.replace("90 eller äldre", "90+")
+df_vacc_age = df_vacc_age.replace("90 eller äldre", "90 and<br>above")
+df_vacc_age = df_vacc_age.replace("80-89", "80 - 89")
+df_vacc_age = df_vacc_age.replace("70-79", "70 - 79")
+df_vacc_age = df_vacc_age.replace("60-69", "60 - 69")
+df_vacc_age = df_vacc_age.replace("50-59", "50 - 59")
+df_vacc_age = df_vacc_age.replace("40-49", "40 - 49")
+df_vacc_age = df_vacc_age.replace("30-39", "30 - 39")
+df_vacc_age = df_vacc_age.replace("18-29", "18 - 29")
+df_vacc_age = df_vacc_age.replace("16-17", "16 - 17")
+df_vacc_age = df_vacc_age.replace("12-15", "12 - 15")
 df_vacc_age.drop(
     df_vacc_age[(df_vacc_age["Åldersgrupp"] == "Totalt")].index, inplace=True
 )
@@ -50,7 +59,16 @@ vacc_third_age = pd.read_excel(
 # initial processing
 vacc_third_age = vacc_third_age.replace("| Sverige |", "Sweden")
 vacc_third_age = vacc_third_age[(vacc_third_age["Region"] == "Sweden")]
-vacc_third_age = vacc_third_age.replace("90 eller äldre", "90+")
+vacc_third_age = vacc_third_age.replace("90 eller äldre", "90 and<br>above")
+vacc_third_age = vacc_third_age.replace("80-89", "80 - 89")
+vacc_third_age = vacc_third_age.replace("70-79", "70 - 79")
+vacc_third_age = vacc_third_age.replace("60-69", "60 - 69")
+vacc_third_age = vacc_third_age.replace("50-59", "50 - 59")
+vacc_third_age = vacc_third_age.replace("40-49", "40 - 49")
+vacc_third_age = vacc_third_age.replace("30-39", "30 - 39")
+vacc_third_age = vacc_third_age.replace("18-29", "18 - 29")
+vacc_third_age = vacc_third_age.replace("16-17", "16 - 17")
+vacc_third_age = vacc_third_age.replace("12-15", "12 - 15")
 vacc_third_age.drop(
     vacc_third_age[(vacc_third_age["Åldersgrupp"] == "Totalt")].index, inplace=True
 )
@@ -63,7 +81,7 @@ vacc_third_age = vacc_third_age[
 ## REMOVE THIS SECTION WHEN THESE AGE CATEGORIES ARE AVAILABLE FOR THIRD DOSE DATA
 top_row = pd.DataFrame(
     {
-        "Åldersgrupp": ["12-15", "16-17"],
+        "Åldersgrupp": ["12 - 15", "16 - 17"],
         "Procent vaccinerade": [np.nan, np.nan],
         "Vaccinationsstatus": ["3 doser", "3 doser"],
     }
@@ -98,6 +116,8 @@ fig = go.Figure(
         zmax=100,
         x=heatmap_data["Vaccinationsstatus"],
         y=heatmap_data["Åldersgrupp"],
+        xgap=1,
+        ygap=1,
         colorbar={
             "title": "<b>Percentage of <br>Population Vaccinated<br> </b>",
             "yanchor": "top",
@@ -162,14 +182,30 @@ fig.update_layout(
 )
 fig.update_layout(
     title=" ",
-    yaxis={"title": "<b>Age Group<br></b>"},
+    plot_bgcolor="white",
+    yaxis={
+        "title": "<b>Age Group<br></b>",
+        "linecolor": "black",
+    },
     font={"size": 16},
     # width=2000, # width not set - will depend on portal space
     height=1000,  # set height for portal (can remove if we want height to depend on space in pace)
     xaxis={
         "title": "<br><b>Vaccine Doses</b>",
         "tickangle": 0,
+        "zeroline": True,
+        "linecolor": "black",
     },
+)
+
+# add text annotation regarding no data
+
+fig.add_annotation(
+    xref="paper",  # yref="paper",
+    x=1.125,
+    y=4.30,
+    text="<b>Note:</b> White<br>indicates no data",
+    showarrow=False,
 )
 
 fig.show()

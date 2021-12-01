@@ -161,7 +161,7 @@ one_FoHm_map_plot.update_layout(
     font=dict(size=14),
 )
 one_FoHm_map_plot.update_traces(marker_line_color="white")
-# one_FoHm_map_plot.show()
+one_FoHm_map_plot.show()
 
 # two doses (FoHm data)
 
@@ -246,7 +246,7 @@ two_FoHm_map_plot.update_layout(
     font=dict(size=14),
 )
 two_FoHm_map_plot.update_traces(marker_line_color="white")
-# two_FoHm_map_plot.show()
+two_FoHm_map_plot.show()
 
 # three doses FoHM data
 
@@ -331,16 +331,16 @@ three_FoHm_map_plot.update_layout(
     font=dict(size=14),
 )
 three_FoHm_map_plot.update_traces(marker_line_color="white")
-# three_FoHm_map_plot.show()
+three_FoHm_map_plot.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
-# write out FoHM graphs
-one_FoHm_map_plot.write_json("Plots/onedose_FoHM_map.json")
-two_FoHm_map_plot.write_json("Plots/twodose_FoHM_map.json")
-three_FoHm_map_plot.write_json("Plots/threedose_FoHM_map.json")
-# as png (for drafting)
-one_FoHm_map_plot.write_image("Plots/onedose_FoHM_map.png")
-two_FoHm_map_plot.write_image("Plots/twodose_FoHM_map.png")
-three_FoHm_map_plot.write_image("Plots/threedose_FoHM_map.png")
+# # write out FoHM graphs
+# one_FoHm_map_plot.write_json("Plots/onedose_FoHM_map.json")
+# two_FoHm_map_plot.write_json("Plots/twodose_FoHM_map.json")
+# three_FoHm_map_plot.write_json("Plots/threedose_FoHM_map.json")
+# # as png (for drafting)
+# one_FoHm_map_plot.write_image("Plots/onedose_FoHM_map.png")
+# two_FoHm_map_plot.write_image("Plots/twodose_FoHM_map.png")
+# three_FoHm_map_plot.write_image("Plots/threedose_FoHM_map.png")
