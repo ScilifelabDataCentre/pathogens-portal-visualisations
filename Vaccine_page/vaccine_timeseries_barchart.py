@@ -31,7 +31,7 @@ trace2 = go.Bar(
     y=least_two_doses["Procent vaccinerade"],
     name="At Least Two Doses Received",
     marker_color="rgb(178,24,43)",
-    marker_pattern_shape="/",
+    # marker_pattern_shape="/",
     hovertemplate="Date: %{x}" + "<br>Percent Full Dose: %{y:.2f}%",
 )
 
@@ -70,13 +70,13 @@ fig.update_yaxes(
     range=[0, 100],
 )
 
-# fig.show()
+fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
-fig.write_json("Plots/vaccine_timeseries_barchart.json")
-fig.write_image("Plots/vaccine_timeseries_barchart.png")
+# fig.write_json("Plots/vaccine_timeseries_barchart.json")
+# fig.write_image("Plots/vaccine_timeseries_barchart.png")
 
 
 ## Figure based on percentages calculated using population size
@@ -93,7 +93,7 @@ trace4 = go.Bar(
     y=least_two_doses["Vacc_perc_population"],
     name="At Least Two Doses Received",
     marker_color="rgb(178,24,43)",
-    marker_pattern_shape="/",
+    # marker_pattern_shape="/",
     hovertemplate="Date: %{x}" + "<br>Percent Full Dose: %{y:.2f}%",
 )
 
@@ -132,10 +132,10 @@ fig_pop.update_yaxes(
     range=[0, 100],
 )
 
-# fig_pop.show()
+fig_pop.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
-fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")
-fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")
+# fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")
+# fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")

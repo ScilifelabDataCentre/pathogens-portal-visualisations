@@ -233,7 +233,7 @@ trace2 = go.Bar(
     y=vaccine_dose_totals["POP_perc"],
     name="Population Data",
     marker_color="rgb(178,24,43)",
-    marker_pattern_shape="/",
+    # marker_pattern_shape="/",
     hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
 )
 
