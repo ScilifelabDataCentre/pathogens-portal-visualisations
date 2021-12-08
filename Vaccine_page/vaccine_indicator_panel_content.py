@@ -3,6 +3,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import os
+import json
 
 # Import processed data
 from vaccine_dataprep_Swedentots import (
@@ -74,7 +75,7 @@ rate_leasttwodose_twowk = float(
     "{:.2f}".format(least_two_dose_lastweek - least_two_dose_twoweek)
 )
 
-## Now data for 3rd dose from FoHM (not currently included in time series)
+## Now data for 3rd dose based on individuals 16+ (not currently included in time series)
 ## may need to note that 'at least 2 doses COULD include 3rd dose'...
 
 # only have total number for now, so no rate calculations etc. for now
@@ -83,10 +84,10 @@ third_vacc_dose_tot = third_vacc_dose[(third_vacc_dose["Åldersgrupp"] == "Total
 third_vacc_dose_tot = float(third_vacc_dose_tot["Procent vaccinerade"].round(2))
 # print(third_vacc_dose_tot)
 
-## Everything above deals with percentages given by FoHM.
+## Everything above deals with percentages for 16+ year olds.
 ## Now need to calculate percentages based on whole population of Sweden
 
-# Calculate percentage of population (rather than FoHM percentages)
+# Calculate percentage of whole population
 
 df_vacc["Vacc_perc_population"] = (
     df_vacc["Antal vaccinerade"] / Swedish_population
@@ -170,42 +171,58 @@ third_vacc_dose_pop = third_vacc_dose[
 third_vacc_dose_pop = float(third_vacc_dose_pop["Vacc_perc_population"].round(2))
 # print(third_vacc_dose_pop)
 
-###### Gathering all the values that we'll need to display below, so it's easy to find them
+## calculate differences in rates
 
-## The % (FoHM) given one dose in total
-one_dose_swe
-## The % (FoHM) given two doses in total
-least_two_dose_swe
-## The % (FoHM) given three doses in total
-third_vacc_dose_tot
-## The % (FoHM) given one dose last week
-rate_onedose_lastwk
-## The % (FoHM) given two doses last week
-rate_leasttwodose_lastwk
-## The change in vaccination rate for one dose (FoHM) between latest 2 weeks
-onedose_ratechange = rate_onedose_lastwk - rate_onedose_twowk
-## The change in vaccination rate for two doses (FoHM) between latest 2 weeks
-twodose_ratechange = rate_leasttwodose_lastwk - rate_leasttwodose_twowk
-## The % (whole population) given one dose in total
-one_dose_pop
-## The % (whole population) given two doses in total
-least_two_dose_pop
-## The % (whole population) given three doses in total
-third_vacc_dose_pop
-## The % (whole population) given one dose last week
-one_dose_pop_lastweek
-## The % (whole population) given two doses last week
-least_two_dose_pop_lastweek
+## The change in vaccination rate for one dose 16+ between latest 2 weeks
+
+onedose_ratechange = float("{:.2f}".format(rate_onedose_lastwk - rate_onedose_twowk))
+
+## The change in vaccination rate for two doses 16+ between latest 2 weeks
+
+twodose_ratechange = float(
+    "{:.2f}".format(rate_leasttwodose_lastwk - rate_leasttwodose_twowk)
+)
+
 ## The change in vaccination rate for one dose (whole population) between latest 2 weeks
-onedose_ratechange_pop = rate_onedose_pop_lastwk - rate_onedose_pop_twowk
+
+onedose_ratechange_pop = float(
+    "{:.2f}".format(rate_onedose_pop_lastwk - rate_onedose_pop_twowk)
+)
+
 ## The change in vaccination rate for two doses (whole population) between latest 2 weeks
-twodose_ratechange_pop = rate_leasttwodose_pop_lastwk - rate_leasttwodose_pop_twowk
+
+twodose_ratechange_pop = float(
+    "{:.2f}".format(rate_leasttwodose_pop_lastwk - rate_leasttwodose_pop_twowk)
+)
+
+## Create a .json file so that we can insert values 'live' to html
+
+# Data to be written
+data_dictionary = {
+    "sixteen_plus_one_dose": one_dose_swe,
+    "sixteen_plus_two_doses": least_two_dose_swe,
+    "sixteen_plus_three_doses": third_vacc_dose_tot,
+    "sixteen_plus_one_dose_lastweek": rate_onedose_lastwk,
+    "sixteen_plus_two_doses_lastweek": rate_leasttwodose_lastwk,
+    "sixteen_plus_one_dose_rate_change": onedose_ratechange,
+    "sixteen_plus_two_doses_rate_change": twodose_ratechange,
+    "population_one_dose": one_dose_pop,
+    "population_two_doses": least_two_dose_pop,
+    "population_three_doses": third_vacc_dose_pop,
+    "population_one_dose_lastweek": one_dose_pop_lastweek,
+    "population_two_doses_lastweek": least_two_dose_pop_lastweek,
+    "population_one_dose_rate_change": onedose_ratechange_pop,
+    "population_two_doses_rate_change": twodose_ratechange_pop,
+}
+
+with open("live_text_inserts.json", "w") as outfile:
+    json.dump(data_dictionary, outfile)
 
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
 
 vaccine_dose_totals = pd.DataFrame()
 vaccine_dose_totals["Doses"] = ["1", "2", "3"]
-vaccine_dose_totals["FOHM_perc"] = [
+vaccine_dose_totals["sixteens_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
     third_vacc_dose_tot,
@@ -220,8 +237,8 @@ vaccine_dose_totals["POP_perc"] = [
 
 trace1 = go.Bar(
     x=vaccine_dose_totals["Doses"],
-    y=vaccine_dose_totals["FOHM_perc"],
-    name="FoHM Method",
+    y=vaccine_dose_totals["sixteens_perc"],
+    name="Method including 16+",
     marker_color="rgb(5,48,97)",
     hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
 )
