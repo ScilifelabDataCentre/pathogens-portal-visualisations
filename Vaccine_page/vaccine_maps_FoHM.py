@@ -340,7 +340,3 @@ if not os.path.isdir("Plots/"):
 # one_FoHm_map_plot.write_json("Plots/onedose_FoHM_map.json")
 # two_FoHm_map_plot.write_json("Plots/twodose_FoHM_map.json")
 # three_FoHm_map_plot.write_json("Plots/threedose_FoHM_map.json")
-# # as png (for drafting)
-# one_FoHm_map_plot.write_image("Plots/onedose_FoHM_map.png")
-# two_FoHm_map_plot.write_image("Plots/twodose_FoHM_map.png")
-# three_FoHm_map_plot.write_image("Plots/threedose_FoHM_map.png")

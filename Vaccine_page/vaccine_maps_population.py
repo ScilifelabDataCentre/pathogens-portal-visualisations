@@ -142,7 +142,7 @@ onedose_pop_map_plot = px.choropleth(
         "id": False,
     },
     labels={
-        "Vacc_perc_population": "Percentage of population<br>Vaccinated (%)",
+        "Vacc_perc_population": "Percentage of population<br>vaccinated (%)",
         "Vaccinationsstatus": "<br>Number of Doses",
     },
 )
@@ -156,24 +156,26 @@ onedose_pop_map_plot.update_layout(
         visible=False,
     )
 )
-onedose_pop_map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800)
+onedose_pop_map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 onedose_pop_map_plot.update_layout(dragmode=False)
 # The below labels the colourbar categories
 onedose_pop_map_plot.update_layout(
     coloraxis_colorbar=dict(
-        title="<b>" + "Percentage population<br>vaccinated with one dose" + "</b>",
+        title="<b>"
+        + "Percentage of population<br>vaccinated with<br>one dose"
+        + "</b>",
         tickvals=[5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
         ticktext=[
-            "00.00 - 9.99 %",
-            "10.00 - 19.99 %",
-            "20.00 - 29.99 %",
-            "30.00 - 39.00 %",
-            "40.00 - 49.99 %",
-            "50.00 - 59.99 %",
-            "60.00 - 69.99 %",
-            "70.00 - 79.99 %",
-            "80.00 - 89.99 %",
-            "90.00 - 100.00 %",
+            "00.00 - 9.99%",
+            "10.00 - 19.99%",
+            "20.00 - 29.99%",
+            "30.00 - 39.99%",
+            "40.00 - 49.99%",
+            "50.00 - 59.99%",
+            "60.00 - 69.99%",
+            "70.00 - 79.99%",
+            "80.00 - 89.99%",
+            "90.00 - 100.00%",
         ],
         x=0.51,
         y=0.40,
@@ -185,7 +187,7 @@ onedose_pop_map_plot.update_layout(
     font=dict(size=14),
 )
 onedose_pop_map_plot.update_traces(marker_line_color="white")
-onedose_pop_map_plot.show()
+# onedose_pop_map_plot.show()
 
 # two doses
 
@@ -227,7 +229,7 @@ twodoses_pop_map_plot = px.choropleth(
         "id": False,
     },
     labels={
-        "Vacc_perc_population": "Percentage of population<br>Vaccinated (%)",
+        "Vacc_perc_population": "Percentage of population<br>vaccinated (%)",
         "Vaccinationsstatus": "<br>Number of Doses",
     },
 )
@@ -241,24 +243,26 @@ twodoses_pop_map_plot.update_layout(
         visible=False,
     )
 )
-twodoses_pop_map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800)
+twodoses_pop_map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 twodoses_pop_map_plot.update_layout(dragmode=False)
 # The below labels the colourbar categories
 twodoses_pop_map_plot.update_layout(
     coloraxis_colorbar=dict(
-        title="<b>" + "Percentage population<br>vaccinated with two doses" + "</b>",
+        title="<b>"
+        + "Percentage of population<br>vaccinated with<br>two doses"
+        + "</b>",
         tickvals=[5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
         ticktext=[
-            "00.00 - 9.99 %",
-            "10.00 - 19.99 %",
-            "20.00 - 29.99 %",
-            "30.00 - 39.00 %",
-            "40.00 - 49.99 %",
-            "50.00 - 59.99 %",
-            "60.00 - 69.99 %",
-            "70.00 - 79.99 %",
-            "80.00 - 89.99 %",
-            "90.00 - 100.00 %",
+            "00.00 - 9.99%",
+            "10.00 - 19.99%",
+            "20.00 - 29.99%",
+            "30.00 - 39.99%",
+            "40.00 - 49.99%",
+            "50.00 - 59.99%",
+            "60.00 - 69.99%",
+            "70.00 - 79.99%",
+            "80.00 - 89.99%",
+            "90.00 - 100.00%",
         ],
         x=0.51,
         y=0.40,
@@ -270,7 +274,7 @@ twodoses_pop_map_plot.update_layout(
     font=dict(size=14),
 )
 twodoses_pop_map_plot.update_traces(marker_line_color="white")
-twodoses_pop_map_plot.show()
+# twodoses_pop_map_plot.show()
 
 # three doses
 
@@ -312,7 +316,7 @@ threedoses_pop_map_plot = px.choropleth(
         "id": False,
     },
     labels={
-        "Vacc_perc_population": "Percentage of population<br>Vaccinated (%)",
+        "Vacc_perc_population": "Percentage of population<br>vaccinated (%)",
         "Vaccinationsstatus": "<br>Number of Doses",
     },
 )
@@ -326,26 +330,26 @@ threedoses_pop_map_plot.update_layout(
         visible=False,
     )
 )
-threedoses_pop_map_plot.update_layout(
-    margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800
-)
+threedoses_pop_map_plot.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 threedoses_pop_map_plot.update_layout(dragmode=False)
 # The below labels the colourbar categories
 threedoses_pop_map_plot.update_layout(
     coloraxis_colorbar=dict(
-        title="<b>" + "Percentage population<br>vaccinated with three doses" + "</b>",
+        title="<b>"
+        + "Percentage of population<br>vaccinated with<br>three doses"
+        + "</b>",
         tickvals=[5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
         ticktext=[
-            "00.00 - 9.99 %",
-            "10.00 - 19.99 %",
-            "20.00 - 29.99 %",
-            "30.00 - 39.00 %",
-            "40.00 - 49.99 %",
-            "50.00 - 59.99 %",
-            "60.00 - 69.99 %",
-            "70.00 - 79.99 %",
-            "80.00 - 89.99 %",
-            "90.00 - 100.00 %",
+            "00.00 - 9.99%",
+            "10.00 - 19.99%",
+            "20.00 - 29.99%",
+            "30.00 - 39.99%",
+            "40.00 - 49.99%",
+            "50.00 - 59.99%",
+            "60.00 - 69.99%",
+            "70.00 - 79.99%",
+            "80.00 - 89.99%",
+            "90.00 - 100.00%",
         ],
         x=0.51,
         y=0.40,
@@ -357,16 +361,12 @@ threedoses_pop_map_plot.update_layout(
     font=dict(size=14),
 )
 threedoses_pop_map_plot.update_traces(marker_line_color="white")
-threedoses_pop_map_plot.show()
+# threedoses_pop_map_plot.show()
 
-# if not os.path.isdir("Plots/"):
-#     os.mkdir("Plots/")
+if not os.path.isdir("Plots/"):
+    os.mkdir("Plots/")
 
-# # write out FoHM graphs
-# onedose_pop_map_plot.write_json("Plots/onedose_pop_map.json")
-# twodoses_pop_map_plot.write_json("Plots/twodose_pop_map.json")
-# threedoses_pop_map_plot.write_json("Plots/threedose_pop_map.json")
-# # as png (for drafting)
-# onedose_pop_map_plot.write_image("Plots/onedose_pop_map.png")
-# twodoses_pop_map_plot.write_image("Plots/twodose_pop_map.png")
-# threedoses_pop_map_plot.write_image("Plots/threedose_pop_map.png")
+# write out FoHM graphs
+onedose_pop_map_plot.write_json("Plots/onedose_pop_map.json")
+twodoses_pop_map_plot.write_json("Plots/twodose_pop_map.json")
+threedoses_pop_map_plot.write_json("Plots/threedose_pop_map.json")

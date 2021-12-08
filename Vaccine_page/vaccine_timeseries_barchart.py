@@ -24,7 +24,7 @@ trace1 = go.Bar(
     y=least_one_dose["Procent vaccinerade"],
     name="At Least One Dose Received",
     marker_color="rgb(5,48,97)",
-    hovertemplate="Date: %{x}" + "<br>Percent One Dose: %{y:.2f}%",
+    hovertemplate="Date: %{x}" + "<br>Percent Vaccinated: %{y:.2f}%",
 )
 trace2 = go.Bar(
     x=least_two_doses["date"],
@@ -32,7 +32,7 @@ trace2 = go.Bar(
     name="At Least Two Doses Received",
     marker_color="rgb(178,24,43)",
     # marker_pattern_shape="/",
-    hovertemplate="Date: %{x}" + "<br>Percent Full Dose: %{y:.2f}%",
+    hovertemplate="Date: %{x}" + "<br>Percent Vaccinated: %{y:.2f}%",
 )
 
 # figure layout
@@ -70,14 +70,13 @@ fig.update_yaxes(
     range=[0, 100],
 )
 
-fig.show()
+# fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
-# fig.write_json("Plots/vaccine_timeseries_barchart.json")
-# fig.write_image("Plots/vaccine_timeseries_barchart.png")
-
+# Use the below to get a barchart based on FoHM data (not population data)
+# fig.write_json("Plots/vaccine_timeseries_FoHM_barchart.json")
 
 ## Figure based on percentages calculated using population size
 
@@ -86,7 +85,7 @@ trace3 = go.Bar(
     y=least_one_dose["Vacc_perc_population"],
     name="At Least One Dose Received",
     marker_color="rgb(5,48,97)",
-    hovertemplate="Date: %{x}" + "<br>Percent One Dose: %{y:.2f}%",
+    hovertemplate="Date: %{x}" + "<br>Percent Vaccinated: %{y:.2f}%",
 )
 trace4 = go.Bar(
     x=least_two_doses["date"],
@@ -94,7 +93,7 @@ trace4 = go.Bar(
     name="At Least Two Doses Received",
     marker_color="rgb(178,24,43)",
     # marker_pattern_shape="/",
-    hovertemplate="Date: %{x}" + "<br>Percent Full Dose: %{y:.2f}%",
+    hovertemplate="Date: %{x}" + "<br>Percent Vaccinated: %{y:.2f}%",
 )
 
 # figure layout
@@ -108,9 +107,9 @@ fig_pop.update_layout(
         title=" ",
         orientation="h",
         # yanchor="bottom",
-        y=1.2,
+        y=1.15,
         # xanchor="right",
-        # x=0.5,
+        # x=0.2,
         font=dict(size=14),
     ),
 )
@@ -132,10 +131,10 @@ fig_pop.update_yaxes(
     range=[0, 100],
 )
 
-fig_pop.show()
+# fig_pop.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
-# fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")
-# fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")
+# we only currently use this map
+fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")

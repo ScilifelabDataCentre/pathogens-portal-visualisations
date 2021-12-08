@@ -4,9 +4,6 @@ import plotly.graph_objects as go
 import pandas as pd
 import os
 
-# from datetime import datetime as dt
-# from datetime import timedelta
-
 # Import processed data
 from vaccine_dataprep_Swedentots import (
     df_vacc,
@@ -173,7 +170,7 @@ third_vacc_dose_pop = third_vacc_dose[
 third_vacc_dose_pop = float(third_vacc_dose_pop["Vacc_perc_population"].round(2))
 # print(third_vacc_dose_pop)
 
-###### Gathering all the values that we'll need to display HERE (so we can insert them in the html)!!
+###### Gathering all the values that we'll need to display below, so it's easy to find them
 
 ## The % (FoHM) given one dose in total
 one_dose_swe
@@ -207,7 +204,7 @@ twodose_ratechange_pop = rate_leasttwodose_pop_lastwk - rate_leasttwodose_pop_tw
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
 
 vaccine_dose_totals = pd.DataFrame()
-vaccine_dose_totals["Doses"] = ["1 dose", "2 doses", "3 doses"]
+vaccine_dose_totals["Doses"] = ["1", "2", "3"]
 vaccine_dose_totals["FOHM_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
@@ -224,14 +221,14 @@ vaccine_dose_totals["POP_perc"] = [
 trace1 = go.Bar(
     x=vaccine_dose_totals["Doses"],
     y=vaccine_dose_totals["FOHM_perc"],
-    name="FoHM Data",
+    name="FoHM Method",
     marker_color="rgb(5,48,97)",
     hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
 )
 trace2 = go.Bar(
     x=vaccine_dose_totals["Doses"],
     y=vaccine_dose_totals["POP_perc"],
-    name="Population Data",
+    name="Whole Population Method",
     marker_color="rgb(178,24,43)",
     # marker_pattern_shape="/",
     hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
@@ -270,151 +267,9 @@ fig.update_yaxes(
     range=[0, 100],
 )
 
-fig.show()
+# fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
 fig.write_json("Plots/Total_vaccinated_barchart.json")
-# png displays strangely (because I haven't set sizes - will be determined in html)
-fig.write_image("Plots/Total_vaccinated_barchart.png")
-
-# # this figure should not ultimately be included - use the app code in html to insert the values we want (all above!)
-# # this figure shows some numbers relevant to FoHM calculations
-# Vacc_doses_fohm = go.Figure(
-#     go.Indicator(
-#         mode="number",  # add + delta to just show how much more % was vaccinated (would need to delete rate delta)
-#         value=one_dose_swe,
-#         title={
-#             "text": "<b>Percentage Population Given Single Vaccine Dose<br> and Change in Rate Compared to Previous Week</b>"
-#         },
-#         delta={
-#             "reference": one_dose_lastweek,
-#             "relative": False,
-#             "position": "right",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0, 1], "y": [0, 0.35]},
-#     )
-# )
-# Vacc_doses_fohm.add_trace(
-#     go.Indicator(
-#         mode="number",  # add + delta to just show how much more % was vaccinated (would need to delete rate delta)
-#         value=least_two_dose_swe,
-#         title={
-#             "text": "<b>Percentage Population Given Two Doses<br> and Change in Rate Compared to Previous Week</b>"
-#         },
-#         delta={
-#             "reference": least_two_dose_lastweek,
-#             "relative": False,
-#             "position": "right",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0, 1], "y": [0.65, 1]},
-#     )
-# )
-# Vacc_doses_fohm.add_trace(
-#     go.Indicator(
-#         mode="delta",
-#         value=rate_onedose_lastwk,
-#         title={"text": " "},
-#         delta={
-#             "reference": rate_onedose_twowk,
-#             "relative": False,
-#             "position": "right",
-#             "decreasing.color": "red",
-#             "increasing.color": "green",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0.75, 1], "y": [0.65, 1]},
-#     )
-# )
-# Vacc_doses_fohm.add_trace(
-#     go.Indicator(
-#         mode="delta",
-#         value=rate_leasttwodose_lastwk,
-#         title={"text": " "},
-#         delta={
-#             "reference": rate_leasttwodose_twowk,
-#             "relative": False,
-#             "position": "right",
-#             "decreasing.color": "red",
-#             "increasing.color": "green",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0.75, 1], "y": [0, 0.35]},
-#     )
-# )
-
-# # This is just to see the indicators
-# Vacc_doses_fohm.show()
-
-# # this figure should not ultimately be included - use the app code in html to insert the values we want (all above!)
-# # this figure shows some numbers relevant to population level calculations
-# Vacc_doses_pop = go.Figure(
-#     go.Indicator(
-#         mode="number",  # add + delta to just show how much more % was vaccinated (would need to delete rate delta)
-#         value=one_dose_pop,
-#         title={
-#             "text": "<b>Percentage Population Given Single Vaccine Dose<br> and Change in Rate Compared to Previous Week</b>"
-#         },
-#         delta={
-#             "reference": one_dose_pop_lastweek,
-#             "relative": False,
-#             "position": "right",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0, 1], "y": [0, 0.35]},
-#     )
-# )
-# Vacc_doses_pop.add_trace(
-#     go.Indicator(
-#         mode="number",  # add + delta to just show how much more % was vaccinated (would need to delete rate delta)
-#         value=least_two_dose_pop,
-#         title={
-#             "text": "<b>Percentage Population Given Two Doses<br> and Change in Rate Compared to Previous Week</b>"
-#         },
-#         delta={
-#             "reference": least_two_dose_pop_lastweek,
-#             "relative": False,
-#             "position": "right",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0, 1], "y": [0.65, 1]},
-#     )
-# )
-# Vacc_doses_pop.add_trace(
-#     go.Indicator(
-#         mode="delta",
-#         value=rate_onedose_pop_lastwk,
-#         title={"text": " "},
-#         delta={
-#             "reference": rate_onedose_pop_twowk,
-#             "relative": False,
-#             "position": "right",
-#             "decreasing.color": "red",
-#             "increasing.color": "green",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0.75, 1], "y": [0.65, 1]},
-#     )
-# )
-# Vacc_doses_pop.add_trace(
-#     go.Indicator(
-#         mode="delta",
-#         value=rate_leasttwodose_pop_lastwk,
-#         title={"text": " "},
-#         delta={
-#             "reference": rate_leasttwodose_pop_twowk,
-#             "relative": False,
-#             "position": "right",
-#             "decreasing.color": "red",
-#             "increasing.color": "green",
-#         },
-#         number={"font": {"size": 70}},
-#         domain={"x": [0.75, 1], "y": [0, 0.35]},
-#     )
-# )
-
-# # This is just to see the indicators
-# Vacc_doses_pop.show()
