@@ -31,7 +31,7 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # language information
-language = "English"
+language = "Swedish"
 
 if language == "Swedish":
     cbtit = "Antal personer som fått<br>diagnosen U08.9/Z86.1A<br>relativt antal<br>bekräftade fall"
