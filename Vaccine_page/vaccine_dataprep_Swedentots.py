@@ -100,7 +100,7 @@ Swedish_population = 10435447
 # take a population measure for each lan (to use in maps)
 
 SCB_population = pd.read_excel(
-    "SCB_pop_data.xlsx",
+    "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",
     sheet_name="Sheet 1",
     header=0,
     engine="openpyxl",
