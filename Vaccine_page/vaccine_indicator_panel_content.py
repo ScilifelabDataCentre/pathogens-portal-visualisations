@@ -209,8 +209,8 @@ data_dictionary = {
     "population_one_dose": one_dose_pop,
     "population_two_doses": least_two_dose_pop,
     "population_three_doses": third_vacc_dose_pop,
-    "population_one_dose_lastweek": one_dose_pop_lastweek,
-    "population_two_doses_lastweek": least_two_dose_pop_lastweek,
+    "population_one_dose_lastweek": rate_onedose_pop_lastwk,
+    "population_two_doses_lastweek": rate_leasttwodose_pop_lastwk,
     "population_one_dose_rate_change": onedose_ratechange_pop,
     "population_two_doses_rate_change": twodose_ratechange_pop,
 }
