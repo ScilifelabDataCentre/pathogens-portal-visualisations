@@ -35,7 +35,7 @@ vaccine_dose_totals["POP_perc"] = [
 trace1 = go.Bar(
     x=vaccine_dose_totals["Doses"],
     y=vaccine_dose_totals["sixteens_perc"],
-    name="Method including 16+",
+    name="At Least 12 Years Method",
     marker_color="rgb(5,48,97)",
     hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
 )
