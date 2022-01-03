@@ -91,12 +91,6 @@ df_vacc_ålders = df_vacc_ålders[
     (df_vacc_ålders["Region"] == "Sweden") & (df_vacc_ålders["Åldersgrupp"] == "Totalt")
 ]
 
-# Need the population size of Sweden
-# Need to update the below number using latest info on website https://www.scb.se/en/finding-statistics/statistics-by-subject-area/population/population-composition/population-statistics/pong/tables-and-graphs/monthly-statistics--the-whole-country/population-statistics-2021/
-# Right now, cannot see a good way to get this automatically - look into this in future
-
-Swedish_population = 10435447
-
 # take a population measure for each lan (to use in maps)
 
 SCB_population = pd.read_excel(
@@ -106,3 +100,8 @@ SCB_population = pd.read_excel(
     engine="openpyxl",
     keep_default_na=False,
 )
+
+# Need to get total population size of Sweden for use in calculations
+# Take the sum of all the counties across Sweden
+
+Swedish_population = SCB_population["Population"].sum()

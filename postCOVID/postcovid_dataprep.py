@@ -25,12 +25,13 @@ postcovid_df.rename(
 # print(postcovid_df)
 
 SCB_population = pd.read_excel(
-    "SCB_pop_data.xlsx",
+    "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",
     sheet_name="Sheet 1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
+
 # SCB_population.drop(SCB_population.columns[[0]], axis=1, inplace=True)
 # print(SCB_population)
 
