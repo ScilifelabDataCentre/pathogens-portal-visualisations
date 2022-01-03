@@ -16,6 +16,8 @@ This folder contains all the initial files required to produce the visualisation
 
 **vaccine_heatmap.py** - this script is used to produce a heatmap of vaccine data related to coverage for each dose in each age-group. Uses publicly available information.
 
+**vaccine_heatmap_small.py** - this script is used to produce a heatmap of vaccine data related to coverage for each dose in each age-group. Uses publicly available information. This is a direct copy of the heatmap described above and featured on the vaccine page, but it is smaller. This version is used as an example plot on the front page of the portal, rather than the vaccine page itself.
+
 **vaccine_indicator_panel_content.py** - this script produces the key values that will be used as indicators on the vaccines web page.
 
 **vaccine_maps_FoHM.py** - this script produces maps of coverage according to Swedish lan. It uses publicly available data from FoHM.
