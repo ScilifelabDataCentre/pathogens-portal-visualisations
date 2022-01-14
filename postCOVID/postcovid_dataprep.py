@@ -56,7 +56,7 @@ cases_df = pd.read_excel(
 )
 
 total_cases = cases_df[
-    (cases_df["år"] == 2021) & (cases_df["veckonummer"] == 47)
+    (cases_df["år"] == 2021) & (cases_df["veckonummer"] == 52)
 ]  # week social data until
 keep_cols = ["Region", "Kum_antal_fall"]
 total_cases = total_cases[keep_cols]
