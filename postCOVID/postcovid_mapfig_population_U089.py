@@ -3,8 +3,7 @@ import pandas as pd
 import plotly.express as px
 import csv
 
-# import requests
-
+from postcovid_dataprep import postcov_summary
 
 # map
 with open("sweden-counties.geojson", "r") as sw:
@@ -16,14 +15,14 @@ for feature in jdata["features"]:
     feature["id"] = feature["properties"]["cartodb_id"]
     counties_id_map[feature["properties"]["name"]] = feature["id"]
 
-# data
-df1 = pd.read_csv(
-    "https://blobserver.dckube.scilifelab.se/blob/Summary_postcovid_statistics.csv",
-    header=0,
-)
+# # data - used to upload to blobserver, now just going to pull from prep script
+# postcov_summary = pd.read_csv(
+#     "https://blobserver.dckube.scilifelab.se/blob/Summary_postcovid_statistics.csv",
+#     header=0,
+# )
 
 # match map and data
-df1["id"] = df1["Lan"].apply(lambda x: counties_id_map[x])
+postcov_summary["id"] = postcov_summary["Lan"].apply(lambda x: counties_id_map[x])
 
 # colour theme
 colour = px.colors.sequential.tempo
@@ -69,10 +68,10 @@ else:
 
 # # make figure
 fig = px.choropleth(
-    df1,
+    postcov_summary,
     geojson=jdata,
     locations="id",
-    color=df1["proc_kodU089_pop"],
+    color=postcov_summary["proc_kodU089_pop"],
     # Below gives discrete colours for ranges
     color_continuous_scale=[
         (splits[0], colour[0]),
