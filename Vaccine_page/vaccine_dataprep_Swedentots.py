@@ -39,7 +39,7 @@ df_vacc_lan = df_vacc[
 
 df_vacc = df_vacc_lan[(df_vacc_lan["Region"] == "Sweden")]
 
-## Now data for 3rd dose (not currently included in time series)
+## Now data for 3rd dose
 ## may need to note that 'at least 2 doses COULD include 3rd dose'...
 
 third_vacc_dose = pd.read_excel(
@@ -105,3 +105,25 @@ SCB_population = pd.read_excel(
 # Take the sum of all the counties across Sweden
 
 Swedish_population = SCB_population["Population"].sum()
+
+# Import data for 3rd dose time series
+
+third_timseries = pd.read_excel(
+    "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data",
+    sheet_name="Vaccinerade tidsserie dos 3",
+    header=0,
+    engine="openpyxl",
+    keep_default_na=False,
+)
+
+third_timseries["day"] = 4  # set day as Thursday (when public health data is updated)
+
+third_timseries["date"] = third_timseries.apply(
+    lambda row: dt.fromisocalendar(row["År"], row["Vecka"], row["day"]), axis=1
+)
+
+third_timseries = third_timseries.replace("| Sverige |", "Sweden")
+
+third_timseries = third_timseries[(third_timseries["Region"] == "Sweden")]
+
+third_timseries = third_timseries[["date", "Region", "Antal vaccinerade"]]
