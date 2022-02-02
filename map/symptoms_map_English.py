@@ -1,4 +1,4 @@
-"""Maps values onto a county-level map of Sweden"""
+# county level symptoms map for Sweden
 import json
 import pandas as pd
 import plotly.express as px
@@ -16,7 +16,9 @@ for feature in jdata["features"]:
     counties_id_map[feature["properties"]["name"]] = feature["id"]
 
 # data
-req = requests.get("https://urls.dckube.scilifelab.se/goto/csss/")
+req = requests.get(
+    "https://blobserver.dckube.scilifelab.se/blob/CSSS_estimates_mostrecent.csv"
+)
 reader = csv.reader(req.text.splitlines())
 data = list(reader)[-21:]
 df1 = pd.DataFrame(
@@ -30,41 +32,22 @@ df1.drop_duplicates("Lan", keep="first", inplace=True)
 df1["Uppskattning"] = pd.to_numeric(df1["Uppskattning"], errors="coerce")
 df1["Uppskattning"] = df1["Uppskattning"].fillna(-0.1)
 # comment out next row when Dalarna fixed
-df1["Lan"] = df1["Lan"].replace("Dalar", "Dalarna")
+# df1["Lan"] = df1["Lan"].replace("Dalar", "Dalarna")
 df1["id"] = df1["Lan"].apply(lambda x: counties_id_map[x])
 
 # colour theme
-colour = px.colors.sequential.tempo
+colour = px.colors.diverging.RdBu
+colour[0] = "rgb(255, 234, 0)"
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
-language = "Swedish"
-
-if language == "Swedish":
-    cbtit = "Uppskattning"
-elif language == "English":
-    cbtit = "Estimate"
-else:
-    cbtit = "lang_error"
-
-if language == "Swedish":
-    overwrite = "Uppskattning för Län"
-elif language == "English":
-    overwrite = "Estimate for County"
-else:
-    overwrite = "lang_error"
-
-if language == "Swedish":
-    insuff = "Otillräckligt underlag"
-elif language == "English":
-    insuff = "Insufficient data"
-else:
-    cbtit = "lang_error"
-
-
+# make edits to account for 'insufficient data' option
 df1["Uppskattning_Lan"] = df1["Uppskattning"].astype(str)
-df1["Uppskattning_Lan"].replace(str(-0.1), insuff, inplace=True)
+df1["Uppskattning_Lan"].replace(
+    str(-0.1), "<br>Otillräckligt<br>underlag", inplace=True
+)
 
 # make figure
+
 fig = px.choropleth(
     df1,
     geojson=jdata,
@@ -74,30 +57,30 @@ fig = px.choropleth(
     color_continuous_scale=[
         (splits[0], colour[0]),
         (splits[1], colour[0]),
-        (splits[1], colour[1]),
-        (splits[2], colour[1]),
-        (splits[2], colour[2]),
-        (splits[3], colour[2]),
-        (splits[3], colour[3]),
-        (splits[4], colour[3]),
-        (splits[4], colour[4]),
-        (splits[5], colour[4]),
-        (splits[5], colour[5]),
-        (splits[6], colour[5]),
+        (splits[1], colour[10]),
+        (splits[2], colour[10]),
+        (splits[2], colour[9]),
+        (splits[3], colour[9]),
+        (splits[3], colour[8]),
+        (splits[4], colour[8]),
+        (splits[4], colour[7]),
+        (splits[5], colour[7]),
+        (splits[5], colour[6]),
         (splits[6], colour[6]),
-        (splits[7], colour[6]),
-        (splits[7], colour[7]),
-        (splits[8], colour[7]),
-        (splits[8], colour[8]),
-        (splits[9], colour[8]),
-        (splits[9], colour[9]),
-        (splits[10], colour[9]),
+        (splits[6], colour[4]),
+        (splits[7], colour[4]),
+        (splits[7], colour[3]),
+        (splits[8], colour[3]),
+        (splits[8], colour[2]),
+        (splits[9], colour[2]),
+        (splits[9], colour[1]),
+        (splits[10], colour[1]),
     ],
     # this keeps the range of colours constant regrdless of data
     range_color=[-0.1, 0.9],
     scope="europe",
     hover_name="Lan",
-    labels={"Uppskattning_Lan": overwrite},
+    labels={"Uppskattning_Lan": "Estimate<br>for County (%) "},
     hover_data={"Uppskattning_Lan": True, "Uppskattning": False, "id": False},
 )
 # this section deals with the exact focus on the map
@@ -111,12 +94,12 @@ fig.update_layout(
         visible=False,
     )
 )
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=255, height=348)
-fig.update_layout(dragmode=False)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+# fig.update_layout(dragmode=False)
 # The below labels the colourbar, essentially categorises Uppskattning
 fig.update_layout(
     coloraxis_colorbar=dict(
-        title="<b>" + cbtit + "</b>",
+        title="<b>Estimated prevalence of<br>symptomatic cases,<br>% of population</b><br>(updated daily)",
         tickvals=[
             -0.050,
             0.050,
@@ -130,7 +113,7 @@ fig.update_layout(
             0.850,
         ],
         ticktext=[
-            insuff,
+            "Insufficient data",
             "0.00 - 0.10 %",
             "0.10 - 0.20 %",
             "0.20 - 0.30 %",
@@ -142,17 +125,19 @@ fig.update_layout(
             "> 0.80 %",
         ],
         x=0.55,
-        y=0.8,
+        y=0.7,
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=150,
+        len=240,
     ),
-    font=dict(size=9),
+    font=dict(size=12),
 )
-# to 'show' the figure in browser
+# to directly write out as a file
+# fig.write_json("Symptoms_map_English.json")
+
+# to show in browser (for testing)
 # fig.show()
-# to write the file as .png
-# fig.write_image('map_with_factor.png', scale=2)
-# write out as html for web
-fig.write_html("map_with_factor.html", include_plotlyjs=False, full_html=False)
+
+# save the figure for blobserver
+print(fig.to_json())
