@@ -1,12 +1,13 @@
 import pandas as pd
 import datetime
 import plotly.graph_objects as go
+import plotly.express as px
 from datetime import datetime as dt
 from plotly.io import write_image
 
 
 wastewater_data = pd.read_csv(
-    "https://datagraphics.dckube.scilifelab.se/dataset/0ac8fa02871745048491de74e5689da9.csv",
+    "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
@@ -42,97 +43,108 @@ fig = go.Figure(
             x=wastewater_Ekerö.date,
             y=wastewater_Ekerö.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#F8ACF4"),
-            line=dict(color="#F8ACF4", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[0], size=7),
+            marker_symbol="square",
+            line=dict(color=px.colors.diverging.RdBu[0], width=2),
         ),
         go.Scatter(
             name="Enköping",
             x=wastewater_Enköping.date,
             y=wastewater_Enköping.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#308ACF"),
-            line=dict(color="#308ACF", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[1], size=7),
+            marker_symbol="cross",
+            line=dict(color=px.colors.diverging.RdBu[1], width=2),
         ),
         go.Scatter(
             name="Kalmar",
             x=wastewater_Kalmar.date,
             y=wastewater_Kalmar.relative_copy_number,
             mode="lines+markers",
-            # connectgaps=False,
-            marker=dict(color="#9513E9"),
-            line=dict(color="#9513E9", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[3], size=7),
+            marker_symbol="hourglass",
+            line=dict(color=px.colors.diverging.RdBu[3], width=2),
         ),
         go.Scatter(
             name="Knivsta",
             x=wastewater_Knivsta.date,
             y=wastewater_Knivsta.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#FF3333"),
-            line=dict(color="#FF3333", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[8], size=7),
+            marker_symbol="square",
+            line=dict(color=px.colors.diverging.RdBu[8], width=2),
         ),
         go.Scatter(
             name="Tierp",
             x=wastewater_Tierp.date,
             y=wastewater_Tierp.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#E98B13"),
-            line=dict(color="#E98B13", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[9], size=7),
+            marker_symbol="cross",
+            line=dict(color=px.colors.diverging.RdBu[9], width=2),
         ),
         go.Scatter(
             name="Umeå",
             x=wastewater_Umeå.date,
             y=wastewater_Umeå.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#045C64"),
-            line=dict(color="#045C64", width=2),
+            marker=dict(color=px.colors.diverging.RdBu[10], size=7),
+            marker_symbol="hourglass",
+            line=dict(color=px.colors.diverging.RdBu[10], width=2),
         ),
         go.Scatter(
             name="Uppsala",
             x=wastewater_Uppsala.date,
             y=wastewater_Uppsala.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#491F53"),
-            line=dict(color="#491F53", width=2),
+            marker=dict(color="#663399", size=7),
+            marker_symbol="square",
+            line=dict(color="#663399", width=2),
         ),
         go.Scatter(
             name="Vaxholm",
             x=wastewater_Vaxholm.date,
             y=wastewater_Vaxholm.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#FBEA1C"),
-            line=dict(color="#FBEA1C", width=2),
+            marker=dict(color="#9400d3", size=7),
+            marker_symbol="cross",
+            line=dict(color="#9400d3", width=2),
         ),
         go.Scatter(
             name="Älvkarleby",
             x=wastewater_Älvkarleby.date,
             y=wastewater_Älvkarleby.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#1CFBB2"),
-            line=dict(color="#1CFBB2", width=2),
+            marker=dict(color="#ff00ff", size=7),
+            marker_symbol="hourglass",
+            line=dict(color="#ff00ff", width=2),
         ),
         go.Scatter(
             name="Örebro",
             x=wastewater_Örebro.date,
             y=wastewater_Örebro.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#A7C947"),
-            line=dict(color="#A7C947", width=2),
+            marker=dict(color="darkgoldenrod", size=7),
+            marker_symbol="square",
+            line=dict(color="darkgoldenrod", width=2),
         ),
         go.Scatter(
             name="Österåker",
             x=wastewater_Österåker.date,
             y=wastewater_Österåker.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#10077F"),
-            line=dict(color="#10077F", width=2),
+            marker=dict(color="gold", size=7),
+            marker_symbol="cross",
+            line=dict(color="gold", width=2),
         ),
         go.Scatter(
             name="Östhammar",
             x=wastewater_Östhammar.date,
             y=wastewater_Östhammar.relative_copy_number,
             mode="lines+markers",
-            marker=dict(color="#BEBBC0"),
-            line=dict(color="#BEBBC0", width=2),
+            marker=dict(color="lightslategray", size=7),
+            marker_symbol="hourglass",
+            line=dict(color="lightslategray", width=2),
         ),
     ]
 )
@@ -177,11 +189,18 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="Reset selected cities",
+                        label="Reselect all areas",
                         method="update",
                         args=[
                             {"visible": [True]},
                             # {"title": "", "annotations": []},
+                        ],
+                    ),
+                    dict(
+                        label="Deselect all areas",
+                        method="update",
+                        args=[
+                            {"visible": "legendonly"},
                         ],
                     ),
                 ]
@@ -191,11 +210,16 @@ fig.update_layout(
 )
 # Below can show figure locally in tests
 # fig.show()
+
 # Below prints as html
-#fig.write_html(
+# fig.write_html(
 #    "wastewater_combined_slu_logyaxis.html", include_plotlyjs=False, full_html=False
-#)
+# )
+
 # Prints as a json file
-fig.write_json("wastewater_combined_slu_logyaxis.json")
+# fig.write_json("wastewater_combined_slu_logyaxis.json")
+
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
+
+print(fig.to_json())
