@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.express as px
 import csv
 
-# import requests
-
-
 # map
 with open("sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
