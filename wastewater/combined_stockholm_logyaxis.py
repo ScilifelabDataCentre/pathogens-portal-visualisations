@@ -1,12 +1,13 @@
 import pandas as pd
 import datetime
 import plotly.graph_objects as go
+import plotly.express as px
 from datetime import datetime as dt
 from plotly.io import write_image
 
 
 wastewater_data = pd.read_csv(
-    "https://datagraphics.dckube.scilifelab.se/dataset/65f19e61386a4a039aa798010ca42469.csv",
+    "https://datagraphics.dckube.scilifelab.se/api/dataset/65f19e61386a4a039aa798010ca42469.csv",
     sep=",",
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
@@ -24,6 +25,9 @@ wastewater_data["date"] = wastewater_data.apply(
 # Restrict data to only 2021 for the purpose of this plot
 wastewater_data = wastewater_data[(wastewater_data["year"] > 2020)]
 
+# colours for plot
+colours = px.colors.diverging.RdBu
+
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
 bromma_wwtp_jarva = wastewater_data[
@@ -32,8 +36,8 @@ bromma_wwtp_jarva = wastewater_data[
 bromma_wwtp_riksby = wastewater_data[
     (wastewater_data["wwtp"] == "Bromma WWTP, Riksby Inlet")
 ]
-henriksdal_wwtp_hasselby = wastewater_data[
-    (wastewater_data["wwtp"] == "Henriksdal WWTP, Hässelby Inlet")
+bromma_wwtp_hasselby = wastewater_data[
+    (wastewater_data["wwtp"] == "Bromma WWTP, Hässelby Inlet")
 ]
 henriksdal_wwtp_henriksdal = wastewater_data[
     (wastewater_data["wwtp"] == "Henriksdal WWTP, Henriksdal Inlet")
@@ -50,49 +54,54 @@ fig = go.Figure(
             x=bromma_wwtp_jarva.date,
             y=bromma_wwtp_jarva.value,
             mode="lines+markers",
-            marker=dict(color="#F8ACF4"),
-            line=dict(color="#F8ACF4", width=2),
+            marker=dict(color=colours[0], size=7),
+            marker_symbol="square",
+            line=dict(color=colours[0], width=2),
         ),
         go.Scatter(
             name="Bromma, Riksby Inlet",
             x=bromma_wwtp_riksby.date,
             y=bromma_wwtp_riksby.value,
             mode="lines+markers",
-            marker=dict(color="#308ACF"),
-            line=dict(color="#308ACF", width=2),
+            marker=dict(color=colours[1], size=7),
+            marker_symbol="circle",
+            line=dict(color=colours[1], width=2),
         ),
         go.Scatter(
-            name="Henriksdal, Hässelby Inlet",
-            x=henriksdal_wwtp_hasselby.date,
-            y=henriksdal_wwtp_hasselby.value,
+            name="Bromma, Hässelby Inlet",
+            x=bromma_wwtp_hasselby.date,
+            y=bromma_wwtp_hasselby.value,
             mode="lines+markers",
-            # connectgaps=False,
-            marker=dict(color="#9513E9"),
-            line=dict(color="#9513E9", width=2),
+            marker=dict(color=colours[3], size=7),
+            marker_symbol="x",
+            line=dict(color=colours[3], width=2),
         ),
         go.Scatter(
             name="Henriksdal, Henriksdal Inlet",
             x=henriksdal_wwtp_henriksdal.date,
             y=henriksdal_wwtp_henriksdal.value,
             mode="lines+markers",
-            marker=dict(color="#FF3333"),
-            line=dict(color="#FF3333", width=2),
+            marker=dict(color=colours[8], size=7),
+            marker_symbol="diamond",
+            line=dict(color=colours[8], width=2),
         ),
         go.Scatter(
             name="Henriksdal, Sickla Inlet",
             x=henriksdal_wwtp_sickla.date,
             y=henriksdal_wwtp_sickla.value,
             mode="lines+markers",
-            marker=dict(color="#E98B13"),
-            line=dict(color="#E98B13", width=2),
+            marker=dict(color=colours[9], size=7),
+            marker_symbol="triangle-down",
+            line=dict(color=colours[9], width=2),
         ),
         go.Scatter(
             name="Käppala",
             x=kappala_wwtp.date,
             y=kappala_wwtp.value,
             mode="lines+markers",
-            marker=dict(color="#045C64"),
-            line=dict(color="#045C64", width=2),
+            marker=dict(color=colours[10], size=7),
+            marker_symbol="hourglass",
+            line=dict(color=colours[10], width=2),
         ),
     ]
 )
@@ -136,11 +145,18 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="Reset selected inlets",
+                        label="Reselect all areas",
                         method="update",
                         args=[
                             {"visible": [True]},
                             # {"title": "", "annotations": []},
+                        ],
+                    ),
+                    dict(
+                        label="Deselect all areas",
+                        method="update",
+                        args=[
+                            {"visible": "legendonly"},
                         ],
                     ),
                 ]
@@ -150,10 +166,15 @@ fig.update_layout(
 )
 # Below can show figure locally in tests
 # fig.show()
+
 # Below prints as html
-#fig.write_html(
+# fig.write_html(
 #    "wastewater_combined_stockholm_logyaxis.html", include_plotlyjs=True, full_html=True)
+
 # Prints as a json file
-fig.write_json("wastewater_stockholm_logyaxis.json")
+# fig.write_json("wastewater_stockholm_logyaxis.json")
+
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
+
+print(fig.to_json())
