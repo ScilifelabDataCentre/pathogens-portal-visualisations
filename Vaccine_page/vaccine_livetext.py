@@ -8,14 +8,12 @@ import json
 # Import processed data
 from vaccine_dataprep_Swedentots import (
     df_vacc,
-    # df_vacc_ålders, (if switch to age data. No date and not possible to figure out date!!)
     third_vacc_dose,
     Swedish_population,
 )
 
 ## Import and sort data from Folkhälsomyndigheten USE THEIR PERCENTAGE CALCULATIONS FIRST!
 ## initially deal with data from first two doses
-# df_vacc = df_vacc_ålders (use this if we switch to ålders and get rid of date)
 
 one_dose_swe = df_vacc[
     (df_vacc["date"] == df_vacc["date"].max())
