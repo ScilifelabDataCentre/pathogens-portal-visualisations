@@ -6,7 +6,7 @@ import os
 import json
 
 # Import processed data
-from vaccine_indicator_panel_content import (
+from vaccine_livetext import (
     one_dose_swe,
     least_two_dose_swe,
     third_vacc_dose_tot,
@@ -19,7 +19,7 @@ from vaccine_indicator_panel_content import (
 
 vaccine_dose_totals = pd.DataFrame()
 vaccine_dose_totals["Doses"] = ["1", "2", "3"]
-vaccine_dose_totals["sixteens_perc"] = [
+vaccine_dose_totals["eligible_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
     third_vacc_dose_tot,
@@ -34,7 +34,7 @@ vaccine_dose_totals["POP_perc"] = [
 
 trace1 = go.Bar(
     x=vaccine_dose_totals["Doses"],
-    y=vaccine_dose_totals["sixteens_perc"],
+    y=vaccine_dose_totals["eligible_perc"],
     name="Eligible Population Method",
     marker_color="rgb(5,48,97)",
     marker_line_color="black",
