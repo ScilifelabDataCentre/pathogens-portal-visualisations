@@ -8,7 +8,8 @@ import json
 # Import processed data
 from vaccine_dataprep_Swedentots import (
     df_vacc,
-    third_vacc_dose,
+    # third_vacc_dose,
+    third_timseries,
     Swedish_population,
 )
 
@@ -73,19 +74,34 @@ rate_leasttwodose_twowk = float(
     "{:.2f}".format(least_two_dose_lastweek - least_two_dose_twoweek)
 )
 
-## Now data for 3rd dose based on individuals 16+ (not currently included in time series)
-## may need to note that 'at least 2 doses COULD include 3rd dose'...
+## Now data for 3rd dose (given new time series data Jan 2022)
 
-# only have total number for now, so no rate calculations etc. for now
-third_vacc_dose_tot = third_vacc_dose[(third_vacc_dose["Åldersgrupp"] == "Totalt")]
+third_dose_swe = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].max())
+]
 
-third_vacc_dose_tot = float(third_vacc_dose_tot["Procent vaccinerade"].round(2))
-# print(third_vacc_dose_tot)
+third_dose_swe = float(third_dose_swe["Procent vaccinerade"].round(2))
 
-## Everything above deals with percentages for 16+ year olds.
+
+third_dose_lastweek = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].unique()[-2])
+]
+
+third_dose_lastweek = float(third_dose_lastweek["Procent vaccinerade"].round(2))
+
+third_dose_twoweek = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].unique()[-3])
+]
+
+third_dose_twoweek = float(third_dose_twoweek["Procent vaccinerade"].round(2))
+
+# Now figure out rates
+
+rate_threedose_lastwk = float("{:.2f}".format(third_dose_swe - third_dose_lastweek))
+rate_threedose_twowk = float("{:.2f}".format(third_dose_lastweek - third_dose_twoweek))
+
+## Everything above deals with percentages based on the percantage eiligible to take the vaccine
 ## Now need to calculate percentages based on whole population of Sweden
-
-# Calculate percentage of whole population
 
 df_vacc["Vacc_perc_population"] = (
     df_vacc["Antal vaccinerade"] / Swedish_population
@@ -155,30 +171,59 @@ rate_leasttwodose_pop_twowk = float(
     "{:.2f}".format(least_two_dose_pop_lastweek - least_two_dose_pop_twoweek)
 )
 
-# now look at 3rd dose (will not have rate data in this case)
+# now look at 3rd dose (rate data become available Late Jan 2022)
 
-third_vacc_dose["Vacc_perc_population"] = (
-    third_vacc_dose["Antal vaccinerade"] / Swedish_population
+# print(third_timseries.head())
+
+third_timseries["Vacc_perc_population"] = (
+    third_timseries["Antal vaccinerade"] / Swedish_population
 ) * 100
 
-third_vacc_dose_pop = third_vacc_dose[
-    (third_vacc_dose["Åldersgrupp"] == "Totalt")
-    & (third_vacc_dose["Region"] == "Sweden")
+third_vacc_dose_pop = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].max())
 ]
 
 third_vacc_dose_pop = float(third_vacc_dose_pop["Vacc_perc_population"].round(2))
-# print(third_vacc_dose_pop)
+
+third_dose_pop_lastweek = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].unique()[-2])
+]
+
+third_dose_pop_lastweek = float(
+    third_dose_pop_lastweek["Vacc_perc_population"].round(2)
+)
+
+third_dose_pop_twoweek = third_timseries[
+    (third_timseries["date"] == third_timseries["date"].unique()[-3])
+]
+
+third_dose_pop_twoweek = float(third_dose_pop_twoweek["Vacc_perc_population"].round(2))
+
+# Now figure out rates
+
+rate_threedose_pop_lastwk = float(
+    "{:.2f}".format(third_vacc_dose_pop - third_dose_pop_lastweek)
+)
+rate_threedose_pop_twowk = float(
+    "{:.2f}".format(third_dose_pop_lastweek - third_dose_pop_twoweek)
+)
 
 ## calculate differences in rates
 
-## The change in vaccination rate for one dose 16+ between latest 2 weeks
+## The change in vaccination rate for one dose for the eligible population between latest 2 weeks
 
 onedose_ratechange = float("{:.2f}".format(rate_onedose_lastwk - rate_onedose_twowk))
 
-## The change in vaccination rate for two doses 16+ between latest 2 weeks
+## The change in vaccination rate for two doses for the eligible population between latest 2 weeks
 
 twodose_ratechange = float(
     "{:.2f}".format(rate_leasttwodose_lastwk - rate_leasttwodose_twowk)
+)
+
+## The change in vaccination rate for three doses for the eligible population between latest 2 weeks
+
+threedose_ratechange = float(
+    "{:.2f}".format(rate_threedose_lastwk - rate_threedose_twowk)
 )
 
 ## The change in vaccination rate for one dose (whole population) between latest 2 weeks
@@ -193,24 +238,34 @@ twodose_ratechange_pop = float(
     "{:.2f}".format(rate_leasttwodose_pop_lastwk - rate_leasttwodose_pop_twowk)
 )
 
+## The change in vaccination rate for three doses for the eligible population between latest 2 weeks
+
+threedose_ratechange_pop = float(
+    "{:.2f}".format(rate_threedose_pop_lastwk - rate_threedose_pop_twowk)
+)
+
 ## Create a .json file so that we can insert values 'live' to html
 
 # Data to be written
 data_dictionary = {
-    "sixteen_plus_one_dose": one_dose_swe,
-    "sixteen_plus_two_doses": least_two_dose_swe,
-    "sixteen_plus_three_doses": third_vacc_dose_tot,
-    "sixteen_plus_one_dose_lastweek": rate_onedose_lastwk,
-    "sixteen_plus_two_doses_lastweek": rate_leasttwodose_lastwk,
-    "sixteen_plus_one_dose_rate_change": onedose_ratechange,
-    "sixteen_plus_two_doses_rate_change": twodose_ratechange,
+    "eligible_one_dose": one_dose_swe,
+    "eligible_two_doses": least_two_dose_swe,
+    "eligible_three_doses": third_dose_swe,
+    "eligible_one_dose_lastweek": rate_onedose_lastwk,
+    "eligible_two_doses_lastweek": rate_leasttwodose_lastwk,
+    "eligible_three_doses_lastweek": rate_threedose_lastwk,
+    "eligible_one_dose_rate_change": onedose_ratechange,
+    "eligible_two_doses_rate_change": twodose_ratechange,
+    "eligible_three_doses_rate_change": threedose_ratechange,
     "population_one_dose": one_dose_pop,
     "population_two_doses": least_two_dose_pop,
     "population_three_doses": third_vacc_dose_pop,
     "population_one_dose_lastweek": rate_onedose_pop_lastwk,
     "population_two_doses_lastweek": rate_leasttwodose_pop_lastwk,
+    "population_three_doses_lastweek": rate_threedose_pop_lastwk,
     "population_one_dose_rate_change": onedose_ratechange_pop,
     "population_two_doses_rate_change": twodose_ratechange_pop,
+    "population_three_doses_rate_change": threedose_ratechange_pop,
 }
 
 with open("live_text_inserts.json", "w") as outfile:

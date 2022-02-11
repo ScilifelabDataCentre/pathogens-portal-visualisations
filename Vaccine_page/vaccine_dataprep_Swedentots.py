@@ -77,7 +77,13 @@ third_timseries = third_timseries.replace("| Sverige |", "Sweden")
 
 third_timseries = third_timseries[(third_timseries["Region"] == "Sweden")]
 
-third_timseries = third_timseries[["date", "Region", "Antal vaccinerade"]]
+third_timseries["Procent vaccinerade"] = (
+    third_timseries["Andel vaccinerade"].astype(float)
+) * 100
+
+third_timseries = third_timseries[
+    ["date", "Region", "Antal vaccinerade", "Procent vaccinerade"]
+]
 
 # Now we are going to process data related to age
 
