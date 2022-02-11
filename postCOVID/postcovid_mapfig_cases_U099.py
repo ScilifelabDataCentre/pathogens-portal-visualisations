@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.express as px
 import csv
 
-# import requests
-
-
 # map
 with open("sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
@@ -31,7 +28,7 @@ colour = px.colors.sequential.tempo
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # language information
-language = "English"
+language = "Swedish"
 
 if language == "Swedish":
     cbtit = "Antal personer som fått<br>diagnosen U09.9<br>relativt antal<br>bekräftade fall"
