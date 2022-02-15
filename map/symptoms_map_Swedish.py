@@ -1,12 +1,16 @@
 # county level symptoms map for Sweden
+import csv
 import json
+import os
+
 import pandas as pd
 import plotly.express as px
-import csv
 import requests
 
+base_path = os.getenv("PYTHONPATH", ".")
+
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open(f"{base_path}/sweden-counties.geojson", "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -129,12 +133,12 @@ fig.update_layout(
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=240,
+        len=185,
     ),
-    font=dict(size=12),
+    font=dict(size=10),
 )
 # to directly write out as a file
-# fig.write_json("Symptoms_map_Swedish.json")
+# fig.write_json("symptoms_map_swedish.json")
 
 # to show in browser (for testing)
 # fig.show()

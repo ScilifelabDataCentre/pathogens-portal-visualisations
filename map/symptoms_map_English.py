@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 
-base_path=os.getenv("PYTHONPATH", ".")
+base_path = os.getenv("PYTHONPATH", ".")
 
 # map
 with open(f"{base_path}/sweden-counties.geojson", "r") as sw:
@@ -46,9 +46,7 @@ splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # make edits to account for 'insufficient data' option
 df1["Uppskattning_Lan"] = df1["Uppskattning"].astype(str)
-df1["Uppskattning_Lan"].replace(
-    str(-0.1), "<br>Otillräckligt<br>underlag", inplace=True
-)
+df1["Uppskattning_Lan"].replace(str(-0.1), "<br>Insufficient<br>data", inplace=True)
 
 # make figure
 
@@ -133,12 +131,12 @@ fig.update_layout(
         thicknessmode="pixels",
         thickness=10,
         lenmode="pixels",
-        len=240,
+        len=185,
     ),
-    font=dict(size=12),
+    font=dict(size=10),
 )
 # to directly write out as a file
-# fig.write_json("Symptoms_map_English.json")
+# fig.write_json("symptoms_map_english.json")
 
 # to show in browser (for testing)
 # fig.show()
