@@ -139,7 +139,7 @@ fig.update_layout(
 # fig.write_json("symptoms_map_english.json")
 
 # to show in browser (for testing)
-fig.show()
+# fig.show()
 
 # save the figure for blobserver
-# print(fig.to_json())
+print(fig.to_json())
