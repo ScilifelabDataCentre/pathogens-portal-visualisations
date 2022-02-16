@@ -34,7 +34,7 @@ df1["Datum"] = pd.to_datetime(df1["Datum"])
 df1.sort_values(by="Datum", ascending=False, inplace=True)
 df1.drop_duplicates("Lan", keep="first", inplace=True)
 df1["Uppskattning"] = pd.to_numeric(df1["Uppskattning"], errors="coerce")
-df1["Uppskattning"] = df1["Uppskattning"].fillna(-0.1)
+df1["Uppskattning"] = df1["Uppskattning"].fillna(-0.2)
 # comment out next row when Dalarna fixed
 # df1["Lan"] = df1["Lan"].replace("Dalar", "Dalarna")
 df1["id"] = df1["Lan"].apply(lambda x: counties_id_map[x])
@@ -46,7 +46,7 @@ splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 # make edits to account for 'insufficient data' option
 df1["Uppskattning_Lan"] = df1["Uppskattning"].astype(str)
-df1["Uppskattning_Lan"].replace(str(-0.1), "<br>Insufficient<br>data", inplace=True)
+df1["Uppskattning_Lan"].replace(str(-0.2), "<br>Insufficient<br>data", inplace=True)
 
 # make figure
 
@@ -79,7 +79,7 @@ fig = px.choropleth(
         (splits[10], colour[1]),
     ],
     # this keeps the range of colours constant regrdless of data
-    range_color=[-0.1, 0.9],
+    range_color=[-0.2, 1.8],
     scope="europe",
     hover_name="Lan",
     labels={"Uppskattning_Lan": "Estimate<br>for County (%) "},
@@ -103,28 +103,28 @@ fig.update_layout(
     coloraxis_colorbar=dict(
         title="<b>Estimated prevalence of<br>symptomatic cases,<br>% of population</b><br>(updated daily)",
         tickvals=[
-            -0.050,
-            0.050,
-            0.150,
-            0.250,
-            0.350,
-            0.450,
-            0.550,
-            0.650,
-            0.750,
-            0.850,
+            -0.10,
+            0.10,
+            0.30,
+            0.50,
+            0.70,
+            0.90,
+            1.10,
+            1.30,
+            1.50,
+            1.70,
         ],
         ticktext=[
             "Insufficient data",
-            "0.00 - 0.10 %",
-            "0.10 - 0.20 %",
-            "0.20 - 0.30 %",
-            "0.30 - 0.40 %",
-            "0.40 - 0.50 %",
-            "0.50 - 0.60 %",
-            "0.60 - 0.70 %",
-            "0.70 - 0.80 %",
-            "> 0.80 %",
+            "0.00 - 0.20 %",
+            "0.20 - 0.40 %",
+            "0.40 - 0.60 %",
+            "0.60 - 0.80 %",
+            "0.80 - 1.00 %",
+            "1.00 - 1.20 %",
+            "1.20 - 1.40 %",
+            "1.40 - 1.60 %",
+            "> 1.60 %",
         ],
         x=0.55,
         y=0.7,
