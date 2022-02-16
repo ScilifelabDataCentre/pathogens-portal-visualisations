@@ -117,7 +117,7 @@ fig.update_layout(
             1.70,
         ],
         ticktext=[
-            "Otillräckligt underlag",
+            "<br>Otillräckligt<br>underlag",
             "0.00 - 0.20 %",
             "0.20 - 0.40 %",
             "0.40 - 0.60 %",
