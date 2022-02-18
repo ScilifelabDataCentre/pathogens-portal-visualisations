@@ -208,7 +208,7 @@ fig.update_layout(
     ]
 )
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # Below prints as html
 # fig.write_html(
@@ -221,4 +221,4 @@ fig.show()
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
 
-# print(fig.to_json())
+print(fig.to_json())
