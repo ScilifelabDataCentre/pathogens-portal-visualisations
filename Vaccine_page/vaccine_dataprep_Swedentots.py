@@ -147,7 +147,7 @@ third_vacc_dose = third_vacc_dose_lan[(third_vacc_dose_lan["Region"] == "Sweden"
 
 SCB_population = pd.read_excel(
     "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",
-    sheet_name="Sheet 1",
+    sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
