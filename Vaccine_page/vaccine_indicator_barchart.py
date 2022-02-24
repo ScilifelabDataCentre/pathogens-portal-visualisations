@@ -9,7 +9,7 @@ import json
 from vaccine_livetext import (
     one_dose_swe,
     least_two_dose_swe,
-    third_vacc_dose_tot,
+    third_dose_swe,
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
@@ -22,7 +22,7 @@ vaccine_dose_totals["Doses"] = ["1", "2", "3"]
 vaccine_dose_totals["eligible_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
-    third_vacc_dose_tot,
+    third_dose_swe,
 ]
 vaccine_dose_totals["POP_perc"] = [
     one_dose_pop,
