@@ -1,6 +1,6 @@
 ## Wordcloud
 
-This folder contains all the files required to produce the wordclouds shown on the portal. These scripts are used directly in cron jobs, so updating them will directly affect the visualisations on the portal.
+This folder contains all the files required to produce the wordclouds shown on the portal. These scripts are used directly in cron jobs, so updating them will directly affect the visualisations on the portal. Remember to rebuild cron after an update here, or the update will not work.
 
 **examplewordclouds folder** - This folder contains images of some example wordclouds.
 
