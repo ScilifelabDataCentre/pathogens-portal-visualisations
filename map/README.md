@@ -1,6 +1,6 @@
 ## map
 
-This folder contains the files used to produce the map for the symptoms study (in dynamic as a cron job).
+This folder contains the files used to produce the map for the symptoms study. The scripts are read in cron jobs in dynamic repo. It's updated daily, so rebuild cron if you update this so that the changes will go into blob server and thus 'live' on the portal. 
 
 **gitignore** - a gitignore file for this part of the reporsitory.
 

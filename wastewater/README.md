@@ -1,6 +1,6 @@
 ## wastewater
 
-This folder contains all of the scripts and associated files required to produce the visualisations displayed on the wastewater page that were produced in plotly using python.The plots run directly on cron and are updated every 10 minutes 
+This folder contains all of the scripts and associated files required to produce the visualisations displayed on the wastewater page that were produced in plotly using python. The plots run directly on cron and are updated every 10 minutes. Remember to rebuild in cron if you update.
 
 **combined_slu_logaxis.py** - This script produces a graph with wastewater data from SLU (combined graph) presented on a log axis.
 
