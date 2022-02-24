@@ -2,7 +2,7 @@ import pandas as pd
 
 Raw_scb_data = pd.read_excel(
     # This link is unfortunately not consistent, so will need to change every quarter of the year (Jan, April, July, September)
-    "https://www.scb.se/contentassets/2cc2cf7f4ae04755bccb1eeb481adcdb/be0101_tabkv3_2021eng.xlsx",
+    "https://www.scb.se/contentassets/cb47e70ddc6b4ed38e67c075b1d59260/tabkv42021eng.xlsx",
     sheet_name="Total",
     header=4,
     engine="openpyxl",
