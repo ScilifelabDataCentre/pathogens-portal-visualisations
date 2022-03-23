@@ -164,7 +164,7 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>N3-gene copy number per PMMoV gene copy number (%), log</b>",
+    title="<b>Relative copy number of SARS-CoV-2 to PMMoV (%), log</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
