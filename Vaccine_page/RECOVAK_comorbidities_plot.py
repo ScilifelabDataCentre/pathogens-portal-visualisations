@@ -57,14 +57,15 @@ def stacked_bar_func(dataset, name):
         margin=dict(r=250, t=0, b=0, l=0),
         width=1500,
         height=800,
-        legend=dict(
-            y=0.95, x=1.0, title="<b>Vaccination<br>status<br></b>", font=dict(size=22)
-        ),
+        # legend=dict(
+        #     y=0.95, x=1.0, title="<b>Vaccination<br>status<br></b>", font=dict(size=22)
+        # ),
         showlegend=True,
         hoverlabel=dict(align="left"),
         hovermode="x unified",
     )
 
+    # add lines to graph to show important dates
     # fig.add_vline(
     #     x=dt.strptime("2020-12-21", "%Y-%m-%d").timestamp() * 1000,
     #     annotation_position="top left",
@@ -91,7 +92,7 @@ def stacked_bar_func(dataset, name):
         title="<br><b>Date</b>",
         showgrid=True,
         linecolor="black",
-        range=["2020-01-01", max(RECO.date)],
+        # range=["2020-01-01", max(RECO.date)], # this cuts off last point, leaving range will include just data range (prep will exclude datapoints before start 2020 anyway)
     )
 
     highest_y_value = max(

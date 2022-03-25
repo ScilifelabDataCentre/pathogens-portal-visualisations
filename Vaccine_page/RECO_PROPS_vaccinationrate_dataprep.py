@@ -48,6 +48,7 @@ def date_func(dataset):
     )
     pd.to_datetime(dataset["date"])
     dataset.drop(columns=["Week", "Year", "day", "wk"], axis=1, inplace=True)
+    dataset["date"] = dataset["date"].astype(str)
     # print(dataset.head())
 
 
@@ -56,10 +57,10 @@ def date_func(dataset):
 def calc_func(dataset):
     # need to work out proportions UNVACCINATED - sum rest and minus from 1
     dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
-    dataset["no_dose"] = 1 - dataset["vacc1"]
-    dataset["one_dose"] = dataset["vacc1"] - dataset["vacc2"]
-    dataset["two_dose"] = dataset["vacc2"] - dataset["vacc3"]
-    dataset["three_dose"] = dataset["vacc3"] - dataset["vacc4"]
+    dataset["no_dose"] = (1 - dataset["vacc1"]) * 100
+    dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
+    dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
+    dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
     # dataset["four_dose"] = dataset[
     #     "vacc4"
     # ]  # might need to extend this if there are 5th dose, for now it's a copy for consistency
@@ -85,5 +86,5 @@ for y in datasets:
 #     for df in datasets
 # ]
 
-# do check
+# ADD THIS INTO DATE FUNCTION!!
 # print(RECO_18plus)

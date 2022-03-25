@@ -7,23 +7,31 @@ import os
 # from datetime import datetime as dt
 from RECO_PROPS_vaccinationrate_dataprep import RECO_18plus, RECO_18to59, RECO_60plus
 
-colours = px.colors.diverging.RdBu
-colours[5] = "rgb(255,255,204)"
-print(colours)
-
 
 def areagraph_func(dataset, name):
     RECO = dataset
     fig = go.Figure()
     fig.add_trace(
+        #     go.Scatter(
+        #         x=RECO["date"],
+        #         y=RECO["four_dose"],
+        #         # hoverinfo='x+y',
+        #         name="Four Doses",
+        #         mode="lines",
+        #         line=dict(width=1, color="rgba(5,48,97,1)"),
+        #         fillcolor="rgba(5,48,97,1)",
+        #         stackgroup="one"  # define stack group
+        #         # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+        #     )
+        # )
         go.Scatter(
             x=RECO["date"],
             y=RECO["three_dose"],
             # hoverinfo='x+y',
             name="Three Doses",
             mode="lines",
-            line=dict(width=0.5, color="rgba(5,48,97,1)"),
-            fillcolor="rgba(5,48,97,0.1)",
+            line=dict(width=1, color="rgba(146,197,222,1)"),
+            fillcolor="rgba(146,197,222,1)",
             stackgroup="one"  # define stack group
             # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
         )
@@ -35,8 +43,8 @@ def areagraph_func(dataset, name):
             # hoverinfo='x+y',
             name="Two Doses",
             mode="lines",
-            line=dict(width=0.5, color="rgba(146,197,222,1)"),
-            fillcolor="rgba(146,197,222,1)",
+            line=dict(width=1, color="rgba(235,235,0,1)"),
+            fillcolor="rgba(235,235,0,1)",
             stackgroup="one"  # define stack group
             # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
         )
@@ -48,8 +56,8 @@ def areagraph_func(dataset, name):
             # hoverinfo='x+y',
             name="One Dose",
             mode="lines",
-            line=dict(width=0.5, color="rgba(255,255,204,1)"),
-            fillcolor="rgba(255,255,204,1)",
+            line=dict(width=1, color="rgba(244,165,130,1)"),
+            fillcolor="rgba(244,165,130,1)",
             stackgroup="one"  # define stack group
             # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
         )
@@ -61,8 +69,8 @@ def areagraph_func(dataset, name):
             # hoverinfo='x+y',
             name="No Doses",
             mode="lines",
-            line=dict(width=0.5, color="rgba(103,0,31,1)"),
-            fillcolor="rgba(103,0,31,1)",
+            line=dict(width=1, color="rgba(178,24,43,1)"),
+            fillcolor="rgba(178,24,43,1)",
             stackgroup="one"  # define stack group
             # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
         )
@@ -88,36 +96,44 @@ def areagraph_func(dataset, name):
     fig.update_layout(
         title=" ",
         yaxis={
-            "title": "",  # "<b>Percentage of Sequences Tested<br></b>",
-            "ticktext": ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
-            "tickvals": ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
-            "range": [0, 1],
+            "title": "<b>Percentage of People with Dose Level<br></b>",
+            "ticktext": ["0 ", "20 ", "40 ", "60 ", "80 ", "100 "],
+            "tickvals": ["0", "20", "40", "60", "80", "100"],
+            "range": [0, 100],
         },
-        font={"size": 14},
-        showlegend=False,
+        font={"size": 12},
+        showlegend=True,
         hovermode="x unified",
         xaxis={
-            "title": "",  # "<b><br>Date</b>",
+            "title": "<b><br>Date</b>",
             "tickangle": 0,
         },
-        height=400,
+        # height=400,
+        width=900,  # need to delete this when moving to json, so it can be adaptive to web
     )
-    fig.update_xaxes(type="category", ticklabelmode="period")
-    fig.update_traces(hovertemplate="%{y:.2f}"),
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    # fig.update_xaxes(type="category", ticklabelmode="period") #This will convert to full dates if needed
+    # If change above, would need to change tick angle so that dates were visible.
+    fig.update_traces(hovertemplate="%{y:.2f}%"),
     # fig.add_vline(
     #     x=dateline, line_width=3, line_color="darkslategrey", line_dash="dash"
     # )
-    fig.show()
+    if not os.path.isdir("Plots/"):
+        os.mkdir("Plots/")
+    fig.write_image(
+        "Plots/vaccination_RECO_timeseries_{}.png".format(name)
+    )  # needs to write json and be .json
 
 
-areagraph_func(RECO_18plus, "18plus")
+# test function with just one graph.
+# areagraph_func(RECO_18plus, "18plus")
 
-# datasets = {
-#     "cancer": RECO_cancer,
-#     "cardio": RECO_cardio,
-#     "diabetes": RECO_diabetes,
-#     "respiratory": RECO_resp,
-# }
+# run all graphs
+datasets = {
+    "18plus": RECO_18plus,
+    "18to59": RECO_18to59,
+    "60plus": RECO_60plus,
+}
 
-# for name, df in datasets.items():
-#     stacked_bar_func(df, name)
+for name, df in datasets.items():
+    areagraph_func(df, name)
