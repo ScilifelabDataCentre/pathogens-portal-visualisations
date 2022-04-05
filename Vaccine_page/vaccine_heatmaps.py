@@ -4,7 +4,11 @@ import pandas as pd
 import numpy as np  # won't need this when data on 3rd dose for 12-17 year olds becomes available
 import os
 
-from vaccine_dataprep_Swedentots import df_vacc_ålders_lan, third_vacc_dose_lan
+from vaccine_dataprep_Swedentots import (
+    df_vacc_ålders_lan,
+    third_vacc_dose_lan,
+    fourth_vacc_dose,
+)
 
 ## Need 3 sets of data - for one dose, two doses, and three doses
 # Don't have population size data for these age groups (at least right now), so can't do population level calculations
@@ -72,10 +76,52 @@ top_row = pd.DataFrame(
 )
 third_dose = pd.concat([top_row, third_vacc_dose_lan]).reset_index(drop=True)
 
+# Add fourth dose (already as percentages from dataprep, so not needed)
+# do need to add additional age group rows (until more are added amd change 90+ )
+# Also need to eliminate 'totalt' row
+fourth_vacc_dose = fourth_vacc_dose.replace("90 eller äldre", "90+")
+# REMOVE BELOW AS MORE AGE CATEGORIES ARE ADDED
+top_row_fourth = pd.DataFrame(
+    {
+        "Åldersgrupp": [
+            "12-15",
+            "16-17",
+            "18-29",
+            "30-39",
+            "40-49",
+            "50-59",
+            "60-69",
+            "70-79",
+        ],
+        "Procent vaccinerade": [
+            np.nan,
+            np.nan,
+            np.nan,
+            np.nan,
+            np.nan,
+            np.nan,
+            np.nan,
+            np.nan,
+        ],
+        "Vaccinationsstatus": [
+            "4 doser",
+            "4 doser",
+            "4 doser",
+            "4 doser",
+            "4 doser",
+            "4 doser",
+            "4 doser",
+            "4 doser",
+        ],
+    }
+)
+fourth_dose = pd.concat([top_row_fourth, fourth_vacc_dose]).reset_index(drop=True)
+fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "Totalt"]
+
 ## Prepare dataframe for heatmap (all data in one place)
 
 heatmap_data = pd.concat(
-    [one_dose, two_doses, third_dose],
+    [one_dose, two_doses, third_dose, fourth_dose],
     axis=0,
 )
 heatmap_data["Vaccinationsstatus"] = heatmap_data["Vaccinationsstatus"].replace(
@@ -83,6 +129,7 @@ heatmap_data["Vaccinationsstatus"] = heatmap_data["Vaccinationsstatus"].replace(
         "Minst 1 dos": "1",
         "Minst 2 doser": "2",
         "3 doser": "3",
+        "4 doser": "4",
     }
 )
 
@@ -187,6 +234,7 @@ if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
 fig_small.write_json("Plots/vaccine_heatmap_small.json")
+# fig_small.write_image("Plots/vaccine_heatmap_small.png")
 
 # Now make the larger version
 
@@ -286,3 +334,4 @@ if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
 fig.write_json("Plots/vaccine_heatmap.json")
+# fig.write_image("Plots/vaccine_heatmap.png")

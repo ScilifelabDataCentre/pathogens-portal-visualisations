@@ -10,24 +10,28 @@ from vaccine_livetext import (
     one_dose_swe,
     least_two_dose_swe,
     third_dose_swe,
+    fourth_dose_swe,
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
+    fourth_dose_pop,
 )
 
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
 
 vaccine_dose_totals = pd.DataFrame()
-vaccine_dose_totals["Doses"] = ["1", "2", "3"]
+vaccine_dose_totals["Doses"] = ["1", "2", "3", "4"]
 vaccine_dose_totals["eligible_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
     third_dose_swe,
+    fourth_dose_swe,
 ]
 vaccine_dose_totals["POP_perc"] = [
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
+    fourth_dose_pop,
 ]
 
 # initiate barchart
@@ -38,7 +42,7 @@ trace1 = go.Bar(
     name="Eligible Population Method",
     marker_color="rgb(5,48,97)",
     marker_line_color="black",
-    hovertemplate="<b>Eligible population Method</b>"
+    hovertemplate="<b>Eligible Population Method</b>"
     + "<br>Number of Doses: %{x}"
     + "<br>Percent Receiving the Dose: %{y:.2f}%<extra></extra>",
 )
@@ -91,4 +95,5 @@ fig.update_yaxes(
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 
+# fig.write_image("Plots/Total_vaccinated_barchart.png")
 fig.write_json("Plots/Total_vaccinated_barchart.json")
