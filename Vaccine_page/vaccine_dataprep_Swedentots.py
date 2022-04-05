@@ -142,6 +142,35 @@ third_vacc_dose_lan["Procent vaccinerade"] = (
 third_vacc_dose = third_vacc_dose_lan[(third_vacc_dose_lan["Region"] == "Sweden")]
 
 
+# TEMPORARY CODE FOR 4th DOSE (likely to be updated with additional data in coming weeks)
+# To date, only data given is on åldersgrupp. No timeseries data. Also only data for those over 80
+# From this, can add to everything except timeseries data and the associated rates of change in the livetext.
+
+# Import 4th dose data
+
+fourth_vacc_dose_lan = pd.read_excel(
+    "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data",
+    sheet_name="Dos 4 per åldersgrupp",
+    header=0,
+    engine="openpyxl",
+    keep_default_na=False,
+)
+
+# Initial processing (note that percentages apply to age group. eligible population from born in or before 1941)
+
+fourth_vacc_dose_lan = fourth_vacc_dose_lan.replace("| Sverige |", "Sweden")
+
+fourth_vacc_dose_lan["Andel vaccinerade"] = fourth_vacc_dose_lan[
+    "Andel vaccinerade"
+].replace(",", ".", regex=True)
+
+fourth_vacc_dose_lan["Procent vaccinerade"] = (
+    fourth_vacc_dose_lan["Andel vaccinerade"].astype(float)
+) * 100
+
+# above contains data for all lan. Below just for Sweden
+fourth_vacc_dose = fourth_vacc_dose_lan[(fourth_vacc_dose_lan["Region"] == "Sweden")]
+
 # Obtain population measures for Swedish population (number of people in country)
 # We use this for the recalculations, so we can calculate vaccination as a percent of whole population
 

@@ -10,6 +10,7 @@ from vaccine_dataprep_Swedentots import (
     df_vacc,
     # third_vacc_dose,
     third_timseries,
+    fourth_vacc_dose,
     Swedish_population,
 )
 
@@ -99,6 +100,11 @@ third_dose_twoweek = float(third_dose_twoweek["Procent vaccinerade"].round(2))
 
 rate_threedose_lastwk = float("{:.2f}".format(third_dose_swe - third_dose_lastweek))
 rate_threedose_twowk = float("{:.2f}".format(third_dose_lastweek - third_dose_twoweek))
+
+# Data on fourth doses (no timeseries data as of March 2022)
+
+fourth_vacc_dose = fourth_vacc_dose[(fourth_vacc_dose["Åldersgrupp"] == "Totalt")]
+fourth_dose_swe = float(fourth_vacc_dose["Procent vaccinerade"].round(2))
 
 ## Everything above deals with percentages based on the percantage eiligible to take the vaccine
 ## Now need to calculate percentages based on whole population of Sweden
@@ -208,7 +214,15 @@ rate_threedose_pop_twowk = float(
     "{:.2f}".format(third_dose_pop_lastweek - third_dose_pop_twoweek)
 )
 
-## calculate differences in rates
+# Data for fourth dose
+
+fourth_vacc_dose["Vacc_perc_population"] = (
+    fourth_vacc_dose["Antal vaccinerade"] / Swedish_population
+) * 100
+
+fourth_dose_pop = float(fourth_vacc_dose["Vacc_perc_population"].round(2))
+
+## calculate differences in rates (no rate available for fourth dose)
 
 ## The change in vaccination rate for one dose for the eligible population between latest 2 weeks
 
@@ -251,6 +265,7 @@ data_dictionary = {
     "eligible_one_dose": one_dose_swe,
     "eligible_two_doses": least_two_dose_swe,
     "eligible_three_doses": third_dose_swe,
+    "eligible_four_doses": fourth_dose_swe,
     "eligible_one_dose_lastweek": rate_onedose_lastwk,
     "eligible_two_doses_lastweek": rate_leasttwodose_lastwk,
     "eligible_three_doses_lastweek": rate_threedose_lastwk,
@@ -260,6 +275,7 @@ data_dictionary = {
     "population_one_dose": one_dose_pop,
     "population_two_doses": least_two_dose_pop,
     "population_three_doses": third_vacc_dose_pop,
+    "population_four_doses": fourth_dose_pop,
     "population_one_dose_lastweek": rate_onedose_pop_lastwk,
     "population_two_doses_lastweek": rate_leasttwodose_pop_lastwk,
     "population_three_doses_lastweek": rate_threedose_pop_lastwk,
@@ -270,3 +286,5 @@ data_dictionary = {
 
 with open("live_text_inserts.json", "w") as outfile:
     json.dump(data_dictionary, outfile)
+
+# REMINDER FOR FOURTH DOSE ADDITION: ADD JSON FILE ADDITIONS TO PORTAL PAGE.
