@@ -7,6 +7,7 @@ import os
 from vaccine_dataprep_Swedentots import (
     df_vacc,
     third_timseries,
+    fourth_timseries,
     Swedish_population,
 )
 
@@ -18,6 +19,10 @@ df_vacc["Vacc_perc_population"] = (
 # Third dose
 third_timseries["Vacc_perc_population"] = (
     third_timseries["Antal vaccinerade"] / Swedish_population
+) * 100
+# Fourth dose
+fourth_timseries["Vacc_perc_population"] = (
+    fourth_timseries["Antal vaccinerade"] / Swedish_population
 ) * 100
 
 # separate the first and second doses
@@ -56,9 +61,19 @@ trace3 = go.Bar(
     + "<br>Date: %{x}"
     + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
 )
+trace4 = go.Bar(
+    x=fourth_timseries["date"],
+    y=fourth_timseries["Vacc_perc_population"],
+    name="At Least Four Doses",
+    marker_color="rgb(146,197,222)",
+    marker_line_color="black",
+    hovertemplate="Number of Doses: Four Doses"
+    + "<br>Date: %{x}"
+    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+)
 
 # figure layout
-fig_pop = go.Figure(data=[trace1, trace2, trace3])
+fig_pop = go.Figure(data=[trace1, trace2, trace3, trace4])
 fig_pop.update_layout(
     plot_bgcolor="white",
     font=dict(size=14),
@@ -66,11 +81,11 @@ fig_pop.update_layout(
     showlegend=True,
     legend=dict(
         title=" ",
-        orientation="h",
+        # orientation="h",
         # yanchor="bottom",
         y=1.15,
         # xanchor="right",
-        # x=0.2,
+        x=0.05,
         font=dict(size=14),
     ),
 )
@@ -93,8 +108,9 @@ fig_pop.update_yaxes(
 
 # fig_pop.show()
 
-if not os.path.isdir("Plots/"):
-    os.mkdir("Plots/")
+# if not os.path.isdir("Plots/"):
+#     os.mkdir("Plots/")
 
-# we only currently use this map
+# make figure for web
 fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")
+# fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")

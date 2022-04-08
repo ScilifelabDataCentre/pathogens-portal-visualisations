@@ -85,6 +85,38 @@ third_timseries = third_timseries[
     ["date", "Region", "Antal vaccinerade", "Procent vaccinerade"]
 ]
 
+## Now timeseries data for 4th dose
+
+fourth_timseries = pd.read_excel(
+    "https://fohm.maps.arcgis.com/sharing/rest/content/items/fc749115877443d29c2a49ea9eca77e9/data",
+    sheet_name="Vaccinerade tidsserie dos 4",
+    header=0,
+    engine="openpyxl",
+    keep_default_na=False,
+)
+
+# Set date
+
+fourth_timseries["day"] = 1  # set day as Monday
+
+fourth_timseries["date"] = fourth_timseries.apply(
+    lambda row: dt.fromisocalendar(row["År"], row["Vecka"], row["day"]), axis=1
+)
+
+# Limit data to just Sweden
+
+fourth_timseries = fourth_timseries.replace("| Sverige |", "Sweden")
+
+fourth_timseries = fourth_timseries[(fourth_timseries["Region"] == "Sweden")]
+
+fourth_timseries["Procent vaccinerade"] = (
+    fourth_timseries["Andel vaccinerade"].astype(float)
+) * 100
+
+fourth_timseries = fourth_timseries[
+    ["date", "Region", "Antal vaccinerade", "Procent vaccinerade"]
+]
+
 # Now we are going to process data related to age
 
 # Do first and second dose data first
@@ -112,11 +144,11 @@ df_vacc_ålders_lan["Procent vaccinerade"] = (
 
 # df_vacc_ålders_lan = df_vacc_ålders
 
-# WHAT DO WE USE THIS FOR?! MAYBE LIMIT LIKE THIS IS BEST ELSEWHERE
-df_vacc_ålders = df_vacc_ålders_lan[
-    (df_vacc_ålders_lan["Region"] == "Sweden")
-    & (df_vacc_ålders_lan["Åldersgrupp"] == "Totalt")
-]
+# # WHAT DO WE USE THIS FOR?! MAYBE LIMIT LIKE THIS IS BEST ELSEWHERE -test delete!
+# df_vacc_ålders = df_vacc_ålders_lan[
+#     (df_vacc_ålders_lan["Region"] == "Sweden")
+#     & (df_vacc_ålders_lan["Åldersgrupp"] == "Totalt")
+# ]
 
 # Now process data for third dose
 
