@@ -117,6 +117,7 @@ top_row_fourth = pd.DataFrame(
 )
 fourth_dose = pd.concat([top_row_fourth, fourth_vacc_dose]).reset_index(drop=True)
 fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "Totalt"]
+fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "65-79"]
 
 ## Prepare dataframe for heatmap (all data in one place)
 

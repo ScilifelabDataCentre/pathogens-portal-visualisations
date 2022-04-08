@@ -14,7 +14,7 @@ from vaccine_livetext import (
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
-    fourth_dose_pop,
+    fourth_vacc_dose_pop,
 )
 
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
@@ -31,7 +31,7 @@ vaccine_dose_totals["POP_perc"] = [
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
-    fourth_dose_pop,
+    fourth_vacc_dose_pop,
 ]
 
 # initiate barchart
