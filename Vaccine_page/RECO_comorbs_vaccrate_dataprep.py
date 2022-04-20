@@ -1,43 +1,46 @@
-# This script prepares the data to be used in plots showing vaccination coverage over time
-# Data is given for different dose levels, and different age groups
-# RECOVAK provides data
-# Data given for 3 age ranges - 18+, 18-59, and 60+
-# Data given for first 4 doses
-# Graph will be 'area under the curve'
+# Data preparation FOR PLOTS BASED ON VACCINATION RATE FOR COMORBIDITY GROUPS!
 import pandas as pd
 from datetime import datetime as dt
 
-# first load data. Note, we currently get in xls format... will ask RECOVAK for xlsx, if possible. If not will consider coding a conversion
-# 18+ age
-RECO_18plus = pd.read_excel(
-    "data/vacc_pop_18plus_25 Feb 2022.xlsx",
+# load vaccine data time series for vaccine coverage
+
+# cardiovascular disease
+RECO_cvd_V = pd.read_excel(
+    "data/cvd_cardio_vacc_SciLifeLab 5 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
 
-# 18-59 age
-RECO_18to59 = pd.read_excel(
-    "data/vacc_pop_18-59_25 Feb 2022.xlsx",
+# diabetes
+RECO_dm_V = pd.read_excel(
+    "data/dm_vacc_SciLifeLab 5 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
 
-# 60+ age
-RECO_60plus = pd.read_excel(
-    "data/vacc_pop_60plus_25 Feb 2022.xlsx",
+# respiratory disease
+RECO_resp_V = pd.read_excel(
+    "data/resp_dis1_vacc_SciLifeLab 5 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
 
-# noticed that there is no data for early weeks (suspect no vaccinations before then)
-# There are also gaps in 4th dose, will need to check this with RECOVAK
-# For now, fill the missing data and convert date on all files
+# cancer
+RECO_cancer_V = pd.read_excel(
+    "data/sos_cancer_vacc_SciLifeLab 5 Apr 2022..xlsx",
+    sheet_name="Sheet1",
+    header=0,
+    engine="openpyxl",
+    keep_default_na=False,
+)
+
+# Some data points missing, does not make sense in a time treand, so need to ask RECOVAK on this
 
 # function to change the date:
 def date_func(dataset):
@@ -60,21 +63,25 @@ def date_func(dataset):
 def calc_func(dataset):
     # need to work out proportions UNVACCINATED - sum rest and minus from 1
     dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
+    dataset.set_axis(["vacc1", "vacc2", "vacc3", "date"], axis=1, inplace=True)
     dataset["no_dose"] = (1 - dataset["vacc1"]) * 100
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
-    dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
-    # dataset["four_dose"] = dataset[
-    #     "vacc4"
-    # ]  # might need to extend this if there are 5th dose, for now it's a copy for consistency
-    # commented above for now because we have questions about vacc4 anyway
-    dataset.drop(columns=["vacc1", "vacc2", "vacc3", "vacc4"], axis=1, inplace=True)
+    dataset["three_dose"] = (
+        dataset["vacc3"] * 100
+    )  # (dataset["vacc3"] - dataset["vacc4"]) * 100
+    # will need to modify and expand this as more doses are added
+    dataset.drop(
+        columns=["vacc1", "vacc2", "vacc3"],
+        axis=1,
+        inplace=True,
+    )
     # print(dataset.head())
 
 
 # make a list of datasets on which to perform the function
 
-datasets = [RECO_18plus, RECO_18to59, RECO_60plus]
+datasets = [RECO_cvd_V, RECO_dm_V, RECO_resp_V, RECO_cancer_V]
 
 # run the functions to recalculate the proportions and format the date
 for x in datasets:
@@ -84,10 +91,7 @@ for y in datasets:
     calc_func(y)
 
 # # Now need to perform a 'melt' to reformat the data for the graph
-# RECO_18plus, RECO_18to59, RECO_60plus = [
+# RECO_cvd, RECO_dm, RECO_resp, RECO_cancer = [
 #     pd.melt(df, id_vars=["date"], var_name="Dose", value_name="Proportion")
 #     for df in datasets
 # ]
-
-# ADD THIS INTO DATE FUNCTION!!
-# print(RECO_18plus)
