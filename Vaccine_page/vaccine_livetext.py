@@ -364,5 +364,3 @@ data_dictionary = {
 
 with open("live_text_inserts.json", "w") as outfile:
     json.dump(data_dictionary, outfile)
-
-# REMINDER FOR FOURTH DOSE ADDITION: ADD JSON FILE ADDITIONS TO PORTAL PAGE.
