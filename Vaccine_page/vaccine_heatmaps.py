@@ -91,10 +91,8 @@ top_row_fourth = pd.DataFrame(
             "40-49",
             "50-59",
             "60-69",
-            "70-79",
         ],
         "Procent vaccinerade": [
-            np.nan,
             np.nan,
             np.nan,
             np.nan,
@@ -111,13 +109,12 @@ top_row_fourth = pd.DataFrame(
             "4 doser",
             "4 doser",
             "4 doser",
-            "4 doser",
         ],
     }
 )
 fourth_dose = pd.concat([top_row_fourth, fourth_vacc_dose]).reset_index(drop=True)
 fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "Totalt"]
-fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "65-79"]
+fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "65-69"]
 
 ## Prepare dataframe for heatmap (all data in one place)
 
