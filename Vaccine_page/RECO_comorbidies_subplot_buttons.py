@@ -20,7 +20,7 @@ from RECOVAK_comorbidities_dataprep import (
     RECO_resp,
 )
 
-fig = make_subplots(rows=2, cols=1, specs=[[{}], [{}]], vertical_spacing=0.1)
+fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 
 ## BELOW ARE TRACES FOR VACCINATION PLOT
 
@@ -503,7 +503,7 @@ fig.update_layout(
         "tickangle": 0,
     },
     # height=400,
-    width=900,  # need to delete this when moving to json, so it can be adaptive to web
+    # width=900,  # need to delete this when moving to json, so it can be adaptive to web
 )
 # fig.update_xaxes(type="category", ticklabelmode="period") #This will convert to full dates if needed
 # If change above, would need to change tick angle so that dates were visible.
@@ -536,12 +536,12 @@ if highest_y_value > 2500:
 fig.update_layout(
     barmode="stack",
     plot_bgcolor="white",
-    autosize=False,
-    font=dict(size=13),
-    margin=dict(r=250, t=100, b=0, l=0),
-    width=1500,
-    height=800,
-    # legend=dict(y=0.5, x=1.05, title=" ", font=dict(size=13)),
+    autosize=True,
+    font=dict(size=12),
+    margin=dict(r=0, t=100, b=0, l=0),
+    # width=1500,
+    # height=800,
+    # legend=dict(title="<b>Vaccine Doses</b>"),
     showlegend=False,
     hoverlabel=dict(align="left"),
     hovermode="x unified",
@@ -964,7 +964,7 @@ fig.update_layout(
     annotations=[
         dict(
             text="Comorbidity:",
-            x=0,
+            x=-0.05,
             xref="paper",
             y=1.23,
             yref="paper",
@@ -973,7 +973,7 @@ fig.update_layout(
         ),
         dict(
             text="Timeframe:",
-            x=0,
+            x=-0.05,
             xref="paper",
             y=1.13,
             yref="paper",
@@ -985,7 +985,8 @@ fig.update_layout(
 
 # if not os.path.isdir("Plots/"):
 #     os.mkdir("Plots/")
-fig.show()
+# fig.show()
+fig.write_json("Plots/comorbs_subplot_button.json")
 # fig.write_image(
 #     "Plots/vaccination_RECO_comorbs_{}.png".format(name)
 # )  # needs to write json and be .json

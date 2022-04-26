@@ -190,7 +190,7 @@ fig.add_trace(
 fig.update_layout(
     title=" ",
     yaxis={
-        "title": "<b>Percentage of People with Dose Level<br></b>",
+        "title": "<b>People with Dose Level (%)<br></b>",
         "ticktext": ["0 ", "20 ", "40 ", "60 ", "80 ", "100 "],
         "tickvals": ["0", "20", "40", "60", "80", "100"],
         "range": [0, 100],
@@ -203,9 +203,11 @@ fig.update_layout(
         "tickangle": 0,
     },
     # height=400,
-    width=1000,  # need to delete this when moving to json, so it can be adaptive to web
+    # width=1000,  # need to delete this when moving to json, so it can be adaptive to web
 )
-fig.update_layout(margin={"r": 0, "t": 100, "l": 0, "b": 0})
+fig.update_layout(
+    margin={"r": 0, "t": 100, "l": 0, "b": 0}, legend=dict(title="<b>Vaccine Doses</b>")
+)
 # fig.update_xaxes(type="category", ticklabelmode="period") #This will convert to full dates if needed
 # If change above, would need to change tick angle so that dates were visible.
 fig.update_traces(hovertemplate="%{y:.2f}%"),
@@ -220,14 +222,14 @@ fig.update_layout(
             direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.1,
+            x=0.05,
             xanchor="left",
             y=1.25,
             yanchor="top",
             buttons=list(
                 [
                     dict(
-                        label="18 plus",
+                        label="> 18",
                         method="update",
                         args=[
                             {
@@ -273,7 +275,7 @@ fig.update_layout(
                         ],
                     ),
                     dict(
-                        label="60 plus",
+                        label="> 60",
                         method="update",
                         args=[
                             {
@@ -305,7 +307,7 @@ fig.update_layout(
     annotations=[
         dict(
             text="Age Range:",
-            x=0,
+            x=-0.1,
             xref="paper",
             y=1.2,
             yref="paper",
@@ -319,4 +321,4 @@ if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 fig.show()
 fig.write_image("Plots/vaccination_RECO_timeseries_buttons.png")
-# fig.write_json("Plots/vaccination_RECO_timeseries_buttons.json")
+fig.write_json("Plots/vaccination_RECO_timeseries_buttons.json")
