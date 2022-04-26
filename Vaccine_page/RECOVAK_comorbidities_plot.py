@@ -127,8 +127,8 @@ def stacked_bar_func(dataset, name):
     )
     if not os.path.isdir("Plots/"):
         os.mkdir("Plots/")
-    fig.show()
-    # fig.write_image("Plots/comorbidity_{}.png".format(name))
+    # fig.show()
+    fig.write_image("Plots/comorbidity_{}.png".format(name))
 
 
 # stacked_bar_func(RECO_resp, "respiratory")

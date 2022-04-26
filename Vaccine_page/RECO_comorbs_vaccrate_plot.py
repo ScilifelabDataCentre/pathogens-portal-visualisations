@@ -7,7 +7,12 @@ import plotly.graph_objects as go
 import os
 
 # from datetime import datetime as dt
-from RECO_comorbs_vaccrate_dataprep import RECO_cvd, RECO_dm, RECO_resp, RECO_cancer
+from RECO_comorbs_vaccrate_dataprep import (
+    RECO_cvd_V,
+    RECO_dm_V,
+    RECO_resp_V,
+    RECO_cancer_V,
+)
 
 
 def areagraph_func(dataset, name):
@@ -101,10 +106,10 @@ def areagraph_func(dataset, name):
 
 # run all graphs
 datasets = {
-    "CVD": RECO_cvd,
-    "DM": RECO_dm,
-    "resp": RECO_resp,
-    "cancer": RECO_cancer,
+    "CVD": RECO_cvd_V,
+    "DM": RECO_dm_V,
+    "resp": RECO_resp_V,
+    "cancer": RECO_cancer_V,
 }
 
 for name, df in datasets.items():

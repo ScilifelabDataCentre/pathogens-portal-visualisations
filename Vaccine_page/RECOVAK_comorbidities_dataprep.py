@@ -49,6 +49,7 @@ def date_func(dataset):
     dataset["date"] = dataset.apply(
         lambda row: dt.fromisocalendar(row["Year"], row["Week"], row["day"]), axis=1
     )
+    dataset.drop(dataset[(dataset["date"] < "2020-01-31")].index, inplace=True)
     dataset.drop(columns=["Week", "Year", "day", "wk"], axis=1, inplace=True)
     # print(dataset.head())
 
