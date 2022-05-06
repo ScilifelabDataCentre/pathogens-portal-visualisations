@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import os
 
 # from datetime import datetime as dt
-from RECO_PROPS_vaccinationrate_dataprep import RECO_18plus, RECO_18to59, RECO_60plus
+from Swedishpop_vaccinecov_dataprep import RECO_18plus, RECO_18to59, RECO_60plus
 
 # add all traces,
 

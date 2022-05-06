@@ -7,13 +7,13 @@ import pandas as pd
 from datetime import datetime as dt
 import os
 
-from RECO_comorbs_vaccrate_dataprep import (
+from comorbidity_vaccinecov_dataprep import (
     RECO_cvd_V,
     RECO_dm_V,
     RECO_resp_V,
     RECO_cancer_V,
 )
-from RECOVAK_comorbidities_dataprep import (
+from comorbidity_cases_dataprep import (
     RECO_cancer,
     RECO_cardio,
     RECO_diabetes,
