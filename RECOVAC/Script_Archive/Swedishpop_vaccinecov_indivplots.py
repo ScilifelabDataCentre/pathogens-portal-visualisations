@@ -1,5 +1,5 @@
-# Produces individual area under the curve graphs for data for each condition
-# shows different doses
+# Produces individual area under the curve graphs for data for each age category
+# shows coverage for each of first 4 doses
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -7,13 +7,25 @@ import plotly.graph_objects as go
 import os
 
 # from datetime import datetime as dt
-from RECO_comorbs_vaccrate_dataprep import RECO_cvd, RECO_dm, RECO_resp, RECO_cancer
+from Swedishpop_vaccinecov_dataprep import RECO_18plus, RECO_18to59, RECO_60plus
 
 
 def areagraph_func(dataset, name):
     RECO = dataset
     fig = go.Figure()
     fig.add_trace(
+        #     go.Scatter(
+        #         x=RECO["date"],
+        #         y=RECO["four_dose"],
+        #         # hoverinfo='x+y',
+        #         name="Four Doses",
+        #         mode="lines",
+        #         line=dict(width=1, color="rgba(5,48,97,1)"),
+        #         fillcolor="rgba(5,48,97,1)",
+        #         stackgroup="one"  # define stack group
+        #         # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+        #     )
+        # )
         go.Scatter(
             x=RECO["date"],
             y=RECO["three_dose"],
@@ -65,7 +77,24 @@ def areagraph_func(dataset, name):
             # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
         )
     )
-
+    # fig = px.area(
+    #     RECO,
+    #     x="date",
+    #     y="Proportion",
+    #     color="Dose",
+    #     line_group="Dose",
+    #     color_discrete_map={
+    #         RECO.Dose[0]: colours[0],
+    #         RECO.Dose[1]: colours[5],
+    #         RECO.Dose[2]: colours[7],
+    #         RECO.Dose[3]: colours[10],
+    #     },
+    #     hover_data={
+    #         "Dose": True,
+    #         "date": True,
+    #         "Proportion": ":.2f",
+    #     },
+    # )
     fig.update_layout(
         title=" ",
         yaxis={
@@ -93,18 +122,20 @@ def areagraph_func(dataset, name):
     # )
     if not os.path.isdir("Plots/"):
         os.mkdir("Plots/")
-    # fig.show()
+    fig.show()
     fig.write_image(
-        "Plots/vaccination_RECO_comorbs_{}.png".format(name)
+        "Plots/vaccination_RECO_timeseries_{}.png".format(name)
     )  # needs to write json and be .json
 
 
+# test function with just one graph.
+# areagraph_func(RECO_18plus, "18plus")
+
 # run all graphs
 datasets = {
-    "CVD": RECO_cvd,
-    "DM": RECO_dm,
-    "resp": RECO_resp,
-    "cancer": RECO_cancer,
+    "18plus": RECO_18plus,
+    "18to59": RECO_18to59,
+    "60plus": RECO_60plus,
 }
 
 for name, df in datasets.items():

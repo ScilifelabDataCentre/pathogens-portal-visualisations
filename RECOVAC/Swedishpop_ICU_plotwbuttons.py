@@ -101,7 +101,7 @@ fig = go.Figure(
             marker=dict(color=map_colour[3], line=dict(color="#000000", width=1)),
         ),
         go.Bar(
-            name="Unvaccinated",
+            name="No doses",
             x=RECO_icu_18plus.date,
             y=RECO_icu_18plus.vacc0,
             marker=dict(color=map_colour[1], line=dict(color="#000000", width=1)),
@@ -197,14 +197,12 @@ fig = go.Figure(
 fig.update_layout(
     barmode="stack",
     plot_bgcolor="white",
-    autosize=False,
-    font=dict(size=18),
-    margin=dict(r=250, t=150, b=0, l=0),
-    width=1500,
-    height=800,
-    # legend=dict(
-    #     y=0.95, x=1.05, title="<b>Vaccination<br>Status</b>", font=dict(size=22)
-    # ),
+    autosize=True,
+    font=dict(size=12),
+    margin=dict(r=100, t=150, b=0, l=0),
+    # width=1500,
+    # height=800,
+    legend=dict(title="<b>Vaccine Doses</b>"),
     showlegend=True,
     hoverlabel=dict(align="left"),
     hovermode="x unified",
@@ -252,8 +250,8 @@ fig.update_yaxes(
     range=[0, int(highest_y_value * 1.1)],
 )
 
-button_layer_1_height = 1.25
-button_layer_2_height = 1.15
+button_layer_1_height = 1.4
+button_layer_2_height = 1.25
 
 fig.update_layout(
     updatemenus=[
@@ -261,7 +259,7 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="18 plus",
+                        label="> 18",
                         method="update",
                         args=[
                             {
@@ -313,7 +311,7 @@ fig.update_layout(
                         ],
                     ),
                     dict(
-                        label="60 plus",
+                        label="> 60",
                         method="update",
                         args=[
                             {
@@ -386,18 +384,18 @@ fig.update_layout(
     annotations=[
         dict(
             text="Age Range:",
-            x=0,
+            x=-0.05,
             xref="paper",
-            y=1.23,
+            y=1.33,
             yref="paper",
             align="left",
             showarrow=False,
         ),
         dict(
             text="Timeframe:",
-            x=0,
+            x=-0.05,
             xref="paper",
-            y=1.13,
+            y=1.20,
             yref="paper",
             showarrow=False,
         ),
