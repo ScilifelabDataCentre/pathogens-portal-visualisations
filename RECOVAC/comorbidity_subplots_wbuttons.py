@@ -985,7 +985,7 @@ fig.update_layout(
 
 # if not os.path.isdir("Plots/"):
 #     os.mkdir("Plots/")
-fig.show()
+# fig.show()
 fig.write_json("Plots/comorbs_subplot_button.json")
 # fig.write_image(
 #     "Plots/vaccination_RECO_comorbs_{}.png".format(name)
