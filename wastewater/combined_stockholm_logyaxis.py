@@ -121,7 +121,7 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>N3-gene copy number per<br>PMMoV gene copy number, log</b>",
+    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10^4, log</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
