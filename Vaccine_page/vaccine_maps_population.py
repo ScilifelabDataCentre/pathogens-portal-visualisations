@@ -1,11 +1,10 @@
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 import json
 import os
 
 from vaccine_dataprep_Swedentots import (
-    df_vacc_lan,  # data on 1st 2 doses
+    first_two_timeseries_lan,  # data on 1st 2 doses
     third_vacc_dose_lan,  # data on 3rd dose (note, this data comes from the age group tab 'totals')
     # The above could be changed for the timeseries data, but they're equilavent for now (Feb 2022), might change in future
     # these two were used historically because we didn't have time series for 3rd dose
@@ -16,7 +15,7 @@ from vaccine_dataprep_Swedentots import (
 )
 
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open(os.path.join(os.path.dirname(__file__), "sweden-counties.geojson"), "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -29,17 +28,25 @@ for feature in jdata["features"]:
 # Need to make calculation based on population data - need to match SCB population data
 
 # First and second doses
-df_vacc_lan = pd.merge(
-    df_vacc_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+first_two_timeseries_lan = pd.merge(
+    first_two_timeseries_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
 )
 
-df_vacc_lan["Vacc_perc_population"] = (
-    df_vacc_lan["Antal vaccinerade"] / df_vacc_lan["Population"]
+first_two_timeseries_lan.drop(
+    first_two_timeseries_lan[first_two_timeseries_lan["Region"] == "Sweden"].index, inplace=True
+)
+
+first_two_timeseries_lan["Vacc_perc_population"] = (
+    first_two_timeseries_lan["Antal vaccinerade"] / first_two_timeseries_lan["Population"]
 ) * 100
 
 # Third dose
 third_vacc_dose_lan = pd.merge(
     third_vacc_dose_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+)
+
+third_vacc_dose_lan.drop(
+    third_vacc_dose_lan[third_vacc_dose_lan["Region"] == "Sweden"].index, inplace=True
 )
 
 third_vacc_dose_lan["Vacc_perc_population"] = (
@@ -51,6 +58,10 @@ fourth_vacc_dose_lan = pd.merge(
     fourth_vacc_dose_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
 )
 
+fourth_vacc_dose_lan.drop(
+    fourth_vacc_dose_lan[fourth_vacc_dose_lan["Region"] == "Sweden"].index, inplace=True
+)
+
 fourth_vacc_dose_lan["Vacc_perc_population"] = (
     fourth_vacc_dose_lan["Antal vaccinerade"] / fourth_vacc_dose_lan["Population"]
 ) * 100
@@ -59,29 +70,19 @@ fourth_vacc_dose_lan["Vacc_perc_population"] = (
 # So, we need to seperate out the doses, and select only the latest data
 
 # get data for one dose
-one_dose_lan_pop = df_vacc_lan[
-    (df_vacc_lan["date"] == df_vacc_lan["date"].max())
-    & (df_vacc_lan["Vaccinationsstatus"] == "Minst 1 dos")
+one_dose_lan_pop = first_two_timeseries_lan[
+    (first_two_timeseries_lan["date"] == first_two_timeseries_lan["date"].max())
+    & (first_two_timeseries_lan["Vaccinationsstatus"] == "Minst 1 dos")
 ]
-
-# drop the data for all Sweden in total, we don't need it
-one_dose_lan_pop.drop(
-    one_dose_lan_pop[(one_dose_lan_pop["Region"] == "Sweden")].index, inplace=True
-)
 
 # Change label for dose level to English
 one_dose_lan_pop = one_dose_lan_pop.replace("Minst 1 dos", "One dose")
 
 # Isolate data for 'at least two doses'
-two_dose_lan_pop = df_vacc_lan[
-    (df_vacc_lan["date"] == df_vacc_lan["date"].max())
-    & (df_vacc_lan["Vaccinationsstatus"] == "Minst 2 doser")
+two_dose_lan_pop = first_two_timeseries_lan[
+    (first_two_timeseries_lan["date"] == first_two_timeseries_lan["date"].max())
+    & (first_two_timeseries_lan["Vaccinationsstatus"] == "Minst 2 doser")
 ]
-
-# drop data for totals for Sweden
-two_dose_lan_pop.drop(
-    two_dose_lan_pop[(two_dose_lan_pop["Region"] == "Sweden")].index, inplace=True
-)
 
 # Change for second dose to English
 two_dose_lan_pop = two_dose_lan_pop.replace("Minst 2 doser", "Two doses")
@@ -93,12 +94,6 @@ third_vacc_dose_lan_pop = third_vacc_dose_lan[
     (third_vacc_dose_lan["Åldersgrupp"] == "Totalt")
 ]
 
-# Drop th overall 'Sweden data', we don't need it
-third_vacc_dose_lan_pop.drop(
-    third_vacc_dose_lan_pop[(third_vacc_dose_lan_pop["Region"] == "Sweden")].index,
-    inplace=True,
-)
-
 # Change label on dose level to English
 third_vacc_dose_lan_pop = third_vacc_dose_lan_pop.replace("3 doser", "Three doses")
 
@@ -108,12 +103,6 @@ third_vacc_dose_lan_pop = third_vacc_dose_lan_pop.replace("3 doser", "Three dose
 fourth_vacc_dose_lan_pop = fourth_vacc_dose_lan[
     (fourth_vacc_dose_lan["Åldersgrupp"] == "Totalt")
 ]
-
-# Drop th overall 'Sweden data', we don't need it
-fourth_vacc_dose_lan_pop.drop(
-    fourth_vacc_dose_lan_pop[(fourth_vacc_dose_lan_pop["Region"] == "Sweden")].index,
-    inplace=True,
-)
 
 # Change label on dose level to English
 fourth_vacc_dose_lan_pop = fourth_vacc_dose_lan_pop.replace("4 doser", "Four doses")
@@ -227,9 +216,10 @@ def map_func(dataset, dose):
     )
     fig.update_traces(marker_line_color="white")
 
-    if not os.path.isdir("Plots/"):
-        os.mkdir("Plots/")
-    fig.write_json("Plots/{}_pop_map.json".format(name))
+    filename = os.path.join(os.getcwd(), "vaccine_plots", "{}_pop_map.json".format(name.replace(" ", "")))
+    if not os.path.isdir(os.path.dirname(filename)):
+        os.mkdir(os.path.dirname(filename))
+    fig.write_json(filename)
 
 
 datasets = {
@@ -330,9 +320,10 @@ def eligible_map_func(elig_data, dose):
     )
     fig.update_traces(marker_line_color="white")
     # fig.show()
-    if not os.path.isdir("Plots/"):
-        os.mkdir("Plots/")
-    fig.write_json("Plots/{}_elig_map.json".format(name))
+    filename = os.path.join(os.getcwd(), "vaccine_plots", "{}_elig_map.json".format(name.replace(" ", "")))
+    if not os.path.isdir(os.path.dirname(filename)):
+        os.mkdir(os.path.dirname(filename))
+    fig.write_json(filename)
     # fig.write_image("Plots/{}_elig_map.png".format(name))
 
 

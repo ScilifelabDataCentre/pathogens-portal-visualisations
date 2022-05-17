@@ -1,5 +1,4 @@
 # Will create barchart from the indicators
-import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import os
@@ -92,8 +91,9 @@ fig.update_yaxes(
 
 # fig.show()
 
-if not os.path.isdir("Plots/"):
-    os.mkdir("Plots/")
+filename = os.path.join(os.getcwd(), "vaccine_plots", "Total_vaccinated_barchart.json")
+if not os.path.isdir(os.path.dirname(filename)):
+    os.mkdir(os.path.dirname(filename))
 
 # fig.write_image("Plots/Total_vaccinated_barchart.png")
-fig.write_json("Plots/Total_vaccinated_barchart.json")
+fig.write_json(filename)

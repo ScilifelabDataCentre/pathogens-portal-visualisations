@@ -5,7 +5,7 @@ import numpy as np  # won't need this when data on 3rd dose for 12-17 year olds 
 import os
 
 from vaccine_dataprep_Swedentots import (
-    df_vacc_ålders_lan,
+    first_two_vacc_dose_lan,
     third_vacc_dose_lan,
     fourth_vacc_dose,
 )
@@ -15,34 +15,34 @@ from vaccine_dataprep_Swedentots import (
 
 ## data for 3rd dose is held separately - work with data for 1st 2 doses first
 
-df_vacc_ålders_lan = df_vacc_ålders_lan[(df_vacc_ålders_lan["Region"] == "Sweden")]
+first_two_vacc_dose_lan = first_two_vacc_dose_lan[(first_two_vacc_dose_lan["Region"] == "Sweden")]
 
 # Need to change terminology used for the '90 or older' age group
-df_vacc_ålders_lan = df_vacc_ålders_lan.replace("90 eller äldre", "90+")
+first_two_vacc_dose_lan = first_two_vacc_dose_lan.replace("90 eller äldre", "90+")
 
 # We drop the 'totals' in the dataset as we don't want them
-df_vacc_ålders_lan.drop(
-    df_vacc_ålders_lan[(df_vacc_ålders_lan["Åldersgrupp"] == "Totalt")].index,
+first_two_vacc_dose_lan.drop(
+    first_two_vacc_dose_lan[(first_two_vacc_dose_lan["Åldersgrupp"] == "Totalt")].index,
     inplace=True,
 )
 
 # recaculate as a percentage for each age group.
-df_vacc_ålders_lan["Procent vaccinerade"] = (
-    df_vacc_ålders_lan["Andel vaccinerade"] * 100
+first_two_vacc_dose_lan["Procent vaccinerade"] = (
+    first_two_vacc_dose_lan["Andel vaccinerade"] * 100
 )
 
 # Separate data for one and two doses
 
 # one dose
-one_dose = df_vacc_ålders_lan[
-    (df_vacc_ålders_lan["Vaccinationsstatus"] == "Minst 1 dos")
+one_dose = first_two_vacc_dose_lan[
+    (first_two_vacc_dose_lan["Vaccinationsstatus"] == "Minst 1 dos")
 ]
 one_dose = one_dose[["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]]
 one_dose.reset_index(drop=True, inplace=True)
 
 # data for two doses
-two_doses = df_vacc_ålders_lan[
-    (df_vacc_ålders_lan["Vaccinationsstatus"] == "Minst 2 doser")
+two_doses = first_two_vacc_dose_lan[
+    (first_two_vacc_dose_lan["Vaccinationsstatus"] == "Minst 2 doser")
 ]
 two_doses = two_doses[["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]]
 two_doses.reset_index(drop=True, inplace=True)
@@ -228,10 +228,11 @@ fig_small.update_layout(
 
 # fig_small.show()
 
-if not os.path.isdir("Plots/"):
-    os.mkdir("Plots/")
+filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_heatmap_small.json")
+if not os.path.isdir(os.path.dirname(filename)):
+    os.mkdir(os.path.dirname(filename))
 
-fig_small.write_json("Plots/vaccine_heatmap_small.json")
+fig_small.write_json(filename)
 # fig_small.write_image("Plots/vaccine_heatmap_small.png")
 
 # Now make the larger version
@@ -328,8 +329,7 @@ fig.update_layout(
 
 # fig.show()
 
-if not os.path.isdir("Plots/"):
-    os.mkdir("Plots/")
+filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_heatmap.json")
 
-fig.write_json("Plots/vaccine_heatmap.json")
+fig.write_json(filename)
 # fig.write_image("Plots/vaccine_heatmap.png")
