@@ -1,11 +1,10 @@
-import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import os
 
 # Import processed data
 from vaccine_dataprep_Swedentots import (
-    df_vacc,
+    first_two_timeseries,
     third_timseries,
     fourth_timseries,
     Swedish_population,
@@ -13,8 +12,8 @@ from vaccine_dataprep_Swedentots import (
 
 # calculate percentages based on population size
 # first and second doses
-df_vacc["Vacc_perc_population"] = (
-    df_vacc["Antal vaccinerade"] / Swedish_population
+first_two_timeseries["Vacc_perc_population"] = (
+    first_two_timeseries["Antal vaccinerade"] / Swedish_population
 ) * 100
 # Third dose
 third_timseries["Vacc_perc_population"] = (
@@ -26,8 +25,8 @@ fourth_timseries["Vacc_perc_population"] = (
 ) * 100
 
 # separate the first and second doses
-least_one_dose = df_vacc[(df_vacc["Vaccinationsstatus"] == "Minst 1 dos")]
-least_two_doses = df_vacc[(df_vacc["Vaccinationsstatus"] == "Minst 2 doser")]
+least_one_dose = first_two_timeseries[(first_two_timeseries["Vaccinationsstatus"] == "Minst 1 dos")]
+least_two_doses = first_two_timeseries[(first_two_timeseries["Vaccinationsstatus"] == "Minst 2 doser")]
 
 ## Figure based on percentages calculated using population size
 
@@ -108,9 +107,10 @@ fig_pop.update_yaxes(
 
 # fig_pop.show()
 
-# if not os.path.isdir("Plots/"):
-#     os.mkdir("Plots/")
+filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_timeseries_pop_barchart.json")
+if not os.path.isdir(os.path.dirname(filename)):
+    os.mkdir(os.path.dirname(filename))
 
 # make figure for web
-fig_pop.write_json("Plots/vaccine_timeseries_pop_barchart.json")
+fig_pop.write_json(filename)
 # fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")
