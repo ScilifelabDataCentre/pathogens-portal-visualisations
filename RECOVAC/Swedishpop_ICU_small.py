@@ -197,9 +197,9 @@ fig = go.Figure(
 fig.update_layout(
     barmode="stack",
     plot_bgcolor="white",
-    autosize=True,
+    # autosize=True,
     font=dict(size=12),
-    margin=dict(r=100, t=150, b=0, l=0),
+    margin=dict(r=100, t=50, b=0, l=0),
     # width=1500,
     # height=800,
     legend=dict(title="<b>Vaccine Doses</b>"),
@@ -230,7 +230,7 @@ fig.update_layout(
 
 # modify x-axis
 fig.update_xaxes(
-    title="<br><b>Date</b>",
+    title="<b>Date</b>",
     showgrid=True,
     linecolor="black",
     # range=["2020-01-01", max(RECO.date)],
@@ -250,8 +250,7 @@ fig.update_yaxes(
     range=[0, int(highest_y_value * 1.1)],
 )
 
-button_layer_1_height = 1.4
-button_layer_2_height = 1.25
+button_layer_1_height = 1.3
 
 fig.update_layout(
     updatemenus=[
@@ -346,37 +345,7 @@ fig.update_layout(
             xanchor="left",
             y=button_layer_1_height,
             yanchor="top",
-        ),
-        dict(
-            buttons=list(
-                [
-                    dict(
-                        label="View whole time series",
-                        method="relayout",
-                        args=[
-                            "xaxis.range",
-                            (min(RECO_icu_18plus.date), max(RECO_icu_18plus.date)),
-                        ],
-                    ),
-                    dict(
-                        label="Align timeline with vaccination coverage plot",
-                        method="relayout",
-                        args=[
-                            "xaxis.range",
-                            ("2020-12-21", max(RECO_icu_18plus.date)),
-                        ],
-                    ),
-                ],
-            ),
-            type="buttons",
-            direction="right",
-            pad={"r": 10, "t": 10},
-            showactive=True,
-            x=0.1,
-            xanchor="left",
-            y=button_layer_2_height,
-            yanchor="top",
-        ),
+        )
     ]
 )
 
@@ -384,19 +353,11 @@ fig.update_layout(
     annotations=[
         dict(
             text="Age Range:",
-            x=-0.05,
-            xref="paper",
-            y=1.33,
-            yref="paper",
-            align="left",
-            showarrow=False,
-        ),
-        dict(
-            text="Timeframe:",
-            x=-0.05,
+            x=-0.1,
             xref="paper",
             y=1.20,
             yref="paper",
+            align="left",
             showarrow=False,
         ),
     ]
@@ -405,9 +366,7 @@ fig.update_layout(
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 # fig.show()
-fig.write_json(
-    "Plots/ICUadmiss_vaccinationlevel_button.json"
-)  # would need to change to json for portal
+fig.write_json("Plots/ICUadmiss_small.json")  # would need to change to json for portal
 
 
 # single tests

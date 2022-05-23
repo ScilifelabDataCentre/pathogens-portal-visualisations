@@ -10,7 +10,7 @@ from datetime import datetime as dt
 # first load data. Note, we currently get in xls format... will ask RECOVAK for xlsx, if possible. If not will consider coding a conversion
 # 18+ age
 RECO_18plus = pd.read_excel(
-    "data/vacc_pop_18plus_25 Feb 2022.xlsx",
+    "data/vacc_pop_18plus_22 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -19,7 +19,7 @@ RECO_18plus = pd.read_excel(
 
 # 18-59 age
 RECO_18to59 = pd.read_excel(
-    "data/vacc_pop_18-59_25 Feb 2022.xlsx",
+    "data/vacc_pop_18-59_22 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -28,7 +28,7 @@ RECO_18to59 = pd.read_excel(
 
 # 60+ age
 RECO_60plus = pd.read_excel(
-    "data/vacc_pop_60plus_25 Feb 2022.xlsx",
+    "data/vacc_pop_60plus_22 Apr 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
