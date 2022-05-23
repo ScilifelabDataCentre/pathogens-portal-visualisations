@@ -983,8 +983,8 @@ fig.update_layout(
 )
 
 
-# if not os.path.isdir("Plots/"):
-#     os.mkdir("Plots/")
+if not os.path.isdir("Plots/"):
+    os.mkdir("Plots/")
 # fig.show()
 fig.write_json("Plots/comorbs_subplot_button.json")
 # fig.write_image(

@@ -319,6 +319,6 @@ fig.update_layout(
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
-fig.show()
-fig.write_image("Plots/vaccination_RECO_timeseries_buttons.png")
+# fig.show()
+# fig.write_image("Plots/vaccination_RECO_timeseries_buttons.png")
 fig.write_json("Plots/vaccination_RECO_timeseries_buttons.json")
