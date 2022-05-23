@@ -1,3 +1,4 @@
+import argparse
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -9,6 +10,11 @@ from vaccine_dataprep_Swedentots import (
     third_vacc_dose_lan,
     fourth_vacc_dose,
 )
+
+aparser = argparse.ArgumentParser(description="Generate text insert json")
+aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 ## Need 3 sets of data - for one dose, two doses, and three doses
 # Don't have population size data for these age groups (at least right now), so can't do population level calculations
@@ -227,12 +233,10 @@ fig_small.update_layout(
 )
 
 # fig_small.show()
+if not os.path.isdir(args.output_dir):
+    os.mkdir(args.output_dir)
 
-filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_heatmap_small.json")
-if not os.path.isdir(os.path.dirname(filename)):
-    os.mkdir(os.path.dirname(filename))
-
-fig_small.write_json(filename)
+fig_small.write_json(os.path.join(args.output_dir, "vaccine_heatmap_small.json"))
 # fig_small.write_image("Plots/vaccine_heatmap_small.png")
 
 # Now make the larger version
@@ -329,7 +333,5 @@ fig.update_layout(
 
 # fig.show()
 
-filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_heatmap.json")
-
-fig.write_json(filename)
+fig.write_json(os.path.join(args.output_dir, "vaccine_heatmap.json"))
 # fig.write_image("Plots/vaccine_heatmap.png")

@@ -1,3 +1,4 @@
+import argparse
 import plotly.express as px
 import pandas as pd
 import json
@@ -13,6 +14,11 @@ from vaccine_dataprep_Swedentots import (
     # Added fourth dose March 25th 2022
     SCB_population,  # raw population counts for each lan
 )
+
+aparser = argparse.ArgumentParser(description="Generate text insert json")
+aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # map
 with open(os.path.join(os.path.dirname(__file__), "sweden-counties.geojson"), "r") as sw:
@@ -216,10 +222,9 @@ def map_func(dataset, dose):
     )
     fig.update_traces(marker_line_color="white")
 
-    filename = os.path.join(os.getcwd(), "vaccine_plots", "{}_pop_map.json".format(name.replace(" ", "")))
-    if not os.path.isdir(os.path.dirname(filename)):
-        os.mkdir(os.path.dirname(filename))
-    fig.write_json(filename)
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
+    fig.write_json(os.path.join(args.output_dir, "{}_pop_map.json".format(name.replace(" ", ""))))
 
 
 datasets = {
@@ -320,10 +325,10 @@ def eligible_map_func(elig_data, dose):
     )
     fig.update_traces(marker_line_color="white")
     # fig.show()
-    filename = os.path.join(os.getcwd(), "vaccine_plots", "{}_elig_map.json".format(name.replace(" ", "")))
-    if not os.path.isdir(os.path.dirname(filename)):
-        os.mkdir(os.path.dirname(filename))
-    fig.write_json(filename)
+    
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
+    fig.write_json(os.path.join(args.output_dir, "{}_elig_map.json".format(name.replace(" ", ""))))
     # fig.write_image("Plots/{}_elig_map.png".format(name))
 
 

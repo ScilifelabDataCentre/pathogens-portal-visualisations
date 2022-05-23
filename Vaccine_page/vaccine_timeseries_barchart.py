@@ -1,3 +1,4 @@
+import argparse
 import plotly.graph_objects as go
 import pandas as pd
 import os
@@ -9,6 +10,11 @@ from vaccine_dataprep_Swedentots import (
     fourth_timseries,
     Swedish_population,
 )
+
+aparser = argparse.ArgumentParser(description="Generate text insert json")
+aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # calculate percentages based on population size
 # first and second doses
@@ -107,10 +113,9 @@ fig_pop.update_yaxes(
 
 # fig_pop.show()
 
-filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_timeseries_pop_barchart.json")
-if not os.path.isdir(os.path.dirname(filename)):
-    os.mkdir(os.path.dirname(filename))
+if not os.path.isdir(args.output_dir):
+    os.mkdir(args.output_dir)
 
 # make figure for web
-fig_pop.write_json(filename)
+fig_pop.write_json(os.path.join(args.output_dir, "vaccine_timeseries_pop_barchart.json"))
 # fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")
