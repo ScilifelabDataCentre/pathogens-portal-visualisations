@@ -1,4 +1,5 @@
 # Will create barchart from the indicators
+import argparse
 import plotly.graph_objects as go
 import pandas as pd
 import os
@@ -15,6 +16,11 @@ from vaccine_livetext import (
     third_vacc_dose_pop,
     fourth_vacc_dose_pop,
 )
+
+aparser = argparse.ArgumentParser(description="Generate comparison bar plot")
+aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
 
@@ -90,10 +96,8 @@ fig.update_yaxes(
 )
 
 # fig.show()
-
-filename = os.path.join(os.getcwd(), "vaccine_plots", "Total_vaccinated_barchart.json")
-if not os.path.isdir(os.path.dirname(filename)):
-    os.mkdir(os.path.dirname(filename))
+if not os.path.isdir(args.output_dir):
+    os.mkdir(args.output_dir)
 
 # fig.write_image("Plots/Total_vaccinated_barchart.png")
-fig.write_json(filename)
+fig.write_json(os.path.join(args.output_dir, "Total_vaccinated_barchart.json"))

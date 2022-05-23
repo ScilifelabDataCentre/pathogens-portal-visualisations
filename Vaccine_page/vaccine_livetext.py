@@ -1,4 +1,5 @@
 # Will create indicators to display on page
+import argparse
 import pandas as pd
 import os
 import json
@@ -34,6 +35,11 @@ def parse_dose_data(dose_data, dose_filter=None):
         float_str((pop_last_three_weeks_data[0] - pop_last_three_weeks_data[1]) - \
                   (pop_last_three_weeks_data[1] - pop_last_three_weeks_data[2]))
         )
+
+aparser = argparse.ArgumentParser(description="Generate text insert json")
+aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 one_dose_swe, rate_onedose_lastwk, onedose_ratechange,\
 one_dose_pop, rate_onedose_pop_lastwk, onedose_ratechange_pop = parse_dose_data(first_two_timeseries, "Minst 1 dos")
@@ -77,9 +83,9 @@ data_dictionary = {
     "population_four_doses_rate_change": fourdose_ratechange_pop,
 }
 
-filename = os.path.join(os.getcwd(), "vaccine_plots", "vaccine_text_inserts.json")
-if not os.path.isdir(os.path.dirname(filename)):
-    os.mkdir(os.path.dirname(filename))
+if __name__ == "__main__":
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
 
-with open(filename, "w") as outfile:
-    json.dump(data_dictionary, outfile)
+    with open(os.path.join(args.output_dir, "vaccine_text_inserts.json"), "w") as outfile:
+        json.dump(data_dictionary, outfile)
