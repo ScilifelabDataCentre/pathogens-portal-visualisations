@@ -538,7 +538,7 @@ fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
     font=dict(size=12),
-    margin=dict(r=0, t=100, b=0, l=0),
+    margin=dict(r=0, t=175, b=0, l=0),
     # width=1500,
     # height=800,
     # legend=dict(title="<b>Vaccine Doses</b>"),
@@ -558,8 +558,9 @@ fig.update_layout(
 
 # buttons
 
-button_layer_1_height = 1.25
-button_layer_2_height = 1.15
+button_layer_1_height = 1.26
+button_layer_2_height = 1.20
+button_layer_3_height = 1.12
 
 fig.update_layout(
     updatemenus=[
@@ -650,6 +651,20 @@ fig.update_layout(
                         ],
                         label="Diabetes",
                     ),
+                ]
+            ),
+            type="buttons",
+            direction="right",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=button_layer_1_height,
+            yanchor="top",
+        ),
+        dict(
+            buttons=list(
+                [
                     dict(
                         method="update",
                         args=[
@@ -742,7 +757,7 @@ fig.update_layout(
             showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_1_height,
+            y=button_layer_2_height,
             yanchor="top",
         ),
         dict(
@@ -772,7 +787,7 @@ fig.update_layout(
             showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_2_height,
+            y=button_layer_3_height,
             yanchor="top",
         ),
         # dict(
@@ -975,7 +990,7 @@ fig.update_layout(
             text="Timeframe:",
             x=-0.05,
             xref="paper",
-            y=1.13,
+            y=1.09,
             yref="paper",
             showarrow=False,
         ),

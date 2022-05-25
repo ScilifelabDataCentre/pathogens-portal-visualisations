@@ -199,7 +199,7 @@ fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
     font=dict(size=12),
-    margin=dict(r=100, t=150, b=0, l=0),
+    margin=dict(r=100, t=175, b=0, l=0),
     # width=1500,
     # height=800,
     legend=dict(title="<b>Vaccine Doses</b>"),
@@ -250,8 +250,9 @@ fig.update_yaxes(
     range=[0, int(highest_y_value * 1.1)],
 )
 
-button_layer_1_height = 1.4
-button_layer_2_height = 1.25
+button_layer_1_height = 1.57
+button_layer_2_height = 1.35
+button_layer_3_height = 1.22
 
 fig.update_layout(
     updatemenus=[
@@ -358,8 +359,22 @@ fig.update_layout(
                             (min(RECO_icu_18plus.date), max(RECO_icu_18plus.date)),
                         ],
                     ),
+                ],
+            ),
+            type="buttons",
+            direction="right",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=button_layer_2_height,
+            yanchor="top",
+        ),
+        dict(
+            buttons=list(
+                [
                     dict(
-                        label="Align timeline with vaccination coverage plot",
+                        label="Align timeline",
                         method="relayout",
                         args=[
                             "xaxis.range",
@@ -374,7 +389,7 @@ fig.update_layout(
             showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_2_height,
+            y=button_layer_3_height,
             yanchor="top",
         ),
     ]
@@ -384,18 +399,18 @@ fig.update_layout(
     annotations=[
         dict(
             text="Age Range:",
-            x=-0.05,
+            x=-0.1,
             xref="paper",
-            y=1.33,
+            y=1.50,
             yref="paper",
             align="left",
             showarrow=False,
         ),
         dict(
             text="Timeframe:",
-            x=-0.05,
+            x=-0.1,
             xref="paper",
-            y=1.20,
+            y=1.30,
             yref="paper",
             showarrow=False,
         ),
