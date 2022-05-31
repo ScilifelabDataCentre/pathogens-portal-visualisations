@@ -1,13 +1,13 @@
 # This script prepares the data to be used in plots showing vaccination coverage over time
 # Data is given for different dose levels, and different age groups
-# RECOVAK provides data
+# RECOVAC provides data
 # Data given for 3 age ranges - 18+, 18-59, and 60+
 # Data given for first 4 doses
 # Graph will be 'area under the curve'
 import pandas as pd
 from datetime import datetime as dt
 
-# first load data. Note, we currently get in xls format... will ask RECOVAK for xlsx, if possible. If not will consider coding a conversion
+# first load data.
 # 18+ age
 RECO_18plus = pd.read_excel(
     "data/vacc_pop_18plus_22 Apr 2022.xlsx",
@@ -34,10 +34,6 @@ RECO_60plus = pd.read_excel(
     engine="openpyxl",
     keep_default_na=False,
 )
-
-# noticed that there is no data for early weeks (suspect no vaccinations before then)
-# There are also gaps in 4th dose, will need to check this with RECOVAK
-# For now, fill the missing data and convert date on all files
 
 # function to change the date:
 def date_func(dataset):
@@ -66,8 +62,7 @@ def calc_func(dataset):
     dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
     # dataset["four_dose"] = dataset[
     #     "vacc4"
-    # ]  # might need to extend this if there are 5th dose, for now it's a copy for consistency
-    # commented above for now because we have questions about vacc4 anyway
+    # ]
     dataset.drop(columns=["vacc1", "vacc2", "vacc3", "vacc4"], axis=1, inplace=True)
     # print(dataset.head())
 
@@ -82,12 +77,3 @@ for x in datasets:
 
 for y in datasets:
     calc_func(y)
-
-# # Now need to perform a 'melt' to reformat the data for the graph
-# RECO_18plus, RECO_18to59, RECO_60plus = [
-#     pd.melt(df, id_vars=["date"], var_name="Dose", value_name="Proportion")
-#     for df in datasets
-# ]
-
-# ADD THIS INTO DATE FUNCTION!!
-# print(RECO_18plus)

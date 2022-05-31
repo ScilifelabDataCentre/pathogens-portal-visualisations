@@ -211,9 +211,6 @@ fig.update_layout(
 # fig.update_xaxes(type="category", ticklabelmode="period") #This will convert to full dates if needed
 # If change above, would need to change tick angle so that dates were visible.
 fig.update_traces(hovertemplate="%{y:.2f}%"),
-# fig.add_vline(
-#     x=dateline, line_width=3, line_color="darkslategrey", line_dash="dash"
-# )
 
 fig.update_layout(
     updatemenus=[
