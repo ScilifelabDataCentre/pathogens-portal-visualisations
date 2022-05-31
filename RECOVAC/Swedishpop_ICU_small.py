@@ -57,12 +57,6 @@ datasets = {
 for name, df in datasets.items():
     date_func(df)
 
-# datasets = [RECO_icu_18plus, RECO_icu_18to59, RECO_icu_60plus]
-
-# # run the functions to recalculate the proportions and format the date
-# for x in datasets:
-#     date_func(x)
-
 # # Make stacked bar chart
 
 map_colour = px.colors.diverging.RdBu
@@ -208,26 +202,6 @@ fig.update_layout(
     hovermode="x unified",
 )
 
-# below - code
-# fig.add_vline(
-#     x=dt.strptime("2020-12-21", "%Y-%m-%d").timestamp() * 1000,
-#     annotation_position="top left",
-#     #    annotation=dict(font_size=16),
-#     annotation_text="First doses start ",
-#     line_width=2,
-# )
-
-# fig.add_vline(
-#     x=dt.strptime("2021-01-04", "%Y-%m-%d").timestamp() * 1000,
-#     annotation_text=" Second doses start",
-#     line_width=2,
-# )
-
-# fig.add_vline(
-#     x=dt.strptime("2020-12-21", "%Y-%m-%d").timestamp() * 1000,
-#     annotation_text="Third vaccinations",
-# )
-
 # modify x-axis
 fig.update_xaxes(
     title="<b>Date</b>",
@@ -366,18 +340,4 @@ fig.update_layout(
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 # fig.show()
-fig.write_json("Plots/ICUadmiss_small.json")  # would need to change to json for portal
-
-
-# single tests
-# ICU_bar_func(RECO_iva_18plus, "18plus_icu")
-
-# # run all graphs
-# datasets = {
-#     "icu_18plus": RECO_icu_18plus,
-#     "icu_18to59": RECO_icu_18to59,
-#     "icu_60plus": RECO_icu_60plus,
-# }
-
-# for name, df in datasets.items():
-#     ICU_bar_func(df, name)
+fig.write_json("Plots/ICUadmiss_small.json")

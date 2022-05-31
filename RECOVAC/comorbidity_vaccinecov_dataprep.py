@@ -40,8 +40,6 @@ RECO_cancer_V = pd.read_excel(
     keep_default_na=False,
 )
 
-# Some data points missing, does not make sense in a time treand, so need to ask RECOVAK on this
-
 # function to change the date:
 def date_func(dataset):
     dataset[["Year", "Week"]] = (
@@ -89,9 +87,3 @@ for x in datasets:
 
 for y in datasets:
     calc_func(y)
-
-# # Now need to perform a 'melt' to reformat the data for the graph
-# RECO_cvd, RECO_dm, RECO_resp, RECO_cancer = [
-#     pd.melt(df, id_vars=["date"], var_name="Dose", value_name="Proportion")
-#     for df in datasets
-# ]

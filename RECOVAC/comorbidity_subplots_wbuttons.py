@@ -1,4 +1,4 @@
-############################## Here is code related to subplots and buttons_
+# Here is code related to subplots and buttons_
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.express as px
@@ -22,7 +22,7 @@ from comorbidity_cases_dataprep import (
 
 fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 
-## BELOW ARE TRACES FOR VACCINATION PLOT
+# BELOW ARE TRACES FOR VACCINATION PLOT
 
 ## CVD traces for vaccination.
 fig.add_trace(
@@ -505,9 +505,6 @@ fig.update_layout(
     # height=400,
     # width=900,  # need to delete this when moving to json, so it can be adaptive to web
 )
-# fig.update_xaxes(type="category", ticklabelmode="period") #This will convert to full dates if needed
-# If change above, would need to change tick angle so that dates were visible.
-# fig.update_traces(hovertemplate="%{y:.2f}%"),
 
 # now layout for second (bar) plot
 
@@ -790,188 +787,6 @@ fig.update_layout(
             y=button_layer_3_height,
             yanchor="top",
         ),
-        # dict(
-        #     buttons=list(
-        #         [
-        #             dict(
-        #                 method="update",
-        #                 args=[
-        #                     {
-        #                         "visible": [
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                         ]
-        #                     }
-        #                 ],
-        #                 label="Three Doses",
-        #             ),
-        #             dict(
-        #                 method="update",
-        #                 args=[
-        #                     {
-        #                         "visible": [
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                         ]
-        #                     }
-        #                 ],
-        #                 label="Two Doses",
-        #             ),
-        #             dict(
-        #                 method="update",
-        #                 args=[
-        #                     {
-        #                         "visible": [
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                         ]
-        #                     }
-        #                 ],
-        #                 label="One Dose",
-        #             ),
-        #             dict(
-        #                 method="update",
-        #                 args=[
-        #                     {
-        #                         "visible": [
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                             False,
-        #                             False,
-        #                             False,
-        #                             True,
-        #                         ]
-        #                     }
-        #                 ],
-        #                 label="Unvaccinated",
-        #             ),
-        #         ]
-        #     ),
-        #     type="buttons",
-        #     direction="right",
-        #     pad={"r": 10, "t": 10},
-        #     showactive=True,
-        #     x=0.5,
-        #     xanchor="left",
-        #     y=button_layer_2_height,
-        #     yanchor="top",
-        # ),
     ]
 )
 
@@ -1002,6 +817,3 @@ if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 # fig.show()
 fig.write_json("Plots/comorbs_subplot_button.json")
-# fig.write_image(
-#     "Plots/vaccination_RECO_comorbs_{}.png".format(name)
-# )  # needs to write json and be .json

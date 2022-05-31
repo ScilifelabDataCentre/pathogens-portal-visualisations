@@ -51,7 +51,6 @@ def date_func(dataset):
     )
     dataset.drop(dataset[(dataset["date"] < "2020-01-31")].index, inplace=True)
     dataset.drop(columns=["Week", "Year", "day", "wk"], axis=1, inplace=True)
-    # print(dataset.head())
 
 
 # make a list of datasets and add function to run function
