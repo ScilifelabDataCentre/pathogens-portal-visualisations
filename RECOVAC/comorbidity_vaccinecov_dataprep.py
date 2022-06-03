@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # cardiovascular disease
 RECO_cvd_V = pd.read_excel(
-    "data/cvd_cardio_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/cvd_cardio_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -15,7 +15,7 @@ RECO_cvd_V = pd.read_excel(
 
 # diabetes
 RECO_dm_V = pd.read_excel(
-    "data/dm_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/dm_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -24,7 +24,7 @@ RECO_dm_V = pd.read_excel(
 
 # respiratory disease
 RECO_resp_V = pd.read_excel(
-    "data/resp_dis1_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/resp_dis1_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -33,7 +33,7 @@ RECO_resp_V = pd.read_excel(
 
 # cancer
 RECO_cancer_V = pd.read_excel(
-    "data/sos_cancer_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/sos_cancer_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -61,20 +61,20 @@ def date_func(dataset):
 def calc_func(dataset):
     # need to work out proportions UNVACCINATED - sum rest and minus from 1
     dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
-    dataset.set_axis(["vacc1", "vacc2", "vacc3", "date"], axis=1, inplace=True)
+    dataset.set_axis(["vacc1", "vacc2", "vacc3", "vacc4", "date"], axis=1, inplace=True)
     dataset["no_dose"] = (1 - dataset["vacc1"]) * 100
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
-    dataset["three_dose"] = (
-        dataset["vacc3"] * 100
-    )  # (dataset["vacc3"] - dataset["vacc4"]) * 100
+    dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
+    dataset["four_dose"] = dataset["vacc4"] * 100
     # will need to modify and expand this as more doses are added
     dataset.drop(
-        columns=["vacc1", "vacc2", "vacc3"],
+        columns=["vacc1", "vacc2", "vacc3", "vacc4"],
         axis=1,
         inplace=True,
     )
-    # print(dataset.head())
+    cols = ["no_dose", "one_dose", "two_dose", "three_dose", "four_dose"]
+    dataset[cols] = dataset[cols].ffill()
 
 
 # make a list of datasets on which to perform the function

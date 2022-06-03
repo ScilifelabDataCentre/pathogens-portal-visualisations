@@ -7,7 +7,7 @@ from datetime import datetime as dt
 # Import data
 
 RECO_icu_18plus = pd.read_excel(
-    "data/iva_vacc_18plus_22 Apr 2022.xlsx",
+    "data/iva_vacc_18plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -15,7 +15,7 @@ RECO_icu_18plus = pd.read_excel(
 )
 
 RECO_icu_18to59 = pd.read_excel(
-    "data/iva_vacc_18-59_22 Apr 2022.xlsx",
+    "data/iva_vacc_18-59_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -23,7 +23,7 @@ RECO_icu_18to59 = pd.read_excel(
 )
 
 RECO_icu_60plus = pd.read_excel(
-    "data/iva_vacc_60plus_22 Apr 2022.xlsx",
+    "data/iva_vacc_60plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",

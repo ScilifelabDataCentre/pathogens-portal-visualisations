@@ -18,6 +18,19 @@ fig = go.Figure()
 fig.add_trace(
     go.Scatter(
         x=RECO_18plus["date"],
+        y=RECO_18plus["four_dose"],
+        # hoverinfo='x+y',
+        name="Four Doses",
+        mode="lines",
+        line=dict(width=1, color="rgba(5,48,97,1)"),
+        fillcolor="rgba(5,48,97,1)",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    )
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18plus["date"],
         y=RECO_18plus["three_dose"],
         # hoverinfo='x+y',
         name="Three Doses",
@@ -69,7 +82,20 @@ fig.add_trace(
 )
 
 # traces for 18-59 age category
-
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18to59["date"],
+        y=RECO_18to59["four_dose"],
+        # hoverinfo='x+y',
+        name="Four Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="rgba(5,48,97,1)"),
+        fillcolor="rgba(5,48,97,1)",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    )
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_18to59["date"],
@@ -128,7 +154,20 @@ fig.add_trace(
 )
 
 # traces for 60+ age category
-
+fig.add_trace(
+    go.Scatter(
+        x=RECO_60plus["date"],
+        y=RECO_60plus["four_dose"],
+        # hoverinfo='x+y',
+        name="Four Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="rgba(5,48,97,1)"),
+        fillcolor="rgba(5,48,97,1)",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    )
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_60plus["date"],
@@ -235,6 +274,9 @@ fig.update_layout(
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -258,10 +300,13 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
                                     True,
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -285,6 +330,9 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
+                                    True,
                                     True,
                                     True,
                                     True,
