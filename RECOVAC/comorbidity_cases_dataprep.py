@@ -6,7 +6,7 @@ from datetime import datetime as dt
 # Import data
 
 RECO_cancer = pd.read_excel(
-    "data/sos_cancer_covid_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/sos_cancer_covid_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -14,7 +14,7 @@ RECO_cancer = pd.read_excel(
 )
 
 RECO_cardio = pd.read_excel(
-    "data/cvd_cardio_covid_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/cvd_cardio_covid_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -22,7 +22,7 @@ RECO_cardio = pd.read_excel(
 )
 
 RECO_diabetes = pd.read_excel(
-    "data/dm_covid_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/dm_covid_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -30,7 +30,7 @@ RECO_diabetes = pd.read_excel(
 )
 
 RECO_resp = pd.read_excel(
-    "data/resp_dis1_covid_vacc_SciLifeLab22 Apr 2022.xlsx",
+    "data/resp_dis1_covid_vacc_SciLifeLab25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -51,6 +51,7 @@ def date_func(dataset):
     )
     dataset.drop(dataset[(dataset["date"] < "2020-01-31")].index, inplace=True)
     dataset.drop(columns=["Week", "Year", "day", "wk"], axis=1, inplace=True)
+    # print(dataset.head())
 
 
 # make a list of datasets and add function to run function

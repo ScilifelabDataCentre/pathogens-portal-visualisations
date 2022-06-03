@@ -7,7 +7,7 @@ from datetime import datetime as dt
 # Import data
 
 RECO_icu_18plus = pd.read_excel(
-    "data/iva_vacc_18plus_22 Apr 2022.xlsx",
+    "data/iva_vacc_18plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -15,7 +15,7 @@ RECO_icu_18plus = pd.read_excel(
 )
 
 RECO_icu_18to59 = pd.read_excel(
-    "data/iva_vacc_18-59_22 Apr 2022.xlsx",
+    "data/iva_vacc_18-59_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -23,7 +23,7 @@ RECO_icu_18to59 = pd.read_excel(
 )
 
 RECO_icu_60plus = pd.read_excel(
-    "data/iva_vacc_60plus_22 Apr 2022.xlsx",
+    "data/iva_vacc_60plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -61,7 +61,7 @@ for name, df in datasets.items():
 
 map_colour = px.colors.diverging.RdBu
 map_colour[5] = "rgb(235, 235, 0)"
-
+# print(map_colour[10])
 
 # def ICU_bar_func(dataset, name):
 #     RECO = dataset
@@ -326,27 +326,13 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="View whole time series",
+                        label="Whole time series",
                         method="relayout",
                         args=[
                             "xaxis.range",
                             (min(RECO_icu_18plus.date), max(RECO_icu_18plus.date)),
                         ],
                     ),
-                ],
-            ),
-            type="buttons",
-            direction="right",
-            pad={"r": 10, "t": 10},
-            showactive=True,
-            x=0.1,
-            xanchor="left",
-            y=button_layer_2_height,
-            yanchor="top",
-        ),
-        dict(
-            buttons=list(
-                [
                     dict(
                         label="Align timeline",
                         method="relayout",
@@ -363,7 +349,7 @@ fig.update_layout(
             showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_3_height,
+            y=button_layer_2_height,
             yanchor="top",
         ),
     ]

@@ -10,7 +10,7 @@ from datetime import datetime as dt
 # first load data.
 # 18+ age
 RECO_18plus = pd.read_excel(
-    "data/vacc_pop_18plus_22 Apr 2022.xlsx",
+    "data/vacc_pop_18plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -19,7 +19,7 @@ RECO_18plus = pd.read_excel(
 
 # 18-59 age
 RECO_18to59 = pd.read_excel(
-    "data/vacc_pop_18-59_22 Apr 2022.xlsx",
+    "data/vacc_pop_18-59_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -28,7 +28,7 @@ RECO_18to59 = pd.read_excel(
 
 # 60+ age
 RECO_60plus = pd.read_excel(
-    "data/vacc_pop_60plus_22 Apr 2022.xlsx",
+    "data/vacc_pop_60plus_25 May 2022.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -60,9 +60,7 @@ def calc_func(dataset):
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
     dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
-    # dataset["four_dose"] = dataset[
-    #     "vacc4"
-    # ]
+    dataset["four_dose"] = dataset["vacc4"]
     dataset.drop(columns=["vacc1", "vacc2", "vacc3", "vacc4"], axis=1, inplace=True)
     # print(dataset.head())
 
