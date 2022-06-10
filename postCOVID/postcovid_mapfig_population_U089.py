@@ -23,20 +23,25 @@ df1 = pd.read_csv(
 df1["id"] = df1["Lan"].apply(lambda x: counties_id_map[x])
 
 # colour theme
-colour = px.colors.sequential.tempo
+colour = px.colors.diverging.RdBu
+colour[5] = "rgb(255, 234, 0)"
 splits = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.0]
 
 for language in ["English", "Swedish"]:
     if language == "English":
         cbtit = "Percentage of the population<br>that received a Z86.1A<br>or U08.9 diagnosis"
         perc_postcov_title = "<br>Percentage of the population<br>that received a Z86.1A<br>or U08.9 diagnosis"
-        raw_number_title = "<br>Number of people that<br>received a Z86.1A<br>or U08.9 diagnosis"
+        raw_number_title = (
+            "<br>Number of people that<br>received a Z86.1A<br>or U08.9 diagnosis"
+        )
         Population = "Total population"
         filename = "map_postcovid_percent_of_population_U089.json"
     elif language == "Swedish":
         cbtit = "Andel personer angivet i<br>procent som fått diagnoserna<br>Z86.1A eller U08.9 relativt<br>populationen"
         perc_postcov_title = "<br>Andel personer angivet i<br>procent som fått diagnoserna<br>Z86.1A eller U08.9"
-        raw_number_title = "<br>Antal personer som fått<br>diagnoserna Z86.1A eller<br>U08.9"
+        raw_number_title = (
+            "<br>Antal personer som fått<br>diagnoserna Z86.1A eller<br>U08.9"
+        )
         Population = "Total population"
         filename = "map_postcovid_percent_of_population_U089_{}.json".format(language)
 
@@ -48,26 +53,26 @@ for language in ["English", "Swedish"]:
         color=df1["proc_kodU089_pop"],
         # Below gives discrete colours for ranges
         color_continuous_scale=[
-            (splits[0], colour[0]),
-            (splits[1], colour[0]),
-            (splits[1], colour[1]),
-            (splits[2], colour[1]),
-            (splits[2], colour[2]),
-            (splits[3], colour[2]),
-            (splits[3], colour[3]),
-            (splits[4], colour[3]),
-            (splits[4], colour[4]),
-            (splits[5], colour[4]),
+            (splits[0], colour[9]),
+            (splits[1], colour[9]),
+            (splits[1], colour[8]),
+            (splits[2], colour[8]),
+            (splits[2], colour[7]),
+            (splits[3], colour[7]),
+            (splits[3], colour[6]),
+            (splits[4], colour[6]),
+            (splits[4], colour[5]),
             (splits[5], colour[5]),
-            (splits[6], colour[5]),
-            (splits[6], colour[6]),
-            (splits[7], colour[6]),
-            (splits[7], colour[7]),
-            (splits[8], colour[7]),
-            (splits[8], colour[8]),
-            (splits[9], colour[8]),
-            (splits[9], colour[9]),
-            (splits[10], colour[9]),
+            (splits[5], colour[4]),
+            (splits[6], colour[4]),
+            (splits[6], colour[3]),
+            (splits[7], colour[3]),
+            (splits[7], colour[2]),
+            (splits[8], colour[2]),
+            (splits[8], colour[1]),
+            (splits[9], colour[1]),
+            (splits[9], colour[0]),
+            (splits[10], colour[0]),
         ],
         # this keeps the range of colours constant regardless of data
         range_color=[0, 1.0],
@@ -99,7 +104,9 @@ for language in ["English", "Swedish"]:
             visible=False,
         )
     )
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, width=400, height=500)
+    fig.update_layout(
+        margin={"r": 0, "t": 0, "l": 0, "b": 0}
+    )  # , width=400, height=500)
     fig.update_layout(dragmode=False)
     # The below labels the colourbar categories
     fig.update_layout(
@@ -134,9 +141,9 @@ for language in ["English", "Swedish"]:
             thicknessmode="pixels",
             thickness=10,
             lenmode="pixels",
-            len=195,
+            len=230,
         ),
-        font=dict(size=9),
+        font=dict(size=12),
     )
     # write out as html for web
     # fig.show()
