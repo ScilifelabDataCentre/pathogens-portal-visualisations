@@ -1,5 +1,7 @@
 import pandas as pd
 import json
+import plotly.graph_objects as go
+import os
 
 # Import and sort data
 age_sex_summ = pd.read_excel(
@@ -14,92 +16,105 @@ age_sex_summ = pd.read_excel(
 U099 = age_sex_summ.iloc[0:3, 0:7]
 U089 = age_sex_summ.iloc[12:15, 0:7]
 
-# concat required values into a column
+# organise data for plots
 
-U099 = U099[["Unnamed: 1", "Unnamed: 3", "Unnamed: 5"]]
-U089 = U089[["Unnamed: 1", "Unnamed: 3", "Unnamed: 5"]]
+U099 = U099[["Unnamed: 3", "Unnamed: 5", "Unnamed: 1"]]
+U089 = U089[["Unnamed: 3", "Unnamed: 5", "Unnamed: 1"]]
 
-# initiate new dataframe
+U099.columns = ["male", "female", "all"]
+U089.columns = ["male", "female", "all"]
 
-df = pd.DataFrame(columns=["diagnosis_code", "number_of_patients", "age_group", "sex"])
+U099["age_group"] = ["0-17", "18-69", "70"]
+U089["age_group"] = ["0-17", "18-69", "70"]
 
-df["number_of_patients"] = (
-    U099["Unnamed: 3"]
-    .append(
-        [
-            U099["Unnamed: 5"],
-            U099["Unnamed: 1"],
-            U089["Unnamed: 3"],
-            U089["Unnamed: 5"],
-            U089["Unnamed: 1"],
+# plot function for the two plots
+
+
+def stack_plot(input, name):
+    diagnosis = input
+    # Make stacked bar chart
+    fig = go.Figure(
+        data=[
+            go.Bar(
+                name="Male",
+                x=diagnosis.age_group,
+                y=diagnosis.male,
+                marker=dict(color="rgb(5,48,97)", line=dict(color="#000000", width=1)),
+                hovertemplate="<b>Sex:</b> Male"
+                + "<br><b>Age Group:</b> %{x}"
+                + "<br><b>Number Diagnosed:</b> %{y}<extra></extra>",
+            ),
+            go.Bar(
+                name="Female",
+                x=diagnosis.age_group,
+                y=diagnosis.female,
+                marker=dict(
+                    color="rgb(178,24,43)", line=dict(color="#000000", width=1)
+                ),
+                hovertemplate="<b>Sex:</b> Female"
+                + "<br><b>Age Group:</b> %{x}"
+                + "<br><b>Number Diagnosed:</b> %{y}<extra></extra>",
+            ),
         ]
     )
-    .reset_index(drop=True)
-)
 
-df["diagnosis_code"] = [
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "U09.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-    "Z86.1A/U08.9",
-]
+    fig.update_layout(
+        barmode="stack",
+        plot_bgcolor="white",
+        autosize=True,
+        font=dict(size=14),
+        margin=dict(r=110, t=0, b=0, l=0),
+        # width=2000, #do not add these parameters for Hugo
+        # height=1200,
+        showlegend=True,
+        legend=dict(
+            title="<b>Patient sex</b>",
+        ),
+    )
+    # modify x-axis
+    fig.update_xaxes(
+        title="<b>Age group</b>",
+        showgrid=True,
+        linecolor="black",
+    )
 
-df["age_group"] = [
-    "0-17",
-    "18-69",
-    "70",
-    "0-17",
-    "18-69",
-    "70",
-    "0-17",
-    "18-69",
-    "70",
-    "0-17",
-    "18-69",
-    "70",
-    "0-17",
-    "18-69",
-    "70",
-    "0-17",
-    "18-69",
-    "70",
-]
+    highest_y_value = max(
+        diagnosis["all"],
+    )
 
-df["sex"] = [
-    "male",
-    "male",
-    "male",
-    "female",
-    "female",
-    "female",
-    "all",
-    "all",
-    "all",
-    "male",
-    "male",
-    "male",
-    "female",
-    "female",
-    "female",
-    "all",
-    "all",
-    "all",
-]
+    if highest_y_value < 100:
+        yaxis_tick = 10
+    if highest_y_value > 100:
+        yaxis_tick = 10
+    if highest_y_value > 1000:
+        yaxis_tick = 1000
+    if highest_y_value > 10000:
+        yaxis_tick = 2000
+    if highest_y_value > 20000:
+        yaxis_tick = 4000
+    if highest_y_value > 30000:
+        yaxis_tick = 5000
 
-df.to_csv("summ_sex_age_bardata.csv")
+    # modify y-axis
+    fig.update_yaxes(
+        title="<b>Number of patients diagnosed<br></b>",
+        showgrid=True,
+        gridcolor="lightgrey",
+        linecolor="black",
+        dtick=yaxis_tick,
+        range=[0, int(highest_y_value * 1.15)],
+    )
+    if not os.path.isdir("Plots/"):
+        os.mkdir("Plots/")
+    # fig.show()
+    fig.write_json("Plots/{}_agesex_casedist.json".format(name))
 
+
+# make plots by applying function
+
+stack_plot(U099, "U099")
+stack_plot(U089, "U089")
+
+# OLD GRAPHICS PLACE:
 # you should upload this to https://datagraphics.dckube.scilifelab.se/dataset/6b24d7130bef4bf78f567d9c9ad96f59
+# need to add to new blob!

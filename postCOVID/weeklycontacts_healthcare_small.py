@@ -1,3 +1,4 @@
+# adjust font etc. for front page and dashboards page
 import pandas as pd
 import numpy as np
 import json
@@ -95,8 +96,8 @@ fig = go.Figure(
 )
 fig.update_layout(
     plot_bgcolor="white",
-    autosize=False,
-    font=dict(size=14),
+    # autosize=False,
+    font=dict(size=10),
     margin=dict(r=150, t=0, b=0, l=0),
     legend=dict(
         title="<b>Diagnosis</b>",
@@ -122,4 +123,4 @@ fig.update_yaxes(
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
 # fig.show()
-fig.write_json("Plots/weeklycontacts_healthcare.json")
+fig.write_json("Plots/weeklycontacts_healthcare_small.json")
