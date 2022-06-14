@@ -125,6 +125,7 @@ def plot_healthcare_divsex(input, name):
             title="<b>Sex</b>",
         ),
         hovermode="x unified",
+        hoverdistance=1,
     )
     fig.update_xaxes(
         title="<br><b>Date (Week Commencing)</b>",

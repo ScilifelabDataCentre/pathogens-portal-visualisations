@@ -103,6 +103,7 @@ fig.update_layout(
         title="<b>Diagnosis</b>",
     ),
     hovermode="x unified",
+    hoverdistance=1,
 )
 fig.update_xaxes(
     title="<br><b>Date (Week Commencing)</b>",
