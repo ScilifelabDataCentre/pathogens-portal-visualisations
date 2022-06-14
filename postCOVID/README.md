@@ -2,9 +2,9 @@
 
 This folder contains all of the scripts and associated files required to produce the visualisations displayed on the postcovid page.
 
-**create_accomp_diagnoses.py** - script used to produce the json file underlying the 'accompanying diagnoses table' - this is the English language version.
+**create_accomp_diagnoses.py** - script used to produce the 'accompanying diagnoses table' - this is the English language version.
 
-**create_accomp_diagnoses_swe.py** - script used to produce the json file underlying the 'accompanying diagnoses table' - this is the Swedish language version.
+**create_accomp_diagnoses_swe.py** - script used to produce the 'accompanying diagnoses table' - this is the Swedish language version.
 
 **create_agesex_distcases.py** - script used to produce the barplots showing cumulative numbers of diagnoses divided by sex and age group category.
 
@@ -24,6 +24,6 @@ This folder contains all of the scripts and associated files required to produce
 
 **weeklycontacts_healthcare.py** - script used to produce plot related to healthcare contacts divided only by diagnosis, NOT patient sex.
 
-**weeklycontacts_healthcare_divsex.py** - script used to produce plots related to healthcare contacts divided by patient sex.
+**weeklycontacts_healthcare_divsex.py** - script used to produce plots related to healthcare contacts divided by patient sex as well as diagnosis.
 
 **weeklycontacts_healthcare_small.py** - script used to produce plot related to healthcare contacts divided only by diagnosis, NOT patient sex. This is a smaller version that is used for the home page of the portal.
