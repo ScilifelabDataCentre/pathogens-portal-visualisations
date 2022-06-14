@@ -22,8 +22,8 @@ This folder contains all of the scripts and associated files required to produce
 
 **sweden-counties.geojson** - a geojson file showing the counties of Sweden. Used to produce the choropleth maps shown on the page. Used in the scripts related to the production of those maps.
 
-**weeklycontacts_healthcare.py** - script used to produce file plot related to healthcare contacts divided only by diagnosis, NOT patient sex.
+**weeklycontacts_healthcare.py** - script used to produce plot related to healthcare contacts divided only by diagnosis, NOT patient sex.
 
-**weeklycontacts_healthcare_divsex.py** - script used to produce file plots related to healthcare contacts divided by patient sex.
+**weeklycontacts_healthcare_divsex.py** - script used to produce plots related to healthcare contacts divided by patient sex.
 
-**weeklycontacts_healthcare_small.py** - script used to produce file plot related to healthcare contacts divided only by diagnosis, NOT patient sex. This is a smaller version that is used for the home page of the portal.
+**weeklycontacts_healthcare_small.py** - script used to produce plot related to healthcare contacts divided only by diagnosis, NOT patient sex. This is a smaller version that is used for the home page of the portal.
