@@ -5,6 +5,12 @@ from datetime import datetime as dt
 import plotly.graph_objects as go
 import plotly.express as px
 import os
+import argparse
+
+aparser = argparse.ArgumentParser(description="Generate weekly contact divsex blob")
+aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # Import and sort data
 healthcare_contacts_week_sex = pd.read_excel(
@@ -141,11 +147,10 @@ def plot_healthcare_divsex(input, name):
         range=[0, (max(diagnosis.Female) * 1.15)],  # more female diagnosed
         rangemode="tozero",
     )
-    if not os.path.isdir("Plots/"):
-        os.mkdir("Plots/")
     # fig.show()
-    fig.write_json("Plots/{}_healthcare_divsex.json".format(name))
-
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
+    fig.write_json(os.path.join(args.output_dir, "{}_healthcare_divsex.json".format(name)))
 
 plot_healthcare_divsex(U089, "U089")
 plot_healthcare_divsex(U099, "U099")
