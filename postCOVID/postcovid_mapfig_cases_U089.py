@@ -2,9 +2,16 @@ import json
 import pandas as pd
 import plotly.express as px
 import csv
+import os
+import argparse
+
+aparser = argparse.ArgumentParser(description="Generate map file for U089 cases")
+aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # map
-with open("sweden-counties.geojson", "r") as sw:
+with open(os.path.join(os.path.dirname(__file__), "sweden-counties.geojson"), "r") as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -147,4 +154,6 @@ for language in ["English", "Swedish"]:
     # fig.update_layout(coloraxis_colorbar_x=0.53, coloraxis_colorbar_y=0.53)
     # write out as html for web
     # fig.show()
-    fig.write_json(filename)
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
+    fig.write_json(os.path.join(args.output_dir, filename))

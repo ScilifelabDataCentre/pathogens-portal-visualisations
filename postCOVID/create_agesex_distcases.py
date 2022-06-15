@@ -1,7 +1,13 @@
+import argparse
 import pandas as pd
 import json
 import plotly.graph_objects as go
 import os
+
+aparser = argparse.ArgumentParser(description="Generate age and sex distribution blob")
+aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # Import and sort data
 age_sex_summ = pd.read_excel(
@@ -104,10 +110,10 @@ def stack_plot(input, name):
         dtick=yaxis_tick,
         range=[0, int(highest_y_value * 1.15)],
     )
-    if not os.path.isdir("Plots/"):
-        os.mkdir("Plots/")
+    if not os.path.isdir(args.output_dir):
+        os.mkdir(args.output_dir)
     # fig.show()
-    fig.write_json("Plots/{}_agesex_casedist.json".format(name))
+    fig.write_json(os.path.join(args.output_dir, "{}_agesex_casedist.json".format(name)))
 
 
 # make plots by applying function

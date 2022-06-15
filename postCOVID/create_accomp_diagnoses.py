@@ -1,6 +1,13 @@
 import pandas as pd
 import json
 import plotly.graph_objects as go
+import os
+import argparse
+
+aparser = argparse.ArgumentParser(description="Generate accompanying diagnosis blob")
+aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 # Import and sort data
 accom_diag = pd.read_excel(
@@ -79,4 +86,6 @@ fig = go.Figure(
     ]
 )
 fig.update_layout(margin={"r": 5, "t": 5, "l": 0, "b": 0})
-fig.write_json("accompdiag_table.json")
+if not os.path.isdir(args.output_dir):
+    os.mkdir(args.output_dir)
+fig.write_json(os.path.join(args.output_dir, "accompdiag_table.json"))

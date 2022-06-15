@@ -1,4 +1,11 @@
+import argparse
+import os
 import pandas as pd
+
+aparser = argparse.ArgumentParser(description="Generate summary file for POSTCOVID")
+aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
+                     help="Output directory where the files will be saved")
+args = aparser.parse_args()
 
 ## REMEMBER THAT WEEK NUMBER WILL AND POPULATION DATA MIGHT REQUIRE UPDATE
 # Import and sort data
@@ -85,4 +92,7 @@ postcov_summary["proc_kodU089_fall"] = (
     postcov_summary["Antal_kodU089"] / postcov_summary["Kum_antal_fall"]
 ) * 100
 # print(postcov_summary)
-postcov_summary.to_csv("Summary_postcovid_statistics.csv")
+
+if not os.path.isdir(args.output_dir):
+    os.mkdir(args.output_dir)
+postcov_summary.to_csv(os.path.join(args.output_dir, "Summary_postcovid_statistics.csv"))
