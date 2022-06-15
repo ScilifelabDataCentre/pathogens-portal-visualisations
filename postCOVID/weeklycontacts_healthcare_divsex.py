@@ -53,16 +53,16 @@ U089.columns = columns
 
 # set years to appropriate rows (according to timeframes)
 U089["Year"] = np.nan
-U089.at[:32, "Year"] = 2020
-U089.at[32:84, "Year"] = 2021
-U089.at[84:136, "Year"] = 2022
-U089.at[136:188, "Year"] = 2023
+U089.loc[:32, "Year"] = 2020
+U089.loc[32:84, "Year"] = 2021
+U089.loc[84:136, "Year"] = 2022
+U089.loc[136:188, "Year"] = 2023
 
 U099["Year"] = np.nan
-U099.at[:11, "Year"] = 2020
-U099.at[11:63, "Year"] = 2021
-U099.at[63:115, "Year"] = 2022
-U099.at[115:167, "Year"] = 2023
+U099.loc[:11, "Year"] = 2020
+U099.loc[11:63, "Year"] = 2021
+U099.loc[63:115, "Year"] = 2022
+U099.loc[115:167, "Year"] = 2023
 
 # if this is still being used in 2024, we will need to add (written week 2 of 2022)
 
