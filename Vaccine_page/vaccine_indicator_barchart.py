@@ -18,8 +18,12 @@ from vaccine_livetext import (
 )
 
 aparser = argparse.ArgumentParser(description="Generate comparison bar plot")
-aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="vaccine_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # Now will make a dataframe so that we can create a grouped bar chart as a summary

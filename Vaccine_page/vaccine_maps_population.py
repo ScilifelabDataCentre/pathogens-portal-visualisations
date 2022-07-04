@@ -6,22 +6,25 @@ import os
 
 from vaccine_dataprep_Swedentots import (
     first_two_timeseries_lan,  # data on 1st 2 doses
-    third_vacc_dose_lan,  # data on 3rd dose (note, this data comes from the age group tab 'totals')
-    # The above could be changed for the timeseries data, but they're equilavent for now (Feb 2022), might change in future
-    # these two were used historically because we didn't have time series for 3rd dose
-    # and the åldersgrupp data for first doses didnt include all the age groups that were in the time series
-    fourth_vacc_dose_lan,
-    # Added fourth dose March 25th 2022
+    third_timseries_lan,  # data on 3rd dose
+    fourth_timseries_lan,  # data on 4th dose
+    # (switched data source on 3rd and 4th doses July 2022 due to changes in source data)
     SCB_population,  # raw population counts for each lan
 )
 
 aparser = argparse.ArgumentParser(description="Generate text insert json")
-aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="vaccine_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # map
-with open(os.path.join(os.path.dirname(__file__), "sweden-counties.geojson"), "r") as sw:
+with open(
+    os.path.join(os.path.dirname(__file__), "sweden-counties.geojson"), "r"
+) as sw:
     jdata = json.load(sw)
 
 # dictionary to match data and map
@@ -35,41 +38,48 @@ for feature in jdata["features"]:
 
 # First and second doses
 first_two_timeseries_lan = pd.merge(
-    first_two_timeseries_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+    first_two_timeseries_lan,
+    SCB_population,
+    how="left",
+    left_on="Region",
+    right_on="Lan",
 )
 
 first_two_timeseries_lan.drop(
-    first_two_timeseries_lan[first_two_timeseries_lan["Region"] == "Sweden"].index, inplace=True
+    first_two_timeseries_lan[first_two_timeseries_lan["Region"] == "Sweden"].index,
+    inplace=True,
 )
 
 first_two_timeseries_lan["Vacc_perc_population"] = (
-    first_two_timeseries_lan["Antal vaccinerade"] / first_two_timeseries_lan["Population"]
+    first_two_timeseries_lan["Antal vaccinerade"]
+    / first_two_timeseries_lan["Population"]
 ) * 100
 
 # Third dose
-third_vacc_dose_lan = pd.merge(
-    third_vacc_dose_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+third_timseries_lan = pd.merge(
+    third_timseries_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
 )
 
-third_vacc_dose_lan.drop(
-    third_vacc_dose_lan[third_vacc_dose_lan["Region"] == "Sweden"].index, inplace=True
+
+third_timseries_lan.drop(
+    third_timseries_lan[third_timseries_lan["Region"] == "Sweden"].index, inplace=True
 )
 
-third_vacc_dose_lan["Vacc_perc_population"] = (
-    third_vacc_dose_lan["Antal vaccinerade"] / third_vacc_dose_lan["Population"]
+third_timseries_lan["Vacc_perc_population"] = (
+    third_timseries_lan["Antal vaccinerade"] / third_timseries_lan["Population"]
 ) * 100
 
 # Fourth dose
-fourth_vacc_dose_lan = pd.merge(
-    fourth_vacc_dose_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+fourth_timseries_lan = pd.merge(
+    fourth_timseries_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
 )
 
-fourth_vacc_dose_lan.drop(
-    fourth_vacc_dose_lan[fourth_vacc_dose_lan["Region"] == "Sweden"].index, inplace=True
+fourth_timseries_lan.drop(
+    fourth_timseries_lan[fourth_timseries_lan["Region"] == "Sweden"].index, inplace=True
 )
 
-fourth_vacc_dose_lan["Vacc_perc_population"] = (
-    fourth_vacc_dose_lan["Antal vaccinerade"] / fourth_vacc_dose_lan["Population"]
+fourth_timseries_lan["Vacc_perc_population"] = (
+    fourth_timseries_lan["Antal vaccinerade"] / fourth_timseries_lan["Population"]
 ) * 100
 
 # First and second doses are taken from a time series and are held together
@@ -95,9 +105,9 @@ two_dose_lan_pop = two_dose_lan_pop.replace("Minst 2 doser", "Two doses")
 
 # third dose
 
-# We don't want individual values for each age groups, just grab the 'totals' across the groups
-third_vacc_dose_lan_pop = third_vacc_dose_lan[
-    (third_vacc_dose_lan["Åldersgrupp"] == "Totalt")
+# Need latest values
+third_vacc_dose_lan_pop = third_timseries_lan[
+    (third_timseries_lan["date"] == third_timseries_lan["date"].max())
 ]
 
 # Change label on dose level to English
@@ -106,8 +116,8 @@ third_vacc_dose_lan_pop = third_vacc_dose_lan_pop.replace("3 doser", "Three dose
 # fourth dose
 
 # We don't want individual values for each age groups, just grab the 'totals' across the groups
-fourth_vacc_dose_lan_pop = fourth_vacc_dose_lan[
-    (fourth_vacc_dose_lan["Åldersgrupp"] == "Totalt")
+fourth_vacc_dose_lan_pop = fourth_timseries_lan[
+    (fourth_timseries_lan["date"] == fourth_timseries_lan["date"].max())
 ]
 
 # Change label on dose level to English
@@ -224,7 +234,9 @@ def map_func(dataset, dose):
 
     if not os.path.isdir(args.output_dir):
         os.mkdir(args.output_dir)
-    fig.write_json(os.path.join(args.output_dir, "{}_pop_map.json".format(name.replace(" ", ""))))
+    fig.write_json(
+        os.path.join(args.output_dir, "{}_pop_map.json".format(name.replace(" ", "")))
+    )
 
 
 datasets = {
@@ -325,10 +337,12 @@ def eligible_map_func(elig_data, dose):
     )
     fig.update_traces(marker_line_color="white")
     # fig.show()
-    
+
     if not os.path.isdir(args.output_dir):
         os.mkdir(args.output_dir)
-    fig.write_json(os.path.join(args.output_dir, "{}_elig_map.json".format(name.replace(" ", ""))))
+    fig.write_json(
+        os.path.join(args.output_dir, "{}_elig_map.json".format(name.replace(" ", "")))
+    )
     # fig.write_image("Plots/{}_elig_map.png".format(name))
 
 

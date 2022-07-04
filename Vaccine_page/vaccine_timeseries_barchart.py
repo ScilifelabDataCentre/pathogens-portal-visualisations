@@ -12,8 +12,12 @@ from vaccine_dataprep_Swedentots import (
 )
 
 aparser = argparse.ArgumentParser(description="Generate text insert json")
-aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="vaccine_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # calculate percentages based on population size
@@ -31,8 +35,12 @@ fourth_timseries["Vacc_perc_population"] = (
 ) * 100
 
 # separate the first and second doses
-least_one_dose = first_two_timeseries[(first_two_timeseries["Vaccinationsstatus"] == "Minst 1 dos")]
-least_two_doses = first_two_timeseries[(first_two_timeseries["Vaccinationsstatus"] == "Minst 2 doser")]
+least_one_dose = first_two_timeseries[
+    (first_two_timeseries["Vaccinationsstatus"] == "Minst 1 dos")
+]
+least_two_doses = first_two_timeseries[
+    (first_two_timeseries["Vaccinationsstatus"] == "Minst 2 doser")
+]
 
 ## Figure based on percentages calculated using population size
 
@@ -117,5 +125,7 @@ if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 
 # make figure for web
-fig_pop.write_json(os.path.join(args.output_dir, "vaccine_timeseries_pop_barchart.json"))
+fig_pop.write_json(
+    os.path.join(args.output_dir, "vaccine_timeseries_pop_barchart.json")
+)
 # fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")
