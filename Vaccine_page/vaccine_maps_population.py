@@ -189,7 +189,7 @@ def map_func(dataset, dose):
         },
         labels={
             "Vacc_perc_population": "Percentage of population<br>vaccinated (%)",
-            "Vaccinationsstatus": "<br>Number of Doses",
+            "Vaccinationsstatus": "<br>Minimum Doses",
         },
     )
     # this section deals with the exact focus on the map
@@ -207,7 +207,7 @@ def map_func(dataset, dose):
     # The below labels the colourbar categories
     fig.update_layout(
         coloraxis_colorbar=dict(
-            title="<b>Percentage of population<br>vaccinated with<br>" + dose + "</b>",
+            title="<b>Percentage of population<br>given at least<br>" + dose + "</b>",
             tickvals=[5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
             ticktext=[
                 "00.00 - 9.99%",
@@ -292,7 +292,7 @@ def eligible_map_func(elig_data, dose):
         },
         labels={
             "Procent vaccinerade": "Percentage of eligible<br>population vaccinated (%)",
-            "Vaccinationsstatus": "<br>Number of Doses",
+            "Vaccinationsstatus": "<br>Minimum Doses",
         },
     )
     # this section deals with the exact focus on the map
@@ -310,7 +310,7 @@ def eligible_map_func(elig_data, dose):
     # The below labels the colourbar categories
     fig.update_layout(
         coloraxis_colorbar=dict(
-            title="<b>Percentage of eligible<br>population vaccinated with<br>"
+            title="<b>Percentage of eligible<br>population given at least<br>"
             + dose
             + "</b>",
             tickvals=[5, 15, 25, 35, 45, 55, 65, 75, 85, 95],

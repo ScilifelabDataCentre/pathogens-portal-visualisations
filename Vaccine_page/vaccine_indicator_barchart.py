@@ -52,8 +52,8 @@ trace1 = go.Bar(
     marker_color="rgb(5,48,97)",
     marker_line_color="black",
     hovertemplate="<b>Eligible Population Method</b>"
-    + "<br>Number of Doses: %{x}"
-    + "<br>Percent Receiving the Dose: %{y:.2f}%<extra></extra>",
+    + "<br>Minimum Number of Doses Received: %{x}"
+    + "<br>Percentage Vaccinated: %{y:.2f}%<extra></extra>",
 )
 trace2 = go.Bar(
     x=vaccine_dose_totals["Doses"],
@@ -62,8 +62,8 @@ trace2 = go.Bar(
     marker_color="rgb(178,24,43)",
     marker_line_color="black",
     hovertemplate="<b>Whole Population Method</b>"
-    + "<br>Number of Doses: %{x}"
-    + "<br>Percent Receiving the Dose: %{y:.2f}%<extra></extra>",
+    + "<br>Minimum Number of Doses Received: %{x}"
+    + "<br>Percentage Vaccinated: %{y:.2f}%<extra></extra>",
 )
 
 # figure layout
@@ -85,7 +85,7 @@ fig.update_layout(
 )
 # modify x-axis
 fig.update_xaxes(
-    title="<b>Number of Doses Received</b>",
+    title="<b>Minimum Number of Doses Received</b>",
     showgrid=True,
     linecolor="black",
 )
