@@ -326,4 +326,4 @@ fig.update_layout(
 fig.write_json(os.path.join(args.output_dir, "vaccine_heatmap.json"))
 # fig.write_image("Plots/vaccine_heatmap.png")
 
-fig.show()
+# fig.show()
