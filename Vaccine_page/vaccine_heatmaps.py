@@ -6,70 +6,62 @@ import numpy as np  # won't need this when data on 3rd dose for 12-17 year olds 
 import os
 
 from vaccine_dataprep_Swedentots import (
-    first_two_vacc_dose_lan,
-    third_vacc_dose_lan,
+    first_three_vacc_dose,
+    # third_vacc_dose_lan,
     fourth_vacc_dose,
 )
 
 aparser = argparse.ArgumentParser(description="Generate text insert json")
-aparser.add_argument("--output-dir", nargs="?", default="vaccine_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="vaccine_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
-## Need 3 sets of data - for one dose, two doses, and three doses
 # Don't have population size data for these age groups (at least right now), so can't do population level calculations
 
-## data for 3rd dose is held separately - work with data for 1st 2 doses first
-
-first_two_vacc_dose_lan = first_two_vacc_dose_lan[(first_two_vacc_dose_lan["Region"] == "Sweden")]
+## data on first 3 doses held together, 4th held seperately.
 
 # Need to change terminology used for the '90 or older' age group
-first_two_vacc_dose_lan = first_two_vacc_dose_lan.replace("90 eller äldre", "90+")
+first_three_vacc_dose = first_three_vacc_dose.replace("90 eller äldre", "90+")
 
 # We drop the 'totals' in the dataset as we don't want them
-first_two_vacc_dose_lan.drop(
-    first_two_vacc_dose_lan[(first_two_vacc_dose_lan["Åldersgrupp"] == "Totalt")].index,
+first_three_vacc_dose.drop(
+    first_three_vacc_dose[(first_three_vacc_dose["Åldersgrupp"] == "Totalt 18+")].index,
     inplace=True,
 )
 
 # recaculate as a percentage for each age group.
-first_two_vacc_dose_lan["Procent vaccinerade"] = (
-    first_two_vacc_dose_lan["Andel vaccinerade"] * 100
+first_three_vacc_dose["Procent vaccinerade"] = (
+    first_three_vacc_dose["Andel vaccinerade"] * 100
 )
 
 # Separate data for one and two doses
 
 # one dose
-one_dose = first_two_vacc_dose_lan[
-    (first_two_vacc_dose_lan["Vaccinationsstatus"] == "Minst 1 dos")
+one_dose = first_three_vacc_dose[
+    (first_three_vacc_dose["Vaccinationsstatus"] == "1 dos")
 ]
 one_dose = one_dose[["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]]
 one_dose.reset_index(drop=True, inplace=True)
 
 # data for two doses
-two_doses = first_two_vacc_dose_lan[
-    (first_two_vacc_dose_lan["Vaccinationsstatus"] == "Minst 2 doser")
+two_doses = first_three_vacc_dose[
+    (first_three_vacc_dose["Vaccinationsstatus"] == "2 doser")
 ]
 two_doses = two_doses[["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]]
 two_doses.reset_index(drop=True, inplace=True)
 
 ## Sort data for three doses. Note - data only currently available for 18+ (from 12 for 1 & 2 dose)
 
-# Limit data to just Sweden and modify for the 90+ age group
-third_vacc_dose_lan = third_vacc_dose_lan[(third_vacc_dose_lan["Region"] == "Sweden")]
-third_vacc_dose_lan = third_vacc_dose_lan.replace("90 eller äldre", "90+")
-
-# Calculate values as percentages
-third_vacc_dose_lan.drop(
-    third_vacc_dose_lan[(third_vacc_dose_lan["Åldersgrupp"] == "Totalt")].index,
-    inplace=True,
-)
-third_vacc_dose_lan["Procent vaccinerade"] = (
-    third_vacc_dose_lan["Andel vaccinerade"] * 100
-)
-third_vacc_dose_lan = third_vacc_dose_lan[
-    ["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]
+# data for three doses
+three_doses = first_three_vacc_dose[
+    (first_three_vacc_dose["Vaccinationsstatus"] == "Minst 3 doser")
 ]
+three_doses = three_doses[["Åldersgrupp", "Procent vaccinerade", "Vaccinationsstatus"]]
+three_doses.reset_index(drop=True, inplace=True)
 
 # For now, we need to add two age categories for the third dose (12-15, 16-17)
 ## REMOVE THIS ROW WHEN THESE AGE CATEGORIES ARE AVAILABLE FOR THIRD DOSE DATA
@@ -77,10 +69,10 @@ top_row = pd.DataFrame(
     {
         "Åldersgrupp": ["12-15", "16-17"],
         "Procent vaccinerade": [np.nan, np.nan],
-        "Vaccinationsstatus": ["3 doser", "3 doser"],
+        "Vaccinationsstatus": ["Minst 3 doser", "Minst 3 doser"],
     }
 )
-third_dose = pd.concat([top_row, third_vacc_dose_lan]).reset_index(drop=True)
+third_dose = pd.concat([top_row, three_doses]).reset_index(drop=True)
 
 # Add fourth dose (already as percentages from dataprep, so not needed)
 # do need to add additional age group rows (until more are added amd change 90+ )
@@ -130,9 +122,9 @@ heatmap_data = pd.concat(
 )
 heatmap_data["Vaccinationsstatus"] = heatmap_data["Vaccinationsstatus"].replace(
     {
-        "Minst 1 dos": "1",
-        "Minst 2 doser": "2",
-        "3 doser": "3",
+        "1 dos": "1",
+        "2 doser": "2",
+        "Minst 3 doser": "3",
         "4 doser": "4",
     }
 )
@@ -331,7 +323,7 @@ fig.update_layout(
     },
 )
 
-# fig.show()
-
 fig.write_json(os.path.join(args.output_dir, "vaccine_heatmap.json"))
 # fig.write_image("Plots/vaccine_heatmap.png")
+
+fig.show()
