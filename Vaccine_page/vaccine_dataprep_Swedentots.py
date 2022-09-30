@@ -100,6 +100,22 @@ fourth_timseries_lan = get_vaccination_data(
 
 fourth_timseries = fourth_timseries_lan[fourth_timseries_lan["Region"] == "Sweden"]
 
+fifth_timseries_lan = get_vaccination_data(
+    data_url=data_url,
+    sheet_name="Vaccinerade tidsserie dos 5",
+    set_date=True,
+    # only_sweden=True,
+    needed_columns=[
+        "date",
+        "Region",
+        "Antal vaccinerade",
+        "Procent vaccinerade",
+        "Vaccinationsstatus",
+    ],
+)
+
+fifth_timseries = fifth_timseries_lan[fifth_timseries_lan["Region"] == "Sweden"]
+
 first_three_vacc_dose_lan = get_vaccination_data(
     data_url=data_url, sheet_name="Dos 1 till 3 per åldersgrupp"
 )
@@ -114,9 +130,15 @@ first_three_vacc_dose = first_three_vacc_dose_lan[
 # third_vacc_dose = third_vacc_dose_lan[third_vacc_dose_lan["Region"] == "Sweden"]
 
 fourth_vacc_dose_lan = get_vaccination_data(
-    data_url=data_url, sheet_name="Dos 4 per åldersgrupp"
+    data_url=data_url,
+    sheet_name="Dos 4 18+",  # was "Dos 4 per åldersgrupp", but this only contains data for those above 65 years. Maybe have to change back later
 )
 fourth_vacc_dose = fourth_vacc_dose_lan[fourth_vacc_dose_lan["Region"] == "Sweden"]
+
+fifth_vacc_dose_lan = get_vaccination_data(
+    data_url=data_url, sheet_name="Dos 5 per åldersgrupp"
+)
+fifth_vacc_dose = fifth_vacc_dose_lan[fifth_vacc_dose_lan["Region"] == "Sweden"]
 
 SCB_population = pd.read_excel(
     "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",

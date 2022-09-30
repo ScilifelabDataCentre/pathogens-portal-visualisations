@@ -11,10 +11,12 @@ from vaccine_livetext import (
     least_two_dose_swe,
     third_dose_swe,
     fourth_dose_swe,
+    fifth_dose_swe,
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
     fourth_vacc_dose_pop,
+    fifth_vacc_dose_pop,
 )
 
 aparser = argparse.ArgumentParser(description="Generate comparison bar plot")
@@ -29,18 +31,20 @@ args = aparser.parse_args()
 # Now will make a dataframe so that we can create a grouped bar chart as a summary
 
 vaccine_dose_totals = pd.DataFrame()
-vaccine_dose_totals["Doses"] = ["1", "2", "3", "4"]
+vaccine_dose_totals["Doses"] = ["1", "2", "3", "4", "5"]
 vaccine_dose_totals["eligible_perc"] = [
     one_dose_swe,
     least_two_dose_swe,
     third_dose_swe,
     fourth_dose_swe,
+    fifth_dose_swe,
 ]
 vaccine_dose_totals["POP_perc"] = [
     one_dose_pop,
     least_two_dose_pop,
     third_vacc_dose_pop,
     fourth_vacc_dose_pop,
+    fifth_vacc_dose_pop,
 ]
 
 # initiate barchart
@@ -70,6 +74,7 @@ trace2 = go.Bar(
 fig = go.Figure(data=[trace1, trace2])
 fig.update_layout(
     plot_bgcolor="white",
+    autosize=False,
     font=dict(size=16),
     margin=dict(l=0, r=50, t=0, b=0),
     showlegend=True,
@@ -99,9 +104,9 @@ fig.update_yaxes(
     range=[0, 100],
 )
 
-# fig.show()
+fig.show()
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 
 # fig.write_image("Plots/Total_vaccinated_barchart.png")
-fig.write_json(os.path.join(args.output_dir, "Total_vaccinated_barchart.json"))
+# fig.write_json(os.path.join(args.output_dir, "Total_vaccinated_barchart.json"))

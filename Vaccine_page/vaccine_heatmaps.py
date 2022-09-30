@@ -9,6 +9,7 @@ from vaccine_dataprep_Swedentots import (
     first_three_vacc_dose,
     # third_vacc_dose_lan,
     fourth_vacc_dose,
+    fifth_vacc_dose,
 )
 
 aparser = argparse.ArgumentParser(description="Generate text insert json")
@@ -75,11 +76,36 @@ top_row = pd.DataFrame(
 third_dose = pd.concat([top_row, three_doses]).reset_index(drop=True)
 
 # Add fourth dose (already as percentages from dataprep, so not needed)
-# do need to add additional age group rows (until more are added amd change 90+ )
+# For now, we need to add two age categories for the fourth dose (12-15, 16-17)
+## REMOVE THIS ROW WHEN THESE AGE CATEGORIES ARE AVAILABLE FOR fourth DOSE DATA
 # Also need to eliminate 'totalt' row
 fourth_vacc_dose = fourth_vacc_dose.replace("90 eller äldre", "90+")
 # REMOVE BELOW AS MORE AGE CATEGORIES ARE ADDED
 top_row_fourth = pd.DataFrame(
+    {
+        "Åldersgrupp": [
+            "12-15",
+            "16-17",
+        ],
+        "Procent vaccinerade": [
+            np.nan,
+            np.nan,
+        ],
+        "Vaccinationsstatus": [
+            "Minst 4 doser",
+            "Minst 4 doser",
+        ],
+    }
+)
+fourth_dose = pd.concat([top_row_fourth, fourth_vacc_dose]).reset_index(drop=True)
+fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "Totalt"]
+
+# Add fifth dose (already as percentages from dataprep, so not needed)
+# do need to add additional age group rows (until more are added amd change 90+ )
+# Also need to eliminate 'totalt' row
+fifth_vacc_dose = fifth_vacc_dose.replace("90 eller äldre", "90+")
+# REMOVE BELOW AS MORE AGE CATEGORIES ARE ADDED
+top_row_fifth = pd.DataFrame(
     {
         "Åldersgrupp": [
             "12-15",
@@ -100,24 +126,24 @@ top_row_fourth = pd.DataFrame(
             np.nan,
         ],
         "Vaccinationsstatus": [
-            "4 doser",
-            "4 doser",
-            "4 doser",
-            "4 doser",
-            "4 doser",
-            "4 doser",
-            "4 doser",
+            "5 doser",
+            "5 doser",
+            "5 doser",
+            "5 doser",
+            "5 doser",
+            "5 doser",
+            "5 doser",
         ],
     }
 )
-fourth_dose = pd.concat([top_row_fourth, fourth_vacc_dose]).reset_index(drop=True)
-fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "Totalt"]
-fourth_dose = fourth_dose[fourth_dose.Åldersgrupp != "65-69"]
+fifth_dose = pd.concat([top_row_fifth, fifth_vacc_dose]).reset_index(drop=True)
+fifth_dose = fifth_dose[fifth_dose.Åldersgrupp != "Totalt"]
+fifth_dose = fifth_dose[fifth_dose.Åldersgrupp != "65-69"]
 
 ## Prepare dataframe for heatmap (all data in one place)
 
 heatmap_data = pd.concat(
-    [one_dose, two_doses, third_dose, fourth_dose],
+    [one_dose, two_doses, third_dose, fourth_dose, fifth_dose],
     axis=0,
 )
 heatmap_data["Vaccinationsstatus"] = heatmap_data["Vaccinationsstatus"].replace(
@@ -125,7 +151,8 @@ heatmap_data["Vaccinationsstatus"] = heatmap_data["Vaccinationsstatus"].replace(
         "1 dos": "1",
         "2 doser": "2",
         "Minst 3 doser": "3",
-        "4 doser": "4",
+        "Minst 4 doser": "4",
+        "5 doser": "5",
     }
 )
 
@@ -209,6 +236,7 @@ fig_small.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig_small.update_layout(
     title=" ",
     plot_bgcolor="white",
+    autosize=False,
     yaxis={
         "title": "<b>Age Group</b>",
         "linecolor": "black",
@@ -308,6 +336,7 @@ fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig.update_layout(
     title=" ",
     plot_bgcolor="white",
+    autosize=False,
     yaxis={
         "title": "<b>Age Group</b>",
         "linecolor": "black",
@@ -326,4 +355,4 @@ fig.update_layout(
 fig.write_json(os.path.join(args.output_dir, "vaccine_heatmap.json"))
 # fig.write_image("Plots/vaccine_heatmap.png")
 
-# fig.show()
+# # fig.show()
