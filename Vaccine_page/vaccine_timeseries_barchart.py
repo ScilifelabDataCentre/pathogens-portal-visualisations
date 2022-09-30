@@ -135,13 +135,11 @@ fig_pop.update_yaxes(
     range=[0, 100],
 )
 
-fig_pop.show()
-
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 
 # make figure for web
-# fig_pop.write_json(
-#     os.path.join(args.output_dir, "vaccine_timeseries_pop_barchart.json")
-# )
+fig_pop.write_json(
+    os.path.join(args.output_dir, "vaccine_timeseries_pop_barchart.json")
+)
 # fig_pop.write_image("Plots/vaccine_timeseries_pop_barchart.png")

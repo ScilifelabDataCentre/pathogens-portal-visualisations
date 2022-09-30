@@ -104,9 +104,8 @@ fig.update_yaxes(
     range=[0, 100],
 )
 
-fig.show()
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 
 # fig.write_image("Plots/Total_vaccinated_barchart.png")
-# fig.write_json(os.path.join(args.output_dir, "Total_vaccinated_barchart.json"))
+fig.write_json(os.path.join(args.output_dir, "Total_vaccinated_barchart.json"))

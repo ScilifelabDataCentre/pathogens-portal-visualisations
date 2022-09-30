@@ -259,7 +259,7 @@ def map_func(dataset, dose):
         font=dict(size=12),
     )
     fig.update_traces(marker_line_color="white")
-    fig.show()
+
     if not os.path.isdir(args.output_dir):
         os.mkdir(args.output_dir)
     fig.write_json(
