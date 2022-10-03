@@ -8,6 +8,7 @@ from vaccine_dataprep_Swedentots import (
     first_two_timeseries,
     third_timseries,
     fourth_timseries,
+    fifth_timseries,
     Swedish_population,
 )
 
@@ -32,6 +33,10 @@ third_timseries["Vacc_perc_population"] = (
 # Fourth dose
 fourth_timseries["Vacc_perc_population"] = (
     fourth_timseries["Antal vaccinerade"] / Swedish_population
+) * 100
+# Fifth dose
+fifth_timseries["Vacc_perc_population"] = (
+    fifth_timseries["Antal vaccinerade"] / Swedish_population
 ) * 100
 
 # separate the first and second doses
@@ -84,11 +89,22 @@ trace4 = go.Bar(
     + "<br>Date: %{x}"
     + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
 )
+trace5 = go.Bar(
+    x=fifth_timseries["date"],
+    y=fifth_timseries["Vacc_perc_population"],
+    name="At Least Five Doses",
+    marker_color="slategrey",
+    marker_line_color="black",
+    hovertemplate="Number of Doses: Five Doses"
+    + "<br>Date: %{x}"
+    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+)
 
 # figure layout
-fig_pop = go.Figure(data=[trace1, trace2, trace3, trace4])
+fig_pop = go.Figure(data=[trace1, trace2, trace3, trace4, trace5])
 fig_pop.update_layout(
     plot_bgcolor="white",
+    autosize=False,
     font=dict(size=14),
     margin=dict(l=0, r=50, t=0, b=0),
     showlegend=True,
@@ -118,8 +134,6 @@ fig_pop.update_yaxes(
     linecolor="black",
     range=[0, 100],
 )
-
-# fig_pop.show()
 
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)

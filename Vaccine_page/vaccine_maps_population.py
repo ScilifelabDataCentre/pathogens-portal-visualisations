@@ -8,7 +8,7 @@ from vaccine_dataprep_Swedentots import (
     first_two_timeseries_lan,  # data on 1st 2 doses
     third_timseries_lan,  # data on 3rd dose
     fourth_timseries_lan,  # data on 4th dose
-    # (switched data source on 3rd and 4th doses July 2022 due to changes in source data)
+    fifth_timseries_lan,  # data on 4th dose
     SCB_population,  # raw population counts for each lan
 )
 
@@ -82,6 +82,19 @@ fourth_timseries_lan["Vacc_perc_population"] = (
     fourth_timseries_lan["Antal vaccinerade"] / fourth_timseries_lan["Population"]
 ) * 100
 
+# Fifth dose
+fifth_timseries_lan = pd.merge(
+    fifth_timseries_lan, SCB_population, how="left", left_on="Region", right_on="Lan"
+)
+
+fifth_timseries_lan.drop(
+    fifth_timseries_lan[fifth_timseries_lan["Region"] == "Sweden"].index, inplace=True
+)
+
+fifth_timseries_lan["Vacc_perc_population"] = (
+    fifth_timseries_lan["Antal vaccinerade"] / fifth_timseries_lan["Population"]
+) * 100
+
 # First and second doses are taken from a time series and are held together
 # So, we need to seperate out the doses, and select only the latest data
 
@@ -122,6 +135,17 @@ fourth_vacc_dose_lan_pop = fourth_timseries_lan[
 
 # Change label on dose level to English
 fourth_vacc_dose_lan_pop = fourth_vacc_dose_lan_pop.replace("4 doser", "Four doses")
+
+# fifth dose
+
+# We don't want individual values for each age groups, just grab the 'totals' across the groups
+fifth_vacc_dose_lan_pop = fifth_timseries_lan[
+    (fifth_timseries_lan["date"] == fifth_timseries_lan["date"].max())
+]
+
+# Change label on dose level to English
+fifth_vacc_dose_lan_pop = fifth_vacc_dose_lan_pop.replace("4 doser", "Four doses")
+
 # print(fourth_vacc_dose_lan_pop["Procent vaccinerade"])
 # Tie each dataframe to the map
 # one dose
@@ -134,6 +158,10 @@ third_vacc_dose_lan_pop["id"] = third_vacc_dose_lan_pop["Region"].apply(
 )
 # four doses
 fourth_vacc_dose_lan_pop["id"] = fourth_vacc_dose_lan_pop["Region"].apply(
+    lambda x: counties_id_map[x]
+)
+# four doses
+fifth_vacc_dose_lan_pop["id"] = fifth_vacc_dose_lan_pop["Region"].apply(
     lambda x: counties_id_map[x]
 )
 
@@ -244,6 +272,7 @@ datasets = {
     "two doses": two_dose_lan_pop,
     "three doses": third_vacc_dose_lan_pop,
     "four doses": fourth_vacc_dose_lan_pop,
+    "five doses": fifth_vacc_dose_lan_pop,
 }
 
 for name, df in datasets.items():
@@ -336,7 +365,6 @@ def eligible_map_func(elig_data, dose):
         font=dict(size=12),
     )
     fig.update_traces(marker_line_color="white")
-    # fig.show()
 
     if not os.path.isdir(args.output_dir):
         os.mkdir(args.output_dir)
@@ -347,7 +375,7 @@ def eligible_map_func(elig_data, dose):
 
 
 elig_datasets = {
-    "four doses": fourth_vacc_dose_lan_pop,
+    "five doses": fifth_vacc_dose_lan_pop,
 }
 
 for name, df in elig_datasets.items():
