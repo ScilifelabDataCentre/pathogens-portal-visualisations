@@ -236,7 +236,7 @@ fig_small.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig_small.update_layout(
     title=" ",
     plot_bgcolor="white",
-    autosize=False,
+    # autosize=False,
     yaxis={
         "title": "<b>Age Group</b>",
         "linecolor": "black",
@@ -336,7 +336,7 @@ fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig.update_layout(
     title=" ",
     plot_bgcolor="white",
-    autosize=False,
+    # autosize=False,
     yaxis={
         "title": "<b>Age Group</b>",
         "linecolor": "black",

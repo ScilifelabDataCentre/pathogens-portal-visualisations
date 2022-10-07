@@ -74,23 +74,23 @@ trace2 = go.Bar(
 fig = go.Figure(data=[trace1, trace2])
 fig.update_layout(
     plot_bgcolor="white",
-    autosize=False,
-    font=dict(size=16),
-    margin=dict(l=0, r=50, t=0, b=0),
+    # autosize=False,
+    font=dict(size=14),
+    margin=dict(l=0, r=0, t=0, b=0),
     showlegend=True,
     legend=dict(
         title=" ",
-        orientation="h",
+        # orientation="h",
         # yanchor="bottom",
         y=1.2,
         # xanchor="right",
-        # x=0.5,
-        font=dict(size=16),
+        x=0.05,
+        font=dict(size=14),
     ),
 )
 # modify x-axis
 fig.update_xaxes(
-    title="<b>Minimum Number of Doses Received</b>",
+    title="<b>Minimum Doses Received</b>",
     showgrid=True,
     linecolor="black",
 )

@@ -49,65 +49,81 @@ least_two_doses = first_two_timeseries[
 
 ## Figure based on percentages calculated using population size
 
-trace1 = go.Bar(
-    x=least_one_dose["date"],
-    y=least_one_dose["Vacc_perc_population"],
-    name="At Least One Dose",
-    marker_color="rgb(5,48,97)",
-    marker_line_color="black",
-    hovertemplate="Number of Doses: One Dose"
-    + "<br>Date: %{x}"
-    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+fig_pop = go.Figure()
+
+fig_pop.add_trace(
+    go.Scatter(
+        x=fifth_timseries["date"],
+        y=fifth_timseries["Vacc_perc_population"],
+        fill="tonexty",
+        # hoverinfo='x+y',
+        name="At Least Five Doses",
+        mode="lines",
+        line=dict(width=1, color="slategrey"),
+        fillcolor="slategrey",
+    )
 )
-trace2 = go.Bar(
-    x=least_two_doses["date"],
-    y=least_two_doses["Vacc_perc_population"],
-    name="At Least Two Doses",
-    marker_color="rgb(178,24,43)",
-    marker_line_color="black",
-    hovertemplate="Number of Doses: Two Doses"
-    + "<br>Date: %{x}"
-    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+
+fig_pop.add_trace(
+    go.Scatter(
+        x=fourth_timseries["date"],
+        y=fourth_timseries["Vacc_perc_population"],
+        fill="tonexty",
+        # hoverinfo='x+y',
+        name="At Least Four Doses",
+        mode="lines",
+        line=dict(width=1, color="rgba(146,197,222,1)"),
+        fillcolor="rgba(146,197,222,1)",
+    )
 )
-trace3 = go.Bar(
-    x=third_timseries["date"],
-    y=third_timseries["Vacc_perc_population"],
-    name="At Least Three Doses",
-    marker_color="rgb(255, 234, 0)",
-    marker_line_color="black",
-    hovertemplate="Number of Doses: Three Doses"
-    + "<br>Date: %{x}"
-    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+
+fig_pop.add_trace(
+    go.Scatter(
+        x=third_timseries["date"],
+        y=third_timseries["Vacc_perc_population"],
+        fill="tonexty",
+        # hoverinfo='x+y',
+        name="At Least Three Doses",
+        mode="lines",
+        line=dict(width=1, color="rgba(255, 234, 0,1)"),
+        fillcolor="rgba(255, 234, 0,1)",
+    )
 )
-trace4 = go.Bar(
-    x=fourth_timseries["date"],
-    y=fourth_timseries["Vacc_perc_population"],
-    name="At Least Four Doses",
-    marker_color="rgb(146,197,222)",
-    marker_line_color="black",
-    hovertemplate="Number of Doses: Four Doses"
-    + "<br>Date: %{x}"
-    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+
+fig_pop.add_trace(
+    go.Scatter(
+        x=least_two_doses["date"],
+        y=least_two_doses["Vacc_perc_population"],
+        fill="tonexty",
+        # hoverinfo='x+y',
+        name="At Least Two Doses",
+        mode="lines",
+        line=dict(width=1, color="rgba(178,24,43,1)"),
+        fillcolor="rgba(178,24,43,1)",
+    )
 )
-trace5 = go.Bar(
-    x=fifth_timseries["date"],
-    y=fifth_timseries["Vacc_perc_population"],
-    name="At Least Five Doses",
-    marker_color="slategrey",
-    marker_line_color="black",
-    hovertemplate="Number of Doses: Five Doses"
-    + "<br>Date: %{x}"
-    + "<br>Percent Vaccinated: %{y:.2f}%<extra></extra>",
+
+fig_pop.add_trace(
+    go.Scatter(
+        x=least_one_dose["date"],
+        y=least_one_dose["Vacc_perc_population"],
+        fill="tonexty",
+        # hoverinfo='x+y',
+        name="At Least One Dose",
+        mode="lines",
+        line=dict(width=1, color="rgba(5,48,97,1)"),
+        fillcolor="rgba(5,48,97,1)",
+    )
 )
 
 # figure layout
-fig_pop = go.Figure(data=[trace1, trace2, trace3, trace4, trace5])
 fig_pop.update_layout(
     plot_bgcolor="white",
-    autosize=False,
+    # autosize=False,
     font=dict(size=14),
-    margin=dict(l=0, r=50, t=0, b=0),
+    margin=dict(l=0, r=0, t=0, b=0),
     showlegend=True,
+    hovermode="x unified",
     legend=dict(
         title=" ",
         # orientation="h",
@@ -118,6 +134,7 @@ fig_pop.update_layout(
         font=dict(size=14),
     ),
 )
+fig_pop.update_traces(hovertemplate="%{y:.2f}%"),
 # modify x-axis
 fig_pop.update_xaxes(
     title="<b>Date</b>",
