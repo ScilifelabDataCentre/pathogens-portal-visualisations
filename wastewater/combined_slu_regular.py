@@ -25,14 +25,27 @@ wastewater_data["date"] = wastewater_data.apply(
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
 wastewater_Ekerö = wastewater_data[(wastewater_data["channel"] == "Ekerö")]
 wastewater_Enköping = wastewater_data[(wastewater_data["channel"] == "Enköping")]
+wastewater_Gävle = wastewater_data[(wastewater_data["channel"] == "Gävle")]  ##new
+wastewater_Helsingborg = wastewater_data[
+    (wastewater_data["channel"] == "Helsingborg")
+]  ##new
+wastewater_Jönköping = wastewater_data[
+    (wastewater_data["channel"] == "Jönköping")
+]  ##new
 wastewater_Kalmar = wastewater_data[(wastewater_data["channel"] == "Kalmar")]
 wastewater_Knivsta = wastewater_data[(wastewater_data["channel"] == "Knivsta")]
 wastewater_Tierp = wastewater_data[(wastewater_data["channel"] == "Tierp")]
 wastewater_Umeå = wastewater_data[(wastewater_data["channel"] == "Umeå")]
 wastewater_Uppsala = wastewater_data[(wastewater_data["channel"] == "Uppsala")]
+wastewater_Västerås = wastewater_data[
+    (wastewater_data["channel"] == "Västerås")
+]  ## new
 wastewater_Vaxholm = wastewater_data[(wastewater_data["channel"] == "Vaxholm")]
 wastewater_Älvkarleby = wastewater_data[(wastewater_data["channel"] == "Älvkarleby")]
 wastewater_Örebro = wastewater_data[(wastewater_data["channel"] == "Örebro")]
+wastewater_Östersund = wastewater_data[
+    (wastewater_data["channel"] == "Östersund")
+]  ##new
 wastewater_Österåker = wastewater_data[(wastewater_data["channel"] == "Österåker")]
 wastewater_Östhammar = wastewater_data[(wastewater_data["channel"] == "Östhammar")]
 
@@ -55,6 +68,33 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[1], size=7),
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[1], width=2),
+        ),
+        go.Scatter(
+            name="Gävle",
+            x=wastewater_Gävle.date,
+            y=wastewater_Gävle.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color=px.colors.diverging.RdBu[2], size=7),
+            marker_symbol="hourglass",
+            line=dict(color=px.colors.diverging.RdBu[2], width=2),
+        ),
+        go.Scatter(
+            name="Helsingborg",
+            x=wastewater_Helsingborg.date,
+            y=wastewater_Helsingborg.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#EFB261", size=7),
+            marker_symbol="square",
+            line=dict(color="#EFB261", width=2),
+        ),
+        go.Scatter(
+            name="Jönköping",
+            x=wastewater_Jönköping.date,
+            y=wastewater_Jönköping.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#FFA500", size=7),
+            marker_symbol="cross",
+            line=dict(color="#FFA500", width=2),
         ),
         go.Scatter(
             name="Kalmar",
@@ -102,6 +142,15 @@ fig = go.Figure(
             line=dict(color="#663399", width=2),
         ),
         go.Scatter(
+            name="Västerås",
+            x=wastewater_Västerås.date,
+            y=wastewater_Västerås.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#B691d2", size=7),
+            marker_symbol="hourglass",
+            line=dict(color="#B691d2", width=2),
+        ),
+        go.Scatter(
             name="Vaxholm",
             x=wastewater_Vaxholm.date,
             y=wastewater_Vaxholm.relative_copy_number,
@@ -127,6 +176,15 @@ fig = go.Figure(
             marker=dict(color="darkgoldenrod", size=7),
             marker_symbol="square",
             line=dict(color="darkgoldenrod", width=2),
+        ),
+        go.Scatter(
+            name="Östersund",
+            x=wastewater_Östersund.date,
+            y=wastewater_Östersund.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#997950", size=7),
+            marker_symbol="hourglass",
+            line=dict(color="#997950", width=2),
         ),
         go.Scatter(
             name="Österåker",
@@ -155,7 +213,7 @@ fig.update_layout(
     margin=dict(r=150, t=65, b=0, l=0),
     # width=900,
     # height=500,
-    legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
+    legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
     hovermode="x unified",
     hoverdistance=1,
 )
