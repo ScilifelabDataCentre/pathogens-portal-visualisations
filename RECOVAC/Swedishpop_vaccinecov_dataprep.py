@@ -60,7 +60,7 @@ def calc_func(dataset):
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
     dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
-    dataset["four_dose"] = dataset["vacc4"]
+    dataset["four_dose"] = dataset["vacc4"] * 100
     dataset.drop(columns=["vacc1", "vacc2", "vacc3", "vacc4"], axis=1, inplace=True)
     # print(dataset.head())
 
