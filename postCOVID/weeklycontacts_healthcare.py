@@ -8,8 +8,12 @@ import os
 import argparse
 
 aparser = argparse.ArgumentParser(description="Generate weekly contact blob")
-aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="postcovid_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # Import and sort data
@@ -101,7 +105,7 @@ fig = go.Figure(
 )
 fig.update_layout(
     plot_bgcolor="white",
-    autosize=False,
+    #    autosize=False,
     font=dict(size=14),
     margin=dict(r=150, t=0, b=0, l=0),
     legend=dict(
@@ -124,7 +128,7 @@ fig.update_yaxes(
     range=[0, (max(healthcare_contacts.U089) * 1.15)],
     rangemode="tozero",
 )
-#fig.show()
+# fig.show()
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 fig.write_json(os.path.join(args.output_dir, "weeklycontacts_healthcare.json"))
