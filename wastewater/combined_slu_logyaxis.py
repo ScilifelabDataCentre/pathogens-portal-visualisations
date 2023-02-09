@@ -21,32 +21,28 @@ wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
-# Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
 wastewater_Ekerö = wastewater_data[(wastewater_data["channel"] == "Ekerö")]
 wastewater_Enköping = wastewater_data[(wastewater_data["channel"] == "Enköping")]
-wastewater_Gävle = wastewater_data[(wastewater_data["channel"] == "Gävle")]  ##new
-wastewater_Helsingborg = wastewater_data[
-    (wastewater_data["channel"] == "Helsingborg")
-]  ##new
-wastewater_Jönköping = wastewater_data[
-    (wastewater_data["channel"] == "Jönköping")
-]  ##new
+wastewater_Gävle = wastewater_data[(wastewater_data["channel"] == "Gävle")]
+wastewater_Göteborg = wastewater_data[(wastewater_data["channel"] == "Göteborg")]  ##new
+wastewater_Helsingborg = wastewater_data[(wastewater_data["channel"] == "Helsingborg")]
+wastewater_Jönköping = wastewater_data[(wastewater_data["channel"] == "Jönköping")]
 wastewater_Kalmar = wastewater_data[(wastewater_data["channel"] == "Kalmar")]
-wastewater_Knivsta = wastewater_data[(wastewater_data["channel"] == "Knivsta")]
+wastewater_Malmö = wastewater_data[(wastewater_data["channel"] == "Malmö")]  ##new
+wastewater_StockholmKäppala = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Käppala")
+]  ##new
+# wastewater_Knivsta = wastewater_data[(wastewater_data["channel"] == "Knivsta")]
 wastewater_Tierp = wastewater_data[(wastewater_data["channel"] == "Tierp")]
 wastewater_Umeå = wastewater_data[(wastewater_data["channel"] == "Umeå")]
 wastewater_Uppsala = wastewater_data[(wastewater_data["channel"] == "Uppsala")]
-wastewater_Västerås = wastewater_data[
-    (wastewater_data["channel"] == "Västerås")
-]  ## new
-wastewater_Vaxholm = wastewater_data[(wastewater_data["channel"] == "Vaxholm")]
+wastewater_Västerås = wastewater_data[(wastewater_data["channel"] == "Västerås")]
+# wastewater_Vaxholm = wastewater_data[(wastewater_data["channel"] == "Vaxholm")]
 wastewater_Älvkarleby = wastewater_data[(wastewater_data["channel"] == "Älvkarleby")]
 wastewater_Örebro = wastewater_data[(wastewater_data["channel"] == "Örebro")]
-wastewater_Östersund = wastewater_data[
-    (wastewater_data["channel"] == "Östersund")
-]  ##new
-wastewater_Österåker = wastewater_data[(wastewater_data["channel"] == "Österåker")]
+wastewater_Östersund = wastewater_data[(wastewater_data["channel"] == "Östersund")]
+# wastewater_Österåker = wastewater_data[(wastewater_data["channel"] == "Österåker")]
 wastewater_Östhammar = wastewater_data[(wastewater_data["channel"] == "Östhammar")]
 
 fig = go.Figure(
@@ -78,6 +74,15 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[2], width=2),
         ),
+        go.Scatter(  ##NEW!!
+            name="Göteborg",
+            x=wastewater_Göteborg.date,
+            y=wastewater_Göteborg.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#9400d3", size=7),
+            marker_symbol="cross",
+            line=dict(color="#9400d3", width=2),
+        ),
         go.Scatter(
             name="Helsingborg",
             x=wastewater_Helsingborg.date,
@@ -105,14 +110,32 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[3], width=2),
         ),
-        go.Scatter(
-            name="Knivsta",
-            x=wastewater_Knivsta.date,
-            y=wastewater_Knivsta.relative_copy_number,
+        # go.Scatter(
+        #     name="Knivsta",
+        #     x=wastewater_Knivsta.date,
+        #     y=wastewater_Knivsta.relative_copy_number,
+        #     mode="lines+markers",
+        #     marker=dict(color=px.colors.diverging.RdBu[8], size=7),
+        #     marker_symbol="square",
+        #     line=dict(color=px.colors.diverging.RdBu[8], width=2),
+        # ),
+        go.Scatter(  ##NEW
+            name="Malmö",
+            x=wastewater_Malmö.date,
+            y=wastewater_Malmö.relative_copy_number,
             mode="lines+markers",
             marker=dict(color=px.colors.diverging.RdBu[8], size=7),
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[8], width=2),
+        ),
+        go.Scatter(  ##NEW
+            name="Stockholm-Käppala",
+            x=wastewater_StockholmKäppala.date,
+            y=wastewater_StockholmKäppala.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="gold", size=7),
+            marker_symbol="square",
+            line=dict(color="gold", width=2),
         ),
         go.Scatter(
             name="Tierp",
@@ -150,15 +173,15 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color="#B691d2", width=2),
         ),
-        go.Scatter(
-            name="Vaxholm",
-            x=wastewater_Vaxholm.date,
-            y=wastewater_Vaxholm.relative_copy_number,
-            mode="lines+markers",
-            marker=dict(color="#9400d3", size=7),
-            marker_symbol="cross",
-            line=dict(color="#9400d3", width=2),
-        ),
+        # go.Scatter(
+        #     name="Vaxholm",
+        #     x=wastewater_Vaxholm.date,
+        #     y=wastewater_Vaxholm.relative_copy_number,
+        #     mode="lines+markers",
+        #     marker=dict(color="#9400d3", size=7),
+        #     marker_symbol="cross",
+        #     line=dict(color="#9400d3", width=2),
+        # ),
         go.Scatter(
             name="Älvkarleby",
             x=wastewater_Älvkarleby.date,
@@ -186,15 +209,15 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color="#997950", width=2),
         ),
-        go.Scatter(
-            name="Österåker",
-            x=wastewater_Österåker.date,
-            y=wastewater_Österåker.relative_copy_number,
-            mode="lines+markers",
-            marker=dict(color="gold", size=7),
-            marker_symbol="cross",
-            line=dict(color="gold", width=2),
-        ),
+        # go.Scatter(
+        #     name="Österåker",
+        #     x=wastewater_Österåker.date,
+        #     y=wastewater_Österåker.relative_copy_number,
+        #     mode="lines+markers",
+        #     marker=dict(color="gold", size=7),
+        #     marker_symbol="cross",
+        #     line=dict(color="gold", width=2),
+        # ),
         go.Scatter(
             name="Östhammar",
             x=wastewater_Östhammar.date,
