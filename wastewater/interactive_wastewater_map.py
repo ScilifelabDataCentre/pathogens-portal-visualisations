@@ -7,13 +7,13 @@ import json
 import numpy as np
 
 df = pd.read_csv(
-    "test_map_points.csv",
+    "data/test_map_points.csv",
     sep=";",
     header=0,
 )
 
 df1 = pd.read_csv(
-    "wastewater_basemap.csv",
+    "data/wastewater_basemap.csv",
     sep=";",
     header=0,
 )
@@ -84,10 +84,11 @@ fig = px.choropleth(
 )
 # this section deals with the exact focus on the map
 lat_foc = 62.45
-lon_foc = 22.5
+lon_foc = 20.5
 fig.update_layout(
     geo=dict(
         lonaxis_range=[20, 90],  # the logitudinal range to consider
+        lataxis_range=[48, 100],  # the latitudinal range to consider
         projection_scale=4.55,  # this is kind of like zoom
         center=dict(lat=lat_foc, lon=lon_foc),  # this will center on the point
         visible=False,
@@ -110,40 +111,43 @@ fig.add_traces(
         lat=df["lat"],
         mode="markers",
         marker=dict(
-            color=df["value"],
+            color=px.colors.sequential.RdBu[10],  # df["value"],
             # color_continuous_scale=[
             # ],
-            colorscale=[
-                (0, px.colors.sequential.RdBu[10]),
-                (0.33, px.colors.sequential.RdBu[10]),
-                (0.33, "yellow"),
-                (0.66, "yellow"),
-                (0.66, px.colors.sequential.RdBu[0]),
-                (1.0, px.colors.sequential.RdBu[0]),
-            ],
-            size=15,
+            # colorscale=[
+            #     (0, px.colors.sequential.RdBu[10]),
+            #     (0.33, px.colors.sequential.RdBu[10]),
+            #     (0.33, "yellow"),
+            #     (0.66, "yellow"),
+            #     (0.66, px.colors.sequential.RdBu[0]),
+            #     (1.0, px.colors.sequential.RdBu[0]),
+            # ],
+            size=10,
             line=dict(color="black", width=2),
-            colorbar=dict(
-                title="<b>Relative copy<br>number of SARS-CoV-2<br>to PMMoV</b>",
-                tickvals=[1.33, 2.0, 2.66],
-                ticktext=[
-                    "Low",
-                    "Medium",
-                    "High",
-                ],
-                x=0.55,
-                y=0.8,
-                thicknessmode="pixels",
-                thickness=10,
-                lenmode="pixels",
-                len=250,
-            ),
+            # colorbar=dict(
+            #     title="<b>Relative copy<br>number of SARS-CoV-2<br>to PMMoV</b>",
+            #     tickvals=[1.33, 2.0, 2.66],
+            #     ticktext=[
+            #         "Low",
+            #         "Medium",
+            #         "High",
+            #     ],
+            #     x=0.55,
+            #     y=0.8,
+            #     thicknessmode="pixels",
+            #     thickness=10,
+            #     lenmode="pixels",
+            #     len=250,
+            # ),
         ),
         customdata=df,
-        hovertemplate="<b>%{customdata[0]} </b><br><br>Population: %{customdata[4]} <br>Value: %{customdata[3]} <br>Classification: %{customdata[6]}<extra></extra>",
+        hovertemplate="<b>%{customdata[0]}</b><extra></extra>",  # <br><br>Population: %{customdata[4]} <br>Value: %{customdata[3]} <br>Classification: %{customdata[6]}<extra></extra>",
     )
 )
 
 fig.update_layout(font=dict(size=16))
+fig.update_layout(dragmode=False)
+# Prints as a json file
+fig.write_json("wastewater_map_test.json")
 
-fig.show()
+# fig.show()

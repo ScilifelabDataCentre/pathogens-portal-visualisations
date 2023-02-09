@@ -8,8 +8,12 @@ import os
 import argparse
 
 aparser = argparse.ArgumentParser(description="Generate weekly contact divsex blob")
-aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="postcovid_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # Import and sort data
@@ -124,7 +128,7 @@ def plot_healthcare_divsex(input, name):
     )
     fig.update_layout(
         plot_bgcolor="white",
-        autosize=False,
+        # autosize=False,
         font=dict(size=14),
         margin=dict(r=150, t=0, b=0, l=0),
         legend=dict(
@@ -150,7 +154,10 @@ def plot_healthcare_divsex(input, name):
     # fig.show()
     if not os.path.isdir(args.output_dir):
         os.mkdir(args.output_dir)
-    fig.write_json(os.path.join(args.output_dir, "{}_healthcare_divsex.json".format(name)))
+    fig.write_json(
+        os.path.join(args.output_dir, "{}_healthcare_divsex.json".format(name))
+    )
+
 
 plot_healthcare_divsex(U089, "U089")
 plot_healthcare_divsex(U099, "U099")
