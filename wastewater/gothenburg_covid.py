@@ -33,7 +33,8 @@ fig.add_trace(
         x=wastewater_data.date,
         y=wastewater_data.relative_amount_CoV,
         marker_color=px.colors.diverging.RdBu[1],
-        hovertemplate="Relative amount of SARS-CoV-2: %{y}<extra></extra>",
+        customdata=wastewater_data,
+        hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of SARS-CoV-2: %{y}<extra></extra>",
     )
 )
 
@@ -43,7 +44,7 @@ fig.update_layout(
     font=dict(size=14),
     margin=dict(r=150, t=0, b=0, l=0),  # changed from 65 when buttons remove
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
-    hovermode="x unified",
+    # hovermode="x unified",
     hoverdistance=1,
 )
 fig.update_xaxes(
