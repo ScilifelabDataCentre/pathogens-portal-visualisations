@@ -22,6 +22,12 @@ wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
+# Limit date range,
+max_date = max(wastewater_data["date"])
+min_date = max_date + pd.Timedelta(-16, unit="w")
+wastewater_data = wastewater_data[
+    (wastewater_data["date"] >= min_date) & (wastewater_data["date"] <= max_date)
+]
 
 # colours for plot
 colours = px.colors.diverging.RdBu
@@ -127,15 +133,17 @@ fig.update_layout(
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
     hoverdistance=1,
+    hoverlabel_namelength=-1,
 )
 fig.update_xaxes(
     title="<br><b>Date (Week Commencing)</b>",
     showgrid=True,
     linecolor="black",
     tickangle=45,
+    range=[min_date, max_date],
 )
 fig.update_yaxes(
-    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10^4</b>",
+    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10<sup>4</sup></b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -143,7 +151,7 @@ fig.update_yaxes(
     zeroline=True,
     zerolinecolor="black",
     # Below will set the y-axis range to constant, if you wish
-    # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+    range=[0, max(wastewater_data["value"] * 1.15)],
 )
 
 fig.update_layout(
@@ -185,9 +193,9 @@ fig.update_layout(
 #     "wastewater_combined_stockholm.html", include_plotlyjs=True, full_html=True)
 
 # Prints as a json file
-# fig.write_json("wastewater_combined_stockholm.json")
+fig.write_json("wastewater_combined_stockholm.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
 
-print(fig.to_json())
+# print(fig.to_json())
