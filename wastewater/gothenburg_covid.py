@@ -3,14 +3,21 @@ import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime as dt
-
+from datetime import date, timedelta
 from plotly.io import write_image
 
-
-wastewater_data = pd.read_csv(
-    "data/GU_initial_data.csv",
-    sep=";",
+wastewater_data = pd.read_excel(
+    "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
+    sheet_name="all_viruses",
+    header=0,
+    engine="openpyxl",
+    keep_default_na=False,
 )
+# wastewater_data = pd.read_csv(
+#     "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu.csv",
+#     sep=";",
+# )
+
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
 wastewater_data["week_no"] = wastewater_data["week"].str[-3:]
 wastewater_data["week_no"] = (
@@ -24,6 +31,13 @@ wastewater_data["date"] = wastewater_data.apply(
 
 # colours for plot
 colours = px.colors.diverging.RdBu
+
+d1 = date(2022, 11, 13)
+d2 = date(2023, 1, 10)
+
+# this will give you a list containing all of the dates
+
+dd = [d1 + timedelta(days=x) for x in range((d2 - d1).days + 1)]
 
 fig = go.Figure()
 
@@ -52,6 +66,7 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
+    rangebreaks=[dict(values=dd)],
 )
 fig.update_yaxes(
     title="<b>Relative amount of SARS-CoV-2</b>",
@@ -63,6 +78,25 @@ fig.update_yaxes(
     zerolinecolor="black",
     # Below will set the y-axis range to constant, if you wish
     # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+)
+
+# fig.add_vrect(
+#     x0="2022-11-10",
+#     x1="2023-01-13",
+#     # annotation_text="Data missing",
+#     # annotation_position="top left",
+#     fillcolor=px.colors.diverging.RdBu[10],
+#     opacity=0.5,
+#     line_width=0,
+# )
+fig.add_vline(
+    x=datetime.datetime.strptime("2023-01-11", "%Y-%m-%d").timestamp() * 1000,
+    annotation_text=" Break in data collection",
+    #    annotation_position="top left",
+    fillcolor=px.colors.diverging.RdBu[10],
+    opacity=1,
+    line_width=5,
+    line_dash="dash",
 )
 
 # fig.update_layout(
@@ -97,9 +131,11 @@ fig.update_yaxes(
 #     ]
 # )
 # Below can show figure locally in tests
-# fig.show()
+#  fig.show()
 
-# Prints as a json file
-fig.write_json("wastewater_gothenburg.json")
+# # Prints as a json file
+# # fig.write_json("wastewater_gothenburg.json")
 
-# print(fig.to_json())
+fig.write_image("wastewater_gothenburg_line.png")
+
+# # print(fig.to_json())
