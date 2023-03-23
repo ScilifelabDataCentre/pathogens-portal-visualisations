@@ -352,7 +352,7 @@ fig.update_layout(
     annotations=[
         dict(
             text="Age Range:",
-            x=-0.1,
+            x=-0.05,
             xref="paper",
             y=1.2,
             yref="paper",
