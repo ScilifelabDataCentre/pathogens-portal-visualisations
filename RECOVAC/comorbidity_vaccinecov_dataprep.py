@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # cardiovascular disease
 RECO_cvd_V = pd.read_excel(
-    "data/cvd_cardio_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_cvd_cardio_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -15,7 +15,7 @@ RECO_cvd_V = pd.read_excel(
 
 # diabetes
 RECO_dm_V = pd.read_excel(
-    "data/dm_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_dm_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -24,7 +24,7 @@ RECO_dm_V = pd.read_excel(
 
 # respiratory disease
 RECO_resp_V = pd.read_excel(
-    "data/resp_dis1_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_resp_dis1_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -33,7 +33,7 @@ RECO_resp_V = pd.read_excel(
 
 # cancer
 RECO_cancer_V = pd.read_excel(
-    "data/sos_cancer_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_sos_cancer_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",

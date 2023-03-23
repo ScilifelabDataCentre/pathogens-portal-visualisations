@@ -6,7 +6,7 @@ from datetime import datetime as dt
 # Import data
 
 RECO_cancer = pd.read_excel(
-    "data/sos_cancer_covid_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_sos_cancer_covid_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -14,7 +14,7 @@ RECO_cancer = pd.read_excel(
 )
 
 RECO_cardio = pd.read_excel(
-    "data/cvd_cardio_covid_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_cvd_cardio_covid_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -22,7 +22,7 @@ RECO_cardio = pd.read_excel(
 )
 
 RECO_diabetes = pd.read_excel(
-    "data/dm_covid_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_dm_covid_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -30,7 +30,7 @@ RECO_diabetes = pd.read_excel(
 )
 
 RECO_resp = pd.read_excel(
-    "data/resp_dis1_covid_vacc_SciLifeLab25 May 2022.xlsx",
+    "data/cm_resp_dis1_covid_vacc_SciLifeLab.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
