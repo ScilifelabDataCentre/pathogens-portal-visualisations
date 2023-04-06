@@ -10,20 +10,16 @@ from plotly.io import write_image
 
 wastewater_data = pd.read_excel(
     "data/KTH_case_data.xlsx",
-    sheet_name="Malmö",
+    sheet_name="Stockholm",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
 
-# Change date format
-wastewater_data["Week"] = (
-    wastewater_data["Week"].str.replace("v", "", regex=True).astype(int)
-)
 # set the date to the start of the week (Monday)
 wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
-    lambda row: dt.fromisocalendar(row["Year"], row["Week"], row["day"]), axis=1
+    lambda row: dt.fromisocalendar(row["year"], row["week"], row["day"]), axis=1
 )
 # # Limit date range,
 # max_date = max(sjölunda_wwtp["date"]) + pd.Timedelta(3, unit="d")
@@ -32,19 +28,42 @@ wastewater_data["date"] = wastewater_data.apply(
 #     (sjölunda_wwtp["date"] >= min_date) & (sjölunda_wwtp["date"] <= max_date)
 # ]
 
-
 # colours for plot
 colours = px.colors.diverging.RdBu
 
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-# # Trace related to wastewater copy number
+# Traces related to wastewater copy number
 fig.add_trace(
     go.Bar(
-        name="Malmö",
+        name="Henriksdal area",
         x=wastewater_data.date,
-        y=wastewater_data.N3_mean,
+        y=wastewater_data.N3_Henriksdal,
         marker_color=px.colors.diverging.RdBu[1],
+        marker_line=dict(width=2, color="black"),
+        # customdata=wastewater_data,
+        # hovertemplate="Date (week commencing): %{x}<br>N3-gene copy number per PMMoV<br>gene copy number x 10<sup>4</sup>: %{y}<extra></extra>",
+    ),
+    secondary_y=False,
+)
+fig.add_trace(
+    go.Bar(
+        name="Bromma area",
+        x=wastewater_data.date,
+        y=wastewater_data.N3_Bromma,
+        marker_color=px.colors.diverging.RdBu[4],
+        marker_line=dict(width=2, color="black")
+        # customdata=wastewater_data,
+        # hovertemplate="Date (week commencing): %{x}<br>N3-gene copy number per PMMoV<br>gene copy number x 10<sup>4</sup>: %{y}<extra></extra>",
+    ),
+    secondary_y=False,
+)
+fig.add_trace(
+    go.Bar(
+        name="Käppala",
+        x=wastewater_data.date,
+        y=wastewater_data.N3_Käppala,
+        marker_color="gold",
         marker_line=dict(width=2, color="black"),
         # customdata=wastewater_data,
         # hovertemplate="Date (week commencing): %{x}<br>N3-gene copy number per PMMoV<br>gene copy number x 10<sup>4</sup>: %{y}<extra></extra>",
@@ -55,9 +74,9 @@ fig.add_trace(
 # Traces related to case numbers
 fig.add_trace(
     go.Scatter(
-        name="COVID-19 cases in Malmö",
+        name="COVID-19 cases in Stockholm",
         x=wastewater_data.date,
-        y=wastewater_data.case_malmö,
+        y=wastewater_data.Case_stockholm,
         mode="lines+markers",
         marker=dict(color=px.colors.diverging.RdBu[8], size=7),
         marker_symbol="square",
@@ -67,9 +86,9 @@ fig.add_trace(
 )
 fig.add_trace(
     go.Scatter(
-        name="Estimated COVID-19 cases in Malmö",
+        name="Estimated COVID-19 cases in Stockholm",
         x=wastewater_data.date,
-        y=wastewater_data.est_case_malmö,
+        y=wastewater_data.est_case_sthlm,
         mode="lines+markers",
         marker=dict(color=px.colors.diverging.RdBu[9], size=7),
         marker_symbol="square",
@@ -81,6 +100,7 @@ fig.add_trace(
 
 fig.update_layout(
     plot_bgcolor="white",
+    barmode="stack",
     autosize=True,
     font=dict(size=14),
     margin=dict(r=150, t=0, b=0, l=0),  # changed from 65 when buttons remove
@@ -114,27 +134,6 @@ fig.update_yaxes(
     # tickmode="sync", #change this to sync axis or not
     rangemode="tozero",
 )
-# fig.update_layout(
-#     # legend=dict(orientation="h"),
-#     yaxis=dict(
-#         title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10<sup>4</sup></b>",
-#         showgrid=True,
-#         gridcolor="lightgrey",
-#         linecolor="black",
-#         side="left",
-#         # range=[0, 250],
-#     ),
-#     yaxis2=dict(
-#         title=dict(text="COVID-19 cases"),
-#         side="right",
-#         showgrid=True,
-#         gridcolor="lightgrey",
-#         linecolor="black",
-#         #        range=[0, 2000],
-#         # overlaying="y",
-#         # tickmode="sync",
-#     ),
-# )
 
 
 # fig.update_yaxes(
