@@ -91,7 +91,7 @@ fig.update_yaxes(
 # )
 fig.add_vline(
     x=datetime.datetime.strptime("2023-01-11", "%Y-%m-%d").timestamp() * 1000,
-    annotation_text=" Break in data collection",
+    # annotation_text=" Break in data collection",
     #    annotation_position="top left",
     fillcolor=px.colors.diverging.RdBu[10],
     opacity=1,
@@ -131,7 +131,7 @@ fig.add_vline(
 #     ]
 # )
 # Below can show figure locally in tests
-#  fig.show()
+fig.show()
 
 # # Prints as a json file
 # # fig.write_json("wastewater_gothenburg.json")

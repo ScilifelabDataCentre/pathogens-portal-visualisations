@@ -40,6 +40,8 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[0], width=2),
             visible=True,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
         go.Scatter(
             name="PMMoV",
@@ -50,6 +52,8 @@ fig = go.Figure(
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[1], width=2),
             visible=False,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
         go.Scatter(
             name="Adenovirus",
@@ -60,6 +64,8 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[2], width=2),
             visible=False,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
         go.Scatter(
             name="GG2",
@@ -70,6 +76,8 @@ fig = go.Figure(
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[3], width=2),
             visible=False,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
         go.Scatter(
             name="Astrovirus",
@@ -80,6 +88,8 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[8], width=2),
             visible=False,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
         go.Scatter(
             name="Sapovirus",
@@ -90,6 +100,8 @@ fig = go.Figure(
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[9], width=2),
             visible=False,
+            customdata=wastewater_data,
+            hovertemplate="Date (week commencing): %{x}<br>Week: %{customdata[0]}<br>Relative amount of virus: %{y}<extra></extra>",
         ),
     ]
 )
@@ -101,7 +113,7 @@ fig.update_layout(
     # width=900,
     # height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
-    hovermode="x unified",
+    # hovermode="x unified",
     hoverdistance=1,
 )
 fig.update_xaxes(
@@ -238,6 +250,19 @@ fig.update_layout(
     ]
 )
 
+fig.update_layout(
+    annotations=[
+        dict(
+            text="Virus:",
+            x=0.00,
+            xref="paper",
+            y=1.23,
+            yref="paper",
+            showarrow=False,
+        ),
+    ]
+)
+
 
 # fig.update_layout(
 #     updatemenus=[
@@ -282,7 +307,7 @@ fig.update_layout(
 # # fig.write_json("wastewater_combined_slu_regular.json")
 
 # # Below can produce a static image
-# # fig.write_image("wastewater_combined_graph.png")
+# fig.write_image("enteric_graph.png")
 
 # print(fig.to_json())
 fig.show()
