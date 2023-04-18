@@ -27,9 +27,9 @@ sjölunda_wwtp["date"] = sjölunda_wwtp.apply(
 # Limit date range,
 max_date = max(sjölunda_wwtp["date"]) + pd.Timedelta(3, unit="d")
 min_date = max_date + pd.Timedelta(-17, unit="w")
-sjölunda_wwtp = sjölunda_wwtp[
+sjölunda_wwtp_res = sjölunda_wwtp[
     (sjölunda_wwtp["date"] >= min_date) & (sjölunda_wwtp["date"] <= max_date)
-]
+]  # added this so that it starts with
 
 # colours for plot
 colours = px.colors.diverging.RdBu

@@ -117,7 +117,7 @@ fig.update_xaxes(
 )
 # Set up two y-axes (one for cases, one for N3 gene content in wastewater)
 fig.update_yaxes(
-    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10<sup>4</sup></b>",
+    title="<b>Total N-gene copy number<br>normalised to PMMoV/week</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -180,6 +180,6 @@ fig.update_yaxes(
 fig.show()
 
 # # Prints as a json file
-# # fig.write_json("wastewater_kthmalmö.json")
+fig.write_json("kth_normalised_COV_sthlm.json")
 
 # # print(fig.to_json())
