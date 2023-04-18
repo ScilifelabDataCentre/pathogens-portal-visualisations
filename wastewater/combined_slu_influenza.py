@@ -9,7 +9,7 @@ from plotly.io import write_image
 # Göteborg, Malmö and Stockholm-Käppala
 
 wastewater_data = pd.read_csv(
-    "/Users/liahu895/Documents/GitHub/covid-portal-visualisations/wastewater/data/SARS-Cov-2-N1_infA quantification data_08-2023.csv",
+    "/Users/liahu895/Documents/GitHub/covid-portal-visualisations/wastewater/data/SARS-Cov-2-N1_infA quantification data_10-2023_corr.csv",
     # "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
 )
@@ -255,6 +255,7 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
+    hoverformat="%b %d, %Y (week %V)",
 )
 fig.update_yaxes(
     title="<b>InfA-gene copy number per PMMOV<br>gene copy number x 10^4</b>",
