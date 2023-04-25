@@ -134,7 +134,7 @@ fig.add_vrect(
 # fig.show()
 
 # # Prints as a json file
-fig.write_json("wastewater_gothenburg.json")
+# fig.write_json("wastewater_gothenburg.json")
 
 # fig.write_image("wastewater_gothenburg_line.png")
 
