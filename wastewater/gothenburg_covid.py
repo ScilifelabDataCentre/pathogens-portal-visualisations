@@ -32,12 +32,12 @@ wastewater_data["date"] = wastewater_data.apply(
 # colours for plot
 colours = px.colors.diverging.RdBu
 
-d1 = date(2022, 11, 13)
-d2 = date(2023, 1, 10)
+# d1 = date(2022, 11, 13)
+# d2 = date(2023, 1, 10)
 
-# this will give you a list containing all of the dates
+# # this will give you a list containing all of the dates
 
-dd = [d1 + timedelta(days=x) for x in range((d2 - d1).days + 1)]
+# dd = [d1 + timedelta(days=x) for x in range((d2 - d1).days + 1)]
 
 fig = go.Figure()
 
@@ -66,7 +66,7 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
-    rangebreaks=[dict(values=dd)],
+    # rangebreaks=[dict(values=dd)],
 )
 fig.update_yaxes(
     title="<b>Relative amount of SARS-CoV-2</b>",
@@ -80,24 +80,24 @@ fig.update_yaxes(
     # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
 )
 
-# fig.add_vrect(
-#     x0="2022-11-10",
-#     x1="2023-01-13",
-#     # annotation_text="Data missing",
-#     # annotation_position="top left",
-#     fillcolor=px.colors.diverging.RdBu[10],
-#     opacity=0.5,
-#     line_width=0,
-# )
-fig.add_vline(
-    x=datetime.datetime.strptime("2023-01-11", "%Y-%m-%d").timestamp() * 1000,
-    # annotation_text=" Break in data collection",
-    #    annotation_position="top left",
+fig.add_vrect(
+    x0="2022-11-10",
+    x1="2023-01-06",
+    # annotation_text="Data missing",
+    # annotation_position="top left",
     fillcolor=px.colors.diverging.RdBu[10],
-    opacity=1,
-    line_width=5,
-    line_dash="dash",
+    opacity=0.5,
+    line_width=0,
 )
+# fig.add_vline(
+#     x=datetime.datetime.strptime("2023-01-11", "%Y-%m-%d").timestamp() * 1000,
+#     # annotation_text=" Break in data collection",
+#     #    annotation_position="top left",
+#     fillcolor=px.colors.diverging.RdBu[10],
+#     opacity=1,
+#     line_width=5,
+#     line_dash="dash",
+# )
 
 # fig.update_layout(
 #     updatemenus=[
@@ -131,11 +131,11 @@ fig.add_vline(
 #     ]
 # )
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # # Prints as a json file
-# # fig.write_json("wastewater_gothenburg.json")
+fig.write_json("wastewater_gothenburg.json")
 
-fig.write_image("wastewater_gothenburg_line.png")
+# fig.write_image("wastewater_gothenburg_line.png")
 
-# # print(fig.to_json())
+print(fig.to_json())
