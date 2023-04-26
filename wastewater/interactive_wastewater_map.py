@@ -70,10 +70,10 @@ fig = px.choropleth(
     color=df1["plant_or_not"],
     # Below gives discrete colours for ranges of Uppskattning values
     color_continuous_scale=[
-        (splits[0], colour[0]),
-        (splits[1], colour[0]),
-        (splits[1], colour[0]),
-        (splits[2], colour[0]),
+        (splits[0], "#E4FAE4"),
+        (splits[1], "#E4FAE4"),
+        (splits[1], "#E4FAE4"),
+        (splits[2], "#E4FAE4"),
     ],
     # this keeps the range of colours constant regrdless of data
     range_color=[-1.1, 1.1],
@@ -150,4 +150,4 @@ fig.update_layout(dragmode=False)
 # Prints as a json file
 fig.write_json("wastewater_map_test.json")
 
-# fig.show()
+fig.show()
