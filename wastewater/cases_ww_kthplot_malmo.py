@@ -114,6 +114,9 @@ fig.update_yaxes(
     # tickmode="sync", #change this to sync axis or not
     rangemode="tozero",
 )
+
+## Need to keep the below in case the team decide to add in the functionality before the graph is finalised
+
 # fig.update_layout(
 #     # legend=dict(orientation="h"),
 #     yaxis=dict(

@@ -135,6 +135,7 @@ fig.update_yaxes(
     rangemode="tozero",
 )
 
+## Keep below until the functionality of the graph is finalised
 
 # fig.update_yaxes(
 
@@ -177,7 +178,7 @@ fig.update_yaxes(
 # #     ]
 # # )
 # # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # # Prints as a json file
 fig.write_json("kth_normalised_COV_sthlm.json")
