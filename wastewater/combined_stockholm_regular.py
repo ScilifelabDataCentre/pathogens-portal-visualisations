@@ -22,6 +22,13 @@ wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
+# want to initially limit the date range,
+max_date = max(wastewater_data["date"])
+min_date = max_date + pd.Timedelta(-16, unit="w")
+# The below just helps to set the y axis, so that it varies according to values in the last 16 weeks
+wastewater_data_res = wastewater_data[
+    (wastewater_data["date"] >= min_date) & (wastewater_data["date"] <= max_date)
+]
 
 # colours for plot
 colours = px.colors.diverging.RdBu
@@ -127,15 +134,17 @@ fig.update_layout(
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
     hoverdistance=1,
+    hoverlabel_namelength=-1,
 )
 fig.update_xaxes(
     title="<br><b>Date (Week Commencing)</b>",
     showgrid=True,
     linecolor="black",
     tickangle=45,
+    range=[min_date, max_date],
 )
 fig.update_yaxes(
-    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10^4</b>",
+    title="<b>N3-gene copy number per<br>PMMoV gene copy number x 10<sup>4</sup></b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -143,19 +152,12 @@ fig.update_yaxes(
     zeroline=True,
     zerolinecolor="black",
     # Below will set the y-axis range to constant, if you wish
-    # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+    range=[0, max(wastewater_data_res["value"] * 1.15)],
 )
 
 fig.update_layout(
     updatemenus=[
         dict(
-            type="buttons",
-            direction="right",
-            active=0,
-            x=1.1,
-            y=1.1,
-            xanchor="right",
-            yanchor="top",
             buttons=list(
                 [
                     dict(
@@ -174,9 +176,64 @@ fig.update_layout(
                     ),
                 ]
             ),
-        )
+            type="buttons",
+            direction="right",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=1.1,
+            xanchor="left",
+            y=1.1,
+            yanchor="top",
+        ),
+        dict(
+            buttons=list(
+                [
+                    dict(
+                        label="Last 16 weeks",
+                        method="relayout",
+                        args=[
+                            {
+                                "xaxis.range": (
+                                    min(wastewater_data_res.date),
+                                    max(wastewater_data_res.date),
+                                ),
+                                "yaxis.range": (
+                                    min(wastewater_data_res.value),
+                                    (max(wastewater_data_res.value) * 1.15),
+                                ),
+                            },
+                        ],
+                    ),
+                    dict(
+                        label="Whole timeline",
+                        method="relayout",
+                        args=[
+                            {
+                                "xaxis.range": (
+                                    min(wastewater_data.date),
+                                    max(wastewater_data.date),
+                                ),
+                                "yaxis.range": (
+                                    min(wastewater_data.value),
+                                    (max(wastewater_data.value) * 1.15),
+                                ),
+                            },
+                        ],
+                    ),
+                ],
+            ),
+            type="buttons",
+            direction="right",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=1.1,
+            yanchor="top",
+        ),
     ]
 )
+
 # Below can show figure locally in tests
 # fig.show()
 
@@ -185,7 +242,7 @@ fig.update_layout(
 #     "wastewater_combined_stockholm.html", include_plotlyjs=True, full_html=True)
 
 # Prints as a json file
-# fig.write_json("wastewater_combined_stockholm.json")
+# fig.write_json("wastewater_combined_stockholm_new.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")

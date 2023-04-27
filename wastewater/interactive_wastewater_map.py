@@ -40,27 +40,6 @@ df["rank"] = (
 colour = px.colors.sequential.tempo
 splits = [0.00, 0.50, 1.00]
 
-# language = "Swedish"
-
-# if language == "Swedish":
-#     cbtit = "<b>Uppskattad förekomst av<br>symptomatisk Covid-19,<br>% av befolkningen</b><br>(uppdateras dagligen)"
-# elif language == "English":
-#     cbtit = "<b>Estimated prevalence of<br>symptomatic cases,<br>% of population</b><br>(updated daily)"
-# else:
-#     cbtit = "lang_error"
-# if language == "Swedish":
-#     overwrite = "Uppskattning<br>för Län (%) "
-# elif language == "English":
-#     overwrite = "Estimate<br>for County (%) "
-# else:
-#     overwrite = "lang_error"
-# if language == "Swedish":
-#     insuff = "<br>Otillräckligt<br>underlag"
-# elif language == "English":
-#     insuff = "Insufficient data"
-# else:
-#     cbtit = "lang_error"
-
 df1["id"] = df1["Lan"].apply(lambda x: counties_id_map[x])
 
 fig = px.choropleth(
@@ -70,10 +49,10 @@ fig = px.choropleth(
     color=df1["plant_or_not"],
     # Below gives discrete colours for ranges of Uppskattning values
     color_continuous_scale=[
-        (splits[0], colour[0]),
-        (splits[1], colour[0]),
-        (splits[1], colour[0]),
-        (splits[2], colour[0]),
+        (splits[0], "#E4FAE4"),
+        (splits[1], "#E4FAE4"),
+        (splits[1], "#E4FAE4"),
+        (splits[2], "#E4FAE4"),
     ],
     # this keeps the range of colours constant regrdless of data
     range_color=[-1.1, 1.1],
@@ -100,11 +79,6 @@ fig.update_coloraxes(showscale=False)
 # to save the figure
 # fig.write_json("Symptoms_map_{}.json".format(language))
 
-
-# # to write the file as .json
-# map_func(df1, jdata, "English")
-# map_func(df1, jdata, "Swedish")
-
 fig.add_traces(
     data=go.Scattergeo(
         lon=df["long"],
@@ -112,33 +86,8 @@ fig.add_traces(
         mode="markers",
         marker=dict(
             color=px.colors.sequential.RdBu[10],  # df["value"],
-            # color_continuous_scale=[
-            # ],
-            # colorscale=[
-            #     (0, px.colors.sequential.RdBu[10]),
-            #     (0.33, px.colors.sequential.RdBu[10]),
-            #     (0.33, "yellow"),
-            #     (0.66, "yellow"),
-            #     (0.66, px.colors.sequential.RdBu[0]),
-            #     (1.0, px.colors.sequential.RdBu[0]),
-            # ],
             size=10,
             line=dict(color="black", width=2),
-            # colorbar=dict(
-            #     title="<b>Relative copy<br>number of SARS-CoV-2<br>to PMMoV</b>",
-            #     tickvals=[1.33, 2.0, 2.66],
-            #     ticktext=[
-            #         "Low",
-            #         "Medium",
-            #         "High",
-            #     ],
-            #     x=0.55,
-            #     y=0.8,
-            #     thicknessmode="pixels",
-            #     thickness=10,
-            #     lenmode="pixels",
-            #     len=250,
-            # ),
         ),
         customdata=df,
         hovertemplate="<b>%{customdata[0]}</b><extra></extra>",  # <br><br>Population: %{customdata[4]} <br>Value: %{customdata[3]} <br>Classification: %{customdata[6]}<extra></extra>",

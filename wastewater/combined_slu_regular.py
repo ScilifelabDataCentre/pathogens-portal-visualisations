@@ -248,9 +248,10 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
+    hoverformat="%b %d, %Y (week %W)",
 )
 fig.update_yaxes(
-    title="<b>N1-gene copy number per PMMOV<br>gene copy number x 10^4</b>",
+    title="<b>N1-gene copy number per PMMOV<br>gene copy number x 10<sup>4</sup></b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
