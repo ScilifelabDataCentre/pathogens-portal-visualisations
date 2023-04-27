@@ -70,47 +70,66 @@ fig.update_yaxes(
     gridcolor="lightgrey",
     linecolor="black",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
-    # zeroline=True,
-    # zerolinecolor="black",
+    zeroline=True,
+    zerolinecolor="black",
     # Below will set the y-axis range to constant, if you wish
-    # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+    range=[0, max(sjölunda_wwtp_res["value"] * 1.15)],
 )
 
-# fig.update_layout(
-#     updatemenus=[
-#         dict(
-#             type="buttons",
-#             direction="right",
-#             active=0,
-#             x=1.1,
-#             y=1.1,
-#             xanchor="right",
-#             yanchor="top",
-#             buttons=list(
-#                 [
-#                     dict(
-#                         label="Reselect all areas",
-#                         method="update",
-#                         args=[
-#                             {"visible": [True]},
-#                         ],
-#                     ),
-#                     dict(
-#                         label="Deselect all areas",
-#                         method="update",
-#                         args=[
-#                             {"visible": "legendonly"},
-#                         ],
-#                     ),
-#                 ]
-#             ),
-#         )
-#     ]
-# )
+fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=list(
+                [
+                    dict(
+                        label="Last 16 weeks",
+                        method="relayout",
+                        args=[
+                            {
+                                "xaxis.range": (
+                                    min(sjölunda_wwtp_res.date),
+                                    max(sjölunda_wwtp_res.date),
+                                ),
+                                "yaxis.range": (
+                                    min(sjölunda_wwtp_res.value),
+                                    (max(sjölunda_wwtp_res.value) * 1.15),
+                                ),
+                            },
+                        ],
+                    ),
+                    dict(
+                        label="Whole timeline",
+                        method="relayout",
+                        args=[
+                            {
+                                "xaxis.range": (
+                                    min(sjölunda_wwtp.date),
+                                    max(sjölunda_wwtp.date),
+                                ),
+                                "yaxis.range": (
+                                    min(sjölunda_wwtp.value),
+                                    (max(sjölunda_wwtp.value) * 1.15),
+                                ),
+                            },
+                        ],
+                    ),
+                ],
+            ),
+            type="buttons",
+            direction="right",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=1.1,
+            yanchor="top",
+        ),
+    ]
+)
 # Below can show figure locally in tests
 # fig.show()
 
 # Prints as a json file
-fig.write_json("wastewater_kthmalmö.json")
+# fig.write_json("wastewater_kthmalmö.json")
 
-# print(fig.to_json())
+print(fig.to_json())
