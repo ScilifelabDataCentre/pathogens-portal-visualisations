@@ -663,7 +663,7 @@ fig.update_layout(
         showgrid=True,
         gridcolor="lightgrey",
         linecolor="black",
-        dtick=200,
+        dtick=500,
         range=[0, int(highest_y_value * 1.05)],
     ),
 )
