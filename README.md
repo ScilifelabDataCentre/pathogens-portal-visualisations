@@ -12,7 +12,7 @@ This folder contains files related to DASH apps. There are some basic scripts ju
 
 ## Population_stats
 
-This repository contains the script that can be used to generate a summary of the Swedish population from publicly available data from https://www.scb.se/. The data is updated each quarter, but not on a consistent date. The script generates a summary excel file should be updated in blobserver [here](https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx/info) for use in calculations related to the vaccinations and postcovid pages of the portal.
+This repository contains the script that can be used to generate a summary of the Swedish population from publicly available data from https://www.scb.se/. The data is updated each quarter, but not on a consistent date. The script generates a summary excel file should be updated in blobserver [here](https://blobserver.dc.scilifelab.se/blob/SCB_pop_data.xlsx/info) for use in calculations related to the vaccinations and postcovid pages of the portal.
 
 ## RECOVAC
 

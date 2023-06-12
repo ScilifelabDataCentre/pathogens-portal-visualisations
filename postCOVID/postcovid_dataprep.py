@@ -32,7 +32,7 @@ postcovid_df.rename(
 # print(postcovid_df)
 
 SCB_population = pd.read_excel(
-    "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/SCB_pop_data.xlsx",
     sheet_name=0,
     header=0,
     engine="openpyxl",

@@ -141,7 +141,7 @@ fifth_vacc_dose_lan = get_vaccination_data(
 fifth_vacc_dose = fifth_vacc_dose_lan[fifth_vacc_dose_lan["Region"] == "Sweden"]
 
 SCB_population = pd.read_excel(
-    "https://blobserver.dckube.scilifelab.se/blob/SCB_pop_data.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/SCB_pop_data.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",

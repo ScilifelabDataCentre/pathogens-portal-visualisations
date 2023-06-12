@@ -14,7 +14,7 @@ def get_yaxis_range(data):
     return [0, max(min(data)*10, max(data))*1.15]
 
 wastewater_data = pd.read_excel(
-    "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
     sheet_name="all_viruses",
     header=0,
     engine="openpyxl",

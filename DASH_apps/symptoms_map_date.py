@@ -21,7 +21,7 @@ for feature in jdata["features"]:
     counties_id_map[feature["properties"]["name"]] = feature["id"]
 
 # data
-req = requests.get("https://urls.dckube.scilifelab.se/goto/csss/")
+req = requests.get("https://urls.dc.scilifelab.se/goto/csss/")
 reader = csv.reader(req.text.splitlines())
 data = list(reader)
 df1 = pd.DataFrame(data)
