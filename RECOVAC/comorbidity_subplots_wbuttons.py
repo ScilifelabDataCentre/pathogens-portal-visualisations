@@ -20,6 +20,22 @@ from comorbidity_cases_dataprep import (
     RECO_resp,
 )
 
+# Function to determine which part ofgrapghs to show
+def get_xaxis(x1, x2):
+    r_start = max(min(x1), min(x2))
+    r_end = min(max(x1), max(x2))
+    x_axes = {
+        "xaxis" : {
+            "all": dict(title="<b>Date</b>", range=[min(x1), max(x1)], anchor="y"),
+            "align": dict(title="<b>Date</b>", range=[r_start, r_end], anchor="y")
+        },
+        "xaxis2" : {
+            "all": dict(title="<b>Date</b>", showgrid=True, linecolor="black", range=[min(x2), max(x2)], anchor="y2"),
+            "align": dict(title="<b>Date</b>", showgrid=True, linecolor="black", range=[r_start, r_end], anchor="y2")
+        }
+    }    
+    return x_axes
+
 fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 
 # BELOW ARE TRACES FOR VACCINATION PLOT
@@ -600,6 +616,9 @@ fig.add_trace(
     1,
 )
 
+# Get appropriate range for x axes
+
+x_axes = get_xaxis(x1=RECO_cvd_V.date, x2=RECO_cardio.date)
 
 # Update layout for top graph (vaccination coverage area under curve)
 fig.update_layout(
@@ -627,24 +646,6 @@ highest_y_value = max(
     RECO_cardio["c19_d2"],
 )
 
-if highest_y_value > 10:
-    yaxis_tick = 2
-if highest_y_value > 20:
-    yaxis_tick = 5
-if highest_y_value > 50:
-    yaxis_tick = 10
-if highest_y_value > 100:
-    yaxis_tick = 20
-if highest_y_value > 150:
-    yaxis_tick = 40
-if highest_y_value > 500:
-    yaxis_tick = 100
-if highest_y_value > 1000:
-    yaxis_tick = 200
-if highest_y_value > 2500:
-    yaxis_tick = 500
-
-
 fig.update_layout(
     barmode="stack",
     plot_bgcolor="white",
@@ -670,9 +671,8 @@ fig.update_layout(
 
 # buttons
 
-button_layer_1_height = 1.26
-button_layer_2_height = 1.20
-button_layer_3_height = 1.12
+button_layer_1_height = 1.20
+button_layer_2_height = 1.12
 
 fig.update_layout(
     updatemenus=[
@@ -771,20 +771,6 @@ fig.update_layout(
                         ],
                         label="Diabetes",
                     ),
-                ]
-            ),
-            type="buttons",
-            direction="right",
-            pad={"r": 10, "t": 10},
-            showactive=False,
-            x=0.1,
-            xanchor="left",
-            y=button_layer_1_height,
-            yanchor="top",
-        ),
-        dict(
-            buttons=list(
-                [
                     dict(
                         method="update",
                         args=[
@@ -882,29 +868,33 @@ fig.update_layout(
             type="buttons",
             direction="right",
             pad={"r": 10, "t": 10},
-            showactive=False,
+            showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_2_height,
+            y=button_layer_1_height,
             yanchor="top",
         ),
         dict(
             buttons=list(
                 [
                     dict(
-                        label="Whole time series",
+                        label="Show all data",
                         method="relayout",
                         args=[
-                            "xaxis2.range",
-                            (min(RECO_cardio.date), max(RECO_cardio.date)),
+                            {
+                                "xaxis": x_axes["xaxis"]["all"],
+                                "xaxis2": x_axes["xaxis2"]["all"]
+                            }
                         ],
                     ),
                     dict(
                         label="Align timeline",
                         method="relayout",
                         args=[
-                            "xaxis2.range",
-                            ("2020-12-21", max(RECO_cvd_V.date)),
+                            {
+                                "xaxis": x_axes["xaxis"]["align"],
+                                "xaxis2": x_axes["xaxis2"]["align"]
+                            }
                         ],
                     ),
                 ],
@@ -912,10 +902,10 @@ fig.update_layout(
             type="buttons",
             direction="right",
             pad={"r": 10, "t": 10},
-            showactive=False,
+            showactive=True,
             x=0.1,
             xanchor="left",
-            y=button_layer_3_height,
+            y=button_layer_2_height,
             yanchor="top",
         ),
     ]
@@ -925,26 +915,26 @@ fig.update_layout(
     annotations=[
         dict(
             text="Comorbidity:",
-            x=-0.05,
+            x=-0.03,
             xref="paper",
-            y=1.23,
+            y=button_layer_1_height*0.978,
             yref="paper",
             align="left",
             showarrow=False,
         ),
         dict(
             text="Timeframe:",
-            x=-0.05,
+            x=-0.03,
             xref="paper",
-            y=1.09,
+            y=button_layer_2_height*0.978,
             yref="paper",
             showarrow=False,
         ),
     ]
 )
 
+# fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
-# fig.show()
 fig.write_json("Plots/comorbs_subplot_button.json")
