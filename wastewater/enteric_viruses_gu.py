@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import datetime
 import plotly.graph_objects as go
@@ -7,6 +8,10 @@ from plotly.io import write_image
 
 # # Knivsta, Vaxholm and Österåker.
 # Göteborg, Malmö and Stockholm-Käppala
+
+#  Method to get proper range for y axis
+def get_yaxis_range(data):
+    return [0, max(min(data)*10, max(data))*1.15]
 
 wastewater_data = pd.read_excel(
     "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
@@ -27,7 +32,6 @@ wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 wastewater_data = wastewater_data[(wastewater_data["date"] >= "2023-01-16")]
-
 
 fig = go.Figure(
     data=[
@@ -105,6 +109,8 @@ fig = go.Figure(
         ),
     ]
 )
+
+# Update layouts
 fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
@@ -128,8 +134,9 @@ fig.update_yaxes(
     gridcolor="lightgrey",
     linecolor="black",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
-    rangemode="tozero"
-    # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+    rangemode="tozero",
+    # Using enterovirus for range as it is the first trace in that graph
+    range=[0, max(min(wastewater_data.enterovirus)*10, max(wastewater_data.enterovirus))*1.15]
 )
 
 # select viruses
@@ -152,6 +159,9 @@ fig.update_layout(
                                     False,
                                     False,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.enterovirus)
                             }
                         ],
                         label="Enterovirus",
@@ -168,6 +178,9 @@ fig.update_layout(
                                     False,
                                     False,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.PMMoV)
                             }
                         ],
                         label="PMMoV",
@@ -184,6 +197,9 @@ fig.update_layout(
                                     False,
                                     False,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.adenovirus)
                             }
                         ],
                         label="Adenovirus",
@@ -200,6 +216,9 @@ fig.update_layout(
                                     False,
                                     False,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.GG2)
                             }
                         ],
                         label="GG2",
@@ -216,6 +235,9 @@ fig.update_layout(
                                     True,
                                     False,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.astrovirus)
                             }
                         ],
                         label="Astrovirus",
@@ -232,6 +254,9 @@ fig.update_layout(
                                     False,
                                     True,
                                 ]
+                            },
+                            {
+                                "yaxis.range" : get_yaxis_range(wastewater_data.sapovirus)
                             }
                         ],
                         label="Sapovirus",
@@ -263,51 +288,11 @@ fig.update_layout(
     ]
 )
 
+# Below can show figure locally in tests
+# fig.show()
 
-# fig.update_layout(
-#     updatemenus=[
-#         dict(
-#             type="buttons",
-#             direction="right",
-#             active=0,
-#             x=1.1,
-#             y=1.1,
-#             xanchor="right",
-#             yanchor="top",
-#             buttons=list(
-#                 [
-#                     dict(
-#                         label="Reselect all areas",
-#                         method="update",
-#                         args=[
-#                             {"visible": [True]},
-#                         ],
-#                     ),
-#                     dict(
-#                         label="Deselect all areas",
-#                         method="update",
-#                         args=[
-#                             {"visible": "legendonly"},
-#                         ],
-#                     ),
-#                 ]
-#             ),
-#         )
-#     ]
-# )
-# # Below can show figure locally in tests
-# # fig.show()
+# if not os.path.isdir("Plots/"):
+#     os.mkdir("Plots/")
+# fig.write_json("Plots/enteric_graph_gu.json")
 
-# # Below prints as html
-# # fig.write_html(
-# #    "wastewater_combined_slu_regular.html", include_plotlyjs=True, full_html=True
-# # )
-
-# # Prints as a json file
-# # fig.write_json("wastewater_combined_slu_regular.json")
-
-# # Below can produce a static image
-# fig.write_image("enteric_graph.png")
-
-# print(fig.to_json())
-fig.show()
+print(fig.to_json())
