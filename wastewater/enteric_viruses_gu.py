@@ -291,6 +291,8 @@ fig.update_layout(
 # Below can show figure locally in tests
 # fig.show()
 
-if not os.path.isdir("Plots/"):
-    os.mkdir("Plots/")
-fig.write_json("Plots/enteric_graph_gu.json")
+# if not os.path.isdir("Plots/"):
+#     os.mkdir("Plots/")
+# fig.write_json("Plots/enteric_graph_gu.json")
+
+print(fig.to_json())
