@@ -11,7 +11,8 @@ from plotly.io import write_image
 
 #  Method to get proper range for y axis
 def get_yaxis_range(data):
-    return [0, max(min(data)*10, max(data))*1.15]
+    nz_data = data[data != 0]
+    return [0, max(min(nz_data)*10, max(nz_data))*1.15]
 
 wastewater_data = pd.read_excel(
     "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
@@ -31,7 +32,7 @@ wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
-wastewater_data = wastewater_data[(wastewater_data["date"] >= "2023-01-16")]
+wastewater_data = wastewater_data[(wastewater_data["date"] >= "2023-01-09")]
 
 fig = go.Figure(
     data=[
