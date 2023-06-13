@@ -98,5 +98,6 @@ fig.update_layout(font=dict(size=16))
 fig.update_layout(dragmode=False)
 # Prints as a json file
 fig.write_json("wastewater_map_test.json")
+#fig.write_image("wastewater_map_test.png")
 
 # fig.show()

@@ -20,9 +20,9 @@ site_table = pd.read_excel(
     keep_default_na=False,
 )
 
-site_table = site_table.iloc[
-    0:20,
-]
+# site_table = site_table.iloc[
+#     0:20,
+# ]
 
 site_table.columns = [
     "Area",
@@ -76,8 +76,8 @@ fig = go.Figure(
                 ),
                 align=["left"],
                 fill_color=["white"],
-                font=dict(color="black", size=14),
-                height=35,
+                font=dict(color="black", size=12),
+                height=30,
                 line=dict(color="#e0e0e0", width=0.05),
             ),
         )
