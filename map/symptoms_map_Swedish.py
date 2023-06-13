@@ -21,7 +21,7 @@ for feature in jdata["features"]:
 
 # data
 req = requests.get(
-    "https://blobserver.dckube.scilifelab.se/blob/CSSS_estimates_mostrecent.csv"
+    "https://blobserver.dc.scilifelab.se/blob/CSSS_estimates_mostrecent.csv"
 )
 reader = csv.reader(req.text.splitlines())
 data = list(reader)[-21:]

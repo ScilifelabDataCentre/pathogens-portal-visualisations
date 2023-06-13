@@ -122,5 +122,5 @@ stack_plot(U099, "U099")
 stack_plot(U089, "U089")
 
 # OLD GRAPHICS PLACE:
-# you should upload this to https://datagraphics.dckube.scilifelab.se/dataset/6b24d7130bef4bf78f567d9c9ad96f59
+# you should upload this to https://datagraphics.dc.scilifelab.se/dataset/6b24d7130bef4bf78f567d9c9ad96f59
 # need to add to new blob!

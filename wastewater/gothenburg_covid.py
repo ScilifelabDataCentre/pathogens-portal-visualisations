@@ -7,14 +7,14 @@ from datetime import date, timedelta
 from plotly.io import write_image
 
 wastewater_data = pd.read_excel(
-    "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
     sheet_name="all_viruses",
     header=0,
     engine="openpyxl",
     keep_default_na=False,
 )
 # wastewater_data = pd.read_csv(
-#     "https://blobserver.dckube.scilifelab.se/blob/wastewater_data_gu.csv",
+#     "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu.csv",
 #     sep=";",
 # )
 

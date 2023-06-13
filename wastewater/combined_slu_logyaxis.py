@@ -7,7 +7,7 @@ from plotly.io import write_image
 
 
 wastewater_data = pd.read_csv(
-    "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
+    "https://datagraphics.dc.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
