@@ -10,10 +10,6 @@ This folder contains all of the scripts and associated files required to produce
 
 **postcovid_dataprep.py** - script required to complete the data manipulations required for the plots. The resultant excel file is uploaded to blob server. It is used by the other plots from there.
 
-**postcovid_mapfig_cases_U089.py** - script produces a map displaying the number of U089 postcovid syndrome diagnoses as a percentage of postcovid cases up to the current time period.
-
-**postcovid_mapfig_cases_U099.py** - script produces a map displaying the number of U099 postcovid syndrome diagnoses as a percentage of postcovid cases up to the current time period.
-
 **postcovid_mapfig_population_U089.py** - script produces a map displaying the number of U089 postcovid syndrome diagnoses as a percentage of the population up to the current time period.
 
 **postcovid_mapfig_population_U099.py** - script produces a map displaying the number of U099 postcovid syndrome diagnoses as a percentage of the population up to the current time period.
@@ -27,3 +23,9 @@ This folder contains all of the scripts and associated files required to produce
 **weeklycontacts_healthcare_divsex.py** - script used to produce plots related to healthcare contacts divided by patient sex as well as diagnosis.
 
 **weeklycontacts_healthcare_small.py** - script used to produce plot related to healthcare contacts divided only by diagnosis, NOT patient sex. This is a smaller version that is used for the home page of the portal.
+
+The Archive folder contains two scripts that are outdated due to the necessary data not being available anymore. The two scripts are the following:
+
+**postcovid_mapfig_cases_U089.py** - script produces a map displaying the number of U089 postcovid syndrome diagnoses as a percentage of postcovid cases up to the current time period.
+
+**postcovid_mapfig_cases_U099.py** - script produces a map displaying the number of U099 postcovid syndrome diagnoses as a percentage of postcovid cases up to the current time period.
