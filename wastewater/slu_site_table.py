@@ -61,8 +61,8 @@ fig = go.Figure(
                 ],
                 align=["left"],
                 fill_color="#ededed",
-                font=dict(color="black", size=14),
-                height=35,
+                font=dict(color="black", size=12),
+                height=30,
                 line=dict(color="#e0e0e0", width=0.05),
             ),
             cells=dict(
@@ -84,7 +84,7 @@ fig = go.Figure(
     ]
 )
 fig.update_layout(margin={"r": 5, "t": 5, "l": 0, "b": 0})
-# fig.show()
+fig.show()
 
 
 # # if not os.path.isdir(args.output_dir):

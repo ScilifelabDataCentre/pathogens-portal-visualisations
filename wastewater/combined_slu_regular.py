@@ -32,13 +32,25 @@ wastewater_Göteborg = wastewater_data[(wastewater_data["channel"] == "Göteborg
 wastewater_Helsingborg = wastewater_data[(wastewater_data["channel"] == "Helsingborg")]
 wastewater_Jönköping = wastewater_data[(wastewater_data["channel"] == "Jönköping")]
 wastewater_Kalmar = wastewater_data[(wastewater_data["channel"] == "Kalmar")]
-wastewater_Karlstad = wastewater_data[(wastewater_data["channel"] == "Karlstad")] #added 2023-06-12
-wastewater_Linköping = wastewater_data[(wastewater_data["channel"] == "Linköping")] #added 2023-06-12
-wastewater_Luleå = wastewater_data[(wastewater_data["channel"] == "Luleå")] #added 2023-06-12
+wastewater_Karlstad = wastewater_data[
+    (wastewater_data["channel"] == "Karlstad")
+]  # added 2023-06-12
+wastewater_Linköping = wastewater_data[
+    (wastewater_data["channel"] == "Linköping")
+]  # added 2023-06-12
+wastewater_Luleå = wastewater_data[
+    (wastewater_data["channel"] == "Luleå")
+]  # added 2023-06-12
 wastewater_Malmö = wastewater_data[(wastewater_data["channel"] == "Malmö")]  ##new
+wastewater_StockholmBromma = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Bromma")
+]  # added 2023-07-04
 wastewater_StockholmGrödinge = wastewater_data[
     (wastewater_data["channel"] == "Stockholm-Grödinge")
-] #added 2023-06-12
+]  # added 2023-06-12
+wastewater_StockholmHenriksdal = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Henriksdal")
+]  # added 2023-07-04
 wastewater_StockholmKäppala = wastewater_data[
     (wastewater_data["channel"] == "Stockholm-Käppala")
 ]  ##new
@@ -119,7 +131,7 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[3], width=2),
         ),
-        go.Scatter( #added 2023-06-12
+        go.Scatter(  # added 2023-06-12
             name="Karlstad",
             x=wastewater_Karlstad.date,
             y=wastewater_Karlstad.relative_copy_number,
@@ -128,7 +140,7 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[0], width=2),
         ),
-        go.Scatter( #added 2023-06-12
+        go.Scatter(  # added 2023-06-12
             name="Linköping",
             x=wastewater_Linköping.date,
             y=wastewater_Linköping.relative_copy_number,
@@ -137,7 +149,7 @@ fig = go.Figure(
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[1], width=2),
         ),
-        go.Scatter( #added 2023-06-12
+        go.Scatter(  # added 2023-06-12
             name="Luleå",
             x=wastewater_Luleå.date,
             y=wastewater_Luleå.relative_copy_number,
@@ -164,7 +176,16 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[8], width=2),
         ),
-        go.Scatter( #added 2023-06-12
+        go.Scatter(  # added 2023-07-04
+            name="Stockholm-Bromma",
+            x=wastewater_StockholmBromma.date,
+            y=wastewater_StockholmBromma.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="black", size=7),
+            marker_symbol="cross",
+            line=dict(color="black", width=2),
+        ),
+        go.Scatter(  # added 2023-06-12
             name="Stockholm-Grödinge",
             x=wastewater_StockholmGrödinge.date,
             y=wastewater_StockholmGrödinge.relative_copy_number,
@@ -172,6 +193,15 @@ fig = go.Figure(
             marker=dict(color="#ff00ff", size=7),
             marker_symbol="square",
             line=dict(color="#ff00ff", width=2),
+        ),
+        go.Scatter(  # added 2023-07-04
+            name="Stockholm-Henriksdal",
+            x=wastewater_StockholmHenriksdal.date,
+            y=wastewater_StockholmHenriksdal.relative_copy_number,
+            mode="lines+markers",
+            marker=dict(color="#4ADEDE", size=7),
+            marker_symbol="cross",
+            line=dict(color="#4ADEDE", width=2),
         ),
         go.Scatter(  ##NEW
             name="Stockholm-Käppala",
