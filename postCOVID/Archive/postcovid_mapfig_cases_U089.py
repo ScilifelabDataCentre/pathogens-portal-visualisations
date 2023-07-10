@@ -22,7 +22,7 @@ for feature in jdata["features"]:
 
 # data
 df1 = pd.read_csv(
-    "https://blobserver.dckube.scilifelab.se/blob/Summary_postcovid_statistics.csv",
+    "https://blobserver.dc.scilifelab.se/blob/Summary_postcovid_statistics.csv",
     header=0,
 )
 
