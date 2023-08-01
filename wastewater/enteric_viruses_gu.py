@@ -12,7 +12,8 @@ from plotly.io import write_image
 #  Method to get proper range for y axis
 def get_yaxis_range(data):
     nz_data = data[data != 0]
-    return [0, max(min(nz_data)*10, max(nz_data))*1.15]
+    return [0, max(min(nz_data) * 10, max(nz_data)) * 1.15]
+
 
 wastewater_data = pd.read_excel(
     "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
@@ -137,7 +138,11 @@ fig.update_yaxes(
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     rangemode="tozero",
     # Using enterovirus for range as it is the first trace in that graph
-    range=[0, max(min(wastewater_data.enterovirus)*10, max(wastewater_data.enterovirus))*1.15]
+    range=[
+        0,
+        max(min(wastewater_data.enterovirus) * 10, max(wastewater_data.enterovirus))
+        * 1.15,
+    ],
 )
 
 # select viruses
@@ -162,8 +167,10 @@ fig.update_layout(
                                 ]
                             },
                             {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.enterovirus)
-                            }
+                                "yaxis.range": get_yaxis_range(
+                                    wastewater_data.enterovirus
+                                )
+                            },
                         ],
                         label="Enterovirus",
                     ),
@@ -173,25 +180,6 @@ fig.update_layout(
                             {
                                 "visible": [
                                     False,
-                                    True,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                ]
-                            },
-                            {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.PMMoV)
-                            }
-                        ],
-                        label="PMMoV",
-                    ),
-                    dict(
-                        method="update",
-                        args=[
-                            {
-                                "visible": [
-                                    False,
                                     False,
                                     True,
                                     False,
@@ -200,8 +188,10 @@ fig.update_layout(
                                 ]
                             },
                             {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.adenovirus)
-                            }
+                                "yaxis.range": get_yaxis_range(
+                                    wastewater_data.adenovirus
+                                )
+                            },
                         ],
                         label="Adenovirus",
                     ),
@@ -218,9 +208,7 @@ fig.update_layout(
                                     False,
                                 ]
                             },
-                            {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.GG2)
-                            }
+                            {"yaxis.range": get_yaxis_range(wastewater_data.GG2)},
                         ],
                         label="GG2",
                     ),
@@ -238,8 +226,10 @@ fig.update_layout(
                                 ]
                             },
                             {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.astrovirus)
-                            }
+                                "yaxis.range": get_yaxis_range(
+                                    wastewater_data.astrovirus
+                                )
+                            },
                         ],
                         label="Astrovirus",
                     ),
@@ -256,11 +246,26 @@ fig.update_layout(
                                     True,
                                 ]
                             },
-                            {
-                                "yaxis.range" : get_yaxis_range(wastewater_data.sapovirus)
-                            }
+                            {"yaxis.range": get_yaxis_range(wastewater_data.sapovirus)},
                         ],
                         label="Sapovirus",
+                    ),
+                    dict(
+                        method="update",
+                        args=[
+                            {
+                                "visible": [
+                                    False,
+                                    True,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                ]
+                            },
+                            {"yaxis.range": get_yaxis_range(wastewater_data.PMMoV)},
+                        ],
+                        label="PMMoV",
                     ),
                 ]
             ),
