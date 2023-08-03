@@ -9,8 +9,8 @@ from plotly.io import write_image
 # Göteborg, Malmö and Stockholm-Käppala
 
 wastewater_data = pd.read_csv(
-    "/Users/liahu895/Documents/GitHub/covid-portal-visualisations/wastewater/data/SARS-Cov-2-N1_infA quantification data_10-2023_corr.csv",
-    # "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
+    # "/Users/liahu895/Documents/GitHub/covid-portal-visualisations/wastewater/data/SARS-Cov-2-N1_infA quantification data_10-2023_corr.csv",
+    "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
@@ -27,27 +27,48 @@ wastewater_data["date"] = wastewater_data.apply(
 
 # Only data after week 47 2022
 wastewater_data = wastewater_data[(wastewater_data["date"] >= "2022-10-17")]
+wastewater_data.rename(
+    columns={
+        "infA-gene cn per PMMoV cn x 10000": "influenza",
+        # "infB-gene cn per PMMoV cn x 10000": "influenza_b",
+    },
+    inplace=True,
+)
+
+print(wastewater_data["channel"].unique())
 
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
-wastewater_Ekerö = wastewater_data[(wastewater_data["channel"] == "Ekerö")]
-wastewater_Enköping = wastewater_data[(wastewater_data["channel"] == "Enköping")]
+# wastewater_Ekerö = wastewater_data[(wastewater_data["channel"] == "Ekerö")]
+# wastewater_Enköping = wastewater_data[(wastewater_data["channel"] == "Enköping")]
 wastewater_Gävle = wastewater_data[(wastewater_data["channel"] == "Gävle")]
-wastewater_Göteborg = wastewater_data[(wastewater_data["channel"] == "Göteborg")]  ##new
+wastewater_Göteborg = wastewater_data[(wastewater_data["channel"] == "Göteborg")]
 wastewater_Helsingborg = wastewater_data[(wastewater_data["channel"] == "Helsingborg")]
 wastewater_Jönköping = wastewater_data[(wastewater_data["channel"] == "Jönköping")]
+wastewater_Karlstad = wastewater_data[(wastewater_data["channel"] == "Karlstad")]
 wastewater_Kalmar = wastewater_data[(wastewater_data["channel"] == "Kalmar")]
-wastewater_Malmö = wastewater_data[(wastewater_data["channel"] == "Malmö")]  ##new
+# wastewater_Knivsta = wastewater_data[(wastewater_data["channel"] == "Knivsta")]
+wastewater_Linköping = wastewater_data[(wastewater_data["channel"] == "Linköping")]
+wastewater_Luleå = wastewater_data[(wastewater_data["channel"] == "Luleå")]
+wastewater_Malmö = wastewater_data[(wastewater_data["channel"] == "Malmö")]
+wastewater_StockholmBromma = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Bromma")
+]
+wastewater_StockholmGrödinge = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Grödinge")
+]
+wastewater_StockholmHenriksdal = wastewater_data[
+    (wastewater_data["channel"] == "Stockholm-Henriksdal")
+]
 wastewater_StockholmKäppala = wastewater_data[
     (wastewater_data["channel"] == "Stockholm-Käppala")
-]  ##new
-# wastewater_Knivsta = wastewater_data[(wastewater_data["channel"] == "Knivsta")]
-wastewater_Tierp = wastewater_data[(wastewater_data["channel"] == "Tierp")]
+]
+# wastewater_Tierp = wastewater_data[(wastewater_data["channel"] == "Tierp")]
 wastewater_Umeå = wastewater_data[(wastewater_data["channel"] == "Umeå")]
 wastewater_Uppsala = wastewater_data[(wastewater_data["channel"] == "Uppsala")]
 wastewater_Västerås = wastewater_data[(wastewater_data["channel"] == "Västerås")]
 # wastewater_Vaxholm = wastewater_data[(wastewater_data["channel"] == "Vaxholm")]
-wastewater_Älvkarleby = wastewater_data[(wastewater_data["channel"] == "Älvkarleby")]
+# wastewater_Älvkarleby = wastewater_data[(wastewater_data["channel"] == "Älvkarleby")]
 wastewater_Örebro = wastewater_data[(wastewater_data["channel"] == "Örebro")]
 wastewater_Östersund = wastewater_data[(wastewater_data["channel"] == "Östersund")]
 # wastewater_Österåker = wastewater_data[(wastewater_data["channel"] == "Österåker")]
@@ -57,24 +78,24 @@ wastewater_Östhammar = wastewater_data[(wastewater_data["channel"] == "Östhamm
 
 fig = go.Figure(
     data=[
-        go.Scatter(
-            name="Ekerö",
-            x=wastewater_Ekerö.date,
-            y=wastewater_Ekerö.influenza,
-            mode="lines+markers",
-            marker=dict(color=px.colors.diverging.RdBu[0], size=7),
-            marker_symbol="square",
-            line=dict(color=px.colors.diverging.RdBu[0], width=2),
-        ),
-        go.Scatter(
-            name="Enköping",
-            x=wastewater_Enköping.date,
-            y=wastewater_Enköping.influenza,
-            mode="lines+markers",
-            marker=dict(color=px.colors.diverging.RdBu[1], size=7),
-            marker_symbol="cross",
-            line=dict(color=px.colors.diverging.RdBu[1], width=2),
-        ),
+        # go.Scatter(
+        #     name="Ekerö",
+        #     x=wastewater_Ekerö.date,
+        #     y=wastewater_Ekerö.influenza,
+        #     mode="lines+markers",
+        #     marker=dict(color=px.colors.diverging.RdBu[0], size=7),
+        #     marker_symbol="square",
+        #     line=dict(color=px.colors.diverging.RdBu[0], width=2),
+        # ),
+        # go.Scatter(
+        #     name="Enköping",
+        #     x=wastewater_Enköping.date,
+        #     y=wastewater_Enköping.influenza,
+        #     mode="lines+markers",
+        #     marker=dict(color=px.colors.diverging.RdBu[1], size=7),
+        #     marker_symbol="cross",
+        #     line=dict(color=px.colors.diverging.RdBu[1], width=2),
+        # ),
         go.Scatter(
             name="Gävle",
             x=wastewater_Gävle.date,
@@ -84,7 +105,7 @@ fig = go.Figure(
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[2], width=2),
         ),
-        go.Scatter(  ##NEW!!
+        go.Scatter(
             name="Göteborg",
             x=wastewater_Göteborg.date,
             y=wastewater_Göteborg.influenza,
@@ -112,6 +133,15 @@ fig = go.Figure(
             line=dict(color="#FFA500", width=2),
         ),
         go.Scatter(
+            name="Karlstad",
+            x=wastewater_Karlstad.date,
+            y=wastewater_Karlstad.influenza,
+            mode="lines+markers",
+            marker=dict(color=px.colors.diverging.RdBu[0], size=7),
+            marker_symbol="square",
+            line=dict(color=px.colors.diverging.RdBu[0], width=2),
+        ),
+        go.Scatter(
             name="Kalmar",
             x=wastewater_Kalmar.date,
             y=wastewater_Kalmar.influenza,
@@ -129,7 +159,25 @@ fig = go.Figure(
         #     marker_symbol="square",
         #     line=dict(color=px.colors.diverging.RdBu[8], width=2),
         # ),
-        go.Scatter(  ##NEW
+        go.Scatter(
+            name="Linköping",
+            x=wastewater_Linköping.date,
+            y=wastewater_Linköping.influenza,
+            mode="lines+markers",
+            marker=dict(color=px.colors.diverging.RdBu[1], size=7),
+            marker_symbol="cross",
+            line=dict(color=px.colors.diverging.RdBu[1], width=2),
+        ),
+        go.Scatter(
+            name="Luleå",
+            x=wastewater_Luleå.date,
+            y=wastewater_Luleå.influenza,
+            mode="lines+markers",
+            marker=dict(color=px.colors.diverging.RdBu[9], size=7),
+            marker_symbol="cross",
+            line=dict(color=px.colors.diverging.RdBu[9], width=2),
+        ),
+        go.Scatter(
             name="Malmö",
             x=wastewater_Malmö.date,
             y=wastewater_Malmö.influenza,
@@ -138,7 +186,34 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[8], width=2),
         ),
-        go.Scatter(  ##NEW
+        go.Scatter(
+            name="Stockholm-Bromma",
+            x=wastewater_StockholmBromma.date,
+            y=wastewater_StockholmBromma.influenza,
+            mode="lines+markers",
+            marker=dict(color="black", size=7),
+            marker_symbol="cross",
+            line=dict(color="black", width=2),
+        ),
+        go.Scatter(
+            name="Stockholm-Grödinge",
+            x=wastewater_StockholmGrödinge.date,
+            y=wastewater_StockholmGrödinge.influenza,
+            mode="lines+markers",
+            marker=dict(color="#ff00ff", size=7),
+            marker_symbol="square",
+            line=dict(color="#ff00ff", width=2),
+        ),
+        go.Scatter(
+            name="Stockholm-Henriksdal",
+            x=wastewater_StockholmHenriksdal.date,
+            y=wastewater_StockholmHenriksdal.influenza,
+            mode="lines+markers",
+            marker=dict(color="#4ADEDE", size=7),
+            marker_symbol="cross",
+            line=dict(color="#4ADEDE", width=2),
+        ),
+        go.Scatter(
             name="Stockholm-Käppala",
             x=wastewater_StockholmKäppala.date,
             y=wastewater_StockholmKäppala.influenza,
@@ -147,15 +222,15 @@ fig = go.Figure(
             marker_symbol="square",
             line=dict(color="gold", width=2),
         ),
-        go.Scatter(
-            name="Tierp",
-            x=wastewater_Tierp.date,
-            y=wastewater_Tierp.influenza,
-            mode="lines+markers",
-            marker=dict(color=px.colors.diverging.RdBu[9], size=7),
-            marker_symbol="cross",
-            line=dict(color=px.colors.diverging.RdBu[9], width=2),
-        ),
+        # go.Scatter(
+        #     name="Tierp",
+        #     x=wastewater_Tierp.date,
+        #     y=wastewater_Tierp.influenza,
+        #     mode="lines+markers",
+        #     marker=dict(color=px.colors.diverging.RdBu[9], size=7),
+        #     marker_symbol="cross",
+        #     line=dict(color=px.colors.diverging.RdBu[9], width=2),
+        # ),
         go.Scatter(
             name="Umeå",
             x=wastewater_Umeå.date,
@@ -192,15 +267,15 @@ fig = go.Figure(
         #     marker_symbol="cross",
         #     line=dict(color="#9400d3", width=2),
         # ),
-        go.Scatter(
-            name="Älvkarleby",
-            x=wastewater_Älvkarleby.date,
-            y=wastewater_Älvkarleby.influenza,
-            mode="lines+markers",
-            marker=dict(color="#ff00ff", size=7),
-            marker_symbol="hourglass",
-            line=dict(color="#ff00ff", width=2),
-        ),
+        # go.Scatter(
+        #     name="Älvkarleby",
+        #     x=wastewater_Älvkarleby.date,
+        #     y=wastewater_Älvkarleby.influenza,
+        #     mode="lines+markers",
+        #     marker=dict(color="#ff00ff", size=7),
+        #     marker_symbol="hourglass",
+        #     line=dict(color="#ff00ff", width=2),
+        # ),
         go.Scatter(
             name="Örebro",
             x=wastewater_Örebro.date,
@@ -300,7 +375,7 @@ fig.update_layout(
     ]
 )
 # Below can show figure locally in tests
-# fig.show()
+fig.show()
 
 # Below prints as html
 # fig.write_html(
