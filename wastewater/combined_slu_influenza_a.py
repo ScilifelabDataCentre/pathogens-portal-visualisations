@@ -9,7 +9,6 @@ from plotly.io import write_image
 # Göteborg, Malmö and Stockholm-Käppala
 
 wastewater_data = pd.read_csv(
-    # "/Users/liahu895/Documents/GitHub/covid-portal-visualisations/wastewater/data/SARS-Cov-2-N1_infA quantification data_10-2023_corr.csv",
     "https://datagraphics.dckube.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
 )
@@ -34,8 +33,6 @@ wastewater_data.rename(
     },
     inplace=True,
 )
-
-print(wastewater_data["channel"].unique())
 
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
@@ -333,7 +330,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %V)",
 )
 fig.update_yaxes(
-    title="<b>InfA-gene copy number per PMMOV<br>gene copy number x 10^4</b>",
+    title="<b>InfA-gene copy number per PMMOV<br>gene copy number x 10<sup>4</sup></b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -375,7 +372,7 @@ fig.update_layout(
     ]
 )
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # Below prints as html
 # fig.write_html(
@@ -383,7 +380,7 @@ fig.show()
 # )
 
 # Prints as a json file
-# fig.write_json("wastewater_combined_slu_regular.json")
+# fig.write_json("wastewater_slu_infA.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")
