@@ -20,7 +20,6 @@ wastewater_data = pd.read_excel(
     sheet_name="all_viruses",
     header=0,
     engine="openpyxl",
-    keep_default_na=False,
 )
 # Convert the dates
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
