@@ -23,6 +23,14 @@ wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
+# The below accomodates a change in the column title for the COVID data
+wastewater_data.rename(
+    columns={
+        "SARS-CoV2/PMMoV x 1000": "relative_copy_number",
+    },
+    inplace=True,
+)
+
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
 # wastewater_Ekerö = wastewater_data[(wastewater_data["channel"] == "Ekerö")]
@@ -323,7 +331,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %W)",
 )
 fig.update_yaxes(
-    title="<b>N1-gene copy number per PMMOV<br>gene copy number x 10<sup>4</sup></b>",
+    title="<b>SARS-CoV-2/PMMoV x 1000</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",

@@ -29,7 +29,7 @@ wastewater_data = wastewater_data[(wastewater_data["date"] >= "2023-03-20")]
 wastewater_data.rename(
     columns={
         # "infA-gene cn per PMMoV cn x 10000": "influenza",
-        "infB-gene cn per PMMoV cn x 10000": "influenza_b",
+        "infB/PMMoV x 1000": "influenza_b",
     },
     inplace=True,
 )
@@ -330,7 +330,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %V)",
 )
 fig.update_yaxes(
-    title="<b>InfB-gene copy number per PMMOV<br>gene copy number x 10<sup>4</sup></b>",
+    title="<b>infB/PMMoV x 1000</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
