@@ -13,7 +13,7 @@ import numpy as np
 
 # Import and sort data
 site_table = pd.read_excel(
-    "data/WWTPs from SLU on dataportal.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/SLU_INF_collection_sites.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -27,7 +27,6 @@ site_table = pd.read_excel(
 site_table.columns = [
     "Area",
     "WWTP",
-    "Company",
     "People",
     "Start",
     "End",
@@ -35,26 +34,25 @@ site_table.columns = [
 
 site_table.sort_values("Area", inplace=True)
 
-# convert weeks to dates
-site_table = site_table.replace(r"^\s*$", np.nan, regex=True)
+# # convert weeks to dates
+# site_table = site_table.replace(r"^\s*$", np.nan, regex=True)
 
 
-def add_day(wkyr):
-    return pd.to_datetime((wkyr + "-1"), format="%Y-%W-%w", errors="coerce").dt.date
+# def add_day(wkyr):
+#     return pd.to_datetime((wkyr + "-1"), format="%Y-%W-%w", errors="coerce").dt.date
 
 
-site_table[["start_date", "end_date"]] = site_table[["Start", "End"]].apply(add_day)
-# # # Need to setup conversions to Swedish in time!.
+# site_table[["start_date", "end_date"]] = site_table[["Start", "End"]].apply(add_day)
+# # # # Need to setup conversions to Swedish in time!.
 
 fig = go.Figure(
     data=[
         go.Table(
-            columnwidth=[5, 7, 10, 5, 5, 5],
+            columnwidth=[5, 7, 10, 5, 5],
             header=dict(
                 values=[
                     "<b>Town/City</b>",
                     "<b>WWTP</b>",
-                    "<b>Company responsible</b>",
                     "<b>Number of people</b>",
                     "<b>Start date</b>",
                     "<b>End date</b>",
@@ -69,10 +67,9 @@ fig = go.Figure(
                 values=(
                     site_table["Area"],
                     site_table["WWTP"],
-                    site_table["Company"],
                     site_table["People"],
-                    site_table["start_date"],
-                    site_table["end_date"],
+                    site_table["Start"],
+                    site_table["End"],
                 ),
                 align=["left"],
                 fill_color=["white"],
@@ -92,7 +89,7 @@ fig.show()
 # #fig.write_json(os.path.join(args.output_dir, "slu_site_table.json"))
 
 # Prints as a json file
-fig.write_json("wastewater_slusites.json")
+fig.write_json("wastewater_sluINFsites.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_slusites_full.png")
