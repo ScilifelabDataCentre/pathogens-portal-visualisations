@@ -41,6 +41,7 @@ healthcare_contacts_week_sex = healthcare_contacts_week_sex.replace(
         "2021 ": "",
         "2022 ": "",
         "2023 ": "",
+        "2023": "",  # added to account for a missing space in one of the data point labels
     },
     regex=True,
 )
