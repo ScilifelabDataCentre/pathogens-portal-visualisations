@@ -2,9 +2,9 @@ import pandas as pd
 
 Raw_scb_data = pd.read_excel(
     # This link is unfortunately not consistent, so will need to change every quarter of the year (Jan, April, July, September)
-    "https://www.scb.se/contentassets/cb47e70ddc6b4ed38e67c075b1d59260/tabkv42021eng.xlsx",
-    sheet_name="Total",
-    header=4,
+    "https://www.scb.se/contentassets/4a1cd0f086b3467b998467e7e64c587a/be0101_tabkv22023.xlsx",
+    sheet_name="Totalt",
+    header=7,
     engine="openpyxl",
     keep_default_na=False,
 )
@@ -12,9 +12,10 @@ Raw_scb_data = pd.read_excel(
 # note above - header isnt row 0
 # drop first 4 rows after header (just blank additional header rows)
 
-Raw_scb_data = Raw_scb_data.drop(range(4))
+Raw_scb_data = Raw_scb_data.iloc[:, :3]
+# Raw_scb_data = Raw_scb_data.iloc[-4:, :]
 
-Raw_scb_data = Raw_scb_data[["Code", "County", "Population"]]
+Raw_scb_data.columns = ["Code", "County", "Population"]
 
 Raw_scb_data = Raw_scb_data.replace(" ", "", regex=True)
 
