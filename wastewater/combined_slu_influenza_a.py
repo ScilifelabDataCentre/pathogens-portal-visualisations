@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import datetime
 import plotly.graph_objects as go
 import plotly.express as px
@@ -32,6 +33,23 @@ wastewater_data.rename(
     },
     inplace=True,
 )
+
+# below line is only needed until 'ND' and 'D' tags begin to be added
+wastewater_data["influenza"] = wastewater_data["influenza"].astype(str)
+
+
+wastewater_data["detection"] = np.where(
+    wastewater_data.influenza.str.contains("\d"), np.nan, wastewater_data.influenza
+)
+
+wastewater_data["influenza"] = wastewater_data["influenza"].str.replace(
+    "ND", "0", regex=True
+)
+wastewater_data["influenza"] = (
+    wastewater_data["influenza"].str.replace("D", "0", regex=True).astype(float)
+)
+
+# print(wastewater_data.info())
 
 # Below sets a dataset for each city. Need to add to it if more places are added
 # Will also need to add in a go.Scatter trace in the fig (no change needed to layout)
@@ -74,24 +92,6 @@ wastewater_Östhammar = wastewater_data[(wastewater_data["channel"] == "Östhamm
 
 fig = go.Figure(
     data=[
-        # go.Scatter(
-        #     name="Ekerö",
-        #     x=wastewater_Ekerö.date,
-        #     y=wastewater_Ekerö.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color=px.colors.diverging.RdBu[0], size=7),
-        #     marker_symbol="square",
-        #     line=dict(color=px.colors.diverging.RdBu[0], width=2),
-        # ),
-        # go.Scatter(
-        #     name="Enköping",
-        #     x=wastewater_Enköping.date,
-        #     y=wastewater_Enköping.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color=px.colors.diverging.RdBu[1], size=7),
-        #     marker_symbol="cross",
-        #     line=dict(color=px.colors.diverging.RdBu[1], width=2),
-        # ),
         go.Scatter(
             name="Gävle",
             x=wastewater_Gävle.date,
@@ -100,6 +100,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[2], size=7),
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[2], width=2),
+            customdata=wastewater_Gävle["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Gävle["detection"] == "ND",
+                    wastewater_Gävle["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Göteborg",
@@ -109,6 +118,15 @@ fig = go.Figure(
             marker=dict(color="#9400d3", size=7),
             marker_symbol="cross",
             line=dict(color="#9400d3", width=2),
+            customdata=wastewater_Göteborg["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Göteborg["detection"] == "ND",
+                    wastewater_Göteborg["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Helsingborg",
@@ -118,6 +136,15 @@ fig = go.Figure(
             marker=dict(color="#EFB261", size=7),
             marker_symbol="square",
             line=dict(color="#EFB261", width=2),
+            customdata=wastewater_Helsingborg["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Helsingborg["detection"] == "ND",
+                    wastewater_Helsingborg["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Jönköping",
@@ -127,6 +154,15 @@ fig = go.Figure(
             marker=dict(color="#FFA500", size=7),
             marker_symbol="cross",
             line=dict(color="#FFA500", width=2),
+            customdata=wastewater_Jönköping["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Jönköping["detection"] == "ND",
+                    wastewater_Jönköping["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Karlstad",
@@ -136,6 +172,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[0], size=7),
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[0], width=2),
+            customdata=wastewater_Karlstad["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Karlstad["detection"] == "ND",
+                    wastewater_Karlstad["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Kalmar",
@@ -145,16 +190,16 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[3], size=7),
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[3], width=2),
+            customdata=wastewater_Kalmar["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Kalmar["detection"] == "ND",
+                    wastewater_Kalmar["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
-        # go.Scatter(
-        #     name="Knivsta",
-        #     x=wastewater_Knivsta.date,
-        #     y=wastewater_Knivsta.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color=px.colors.diverging.RdBu[8], size=7),
-        #     marker_symbol="square",
-        #     line=dict(color=px.colors.diverging.RdBu[8], width=2),
-        # ),
         go.Scatter(
             name="Linköping",
             x=wastewater_Linköping.date,
@@ -163,6 +208,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[1], size=7),
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[1], width=2),
+            customdata=wastewater_Linköping["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Linköping["detection"] == "ND",
+                    wastewater_Linköping["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Luleå",
@@ -172,6 +226,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[9], size=7),
             marker_symbol="cross",
             line=dict(color=px.colors.diverging.RdBu[9], width=2),
+            customdata=wastewater_Luleå["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Luleå["detection"] == "ND",
+                    wastewater_Luleå["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Malmö",
@@ -181,6 +244,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[8], size=7),
             marker_symbol="square",
             line=dict(color=px.colors.diverging.RdBu[8], width=2),
+            customdata=wastewater_Malmö["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Malmö["detection"] == "ND",
+                    wastewater_Malmö["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Stockholm-Bromma",
@@ -190,6 +262,15 @@ fig = go.Figure(
             marker=dict(color="black", size=7),
             marker_symbol="cross",
             line=dict(color="black", width=2),
+            customdata=wastewater_StockholmBromma["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_StockholmBromma["detection"] == "ND",
+                    wastewater_StockholmBromma["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Stockholm-Grödinge",
@@ -199,6 +280,15 @@ fig = go.Figure(
             marker=dict(color="#ff00ff", size=7),
             marker_symbol="square",
             line=dict(color="#ff00ff", width=2),
+            customdata=wastewater_StockholmGrödinge["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_StockholmGrödinge["detection"] == "ND",
+                    wastewater_StockholmGrödinge["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Stockholm-Henriksdal",
@@ -208,6 +298,15 @@ fig = go.Figure(
             marker=dict(color="#4ADEDE", size=7),
             marker_symbol="cross",
             line=dict(color="#4ADEDE", width=2),
+            customdata=wastewater_StockholmHenriksdal["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_StockholmHenriksdal["detection"] == "ND",
+                    wastewater_StockholmHenriksdal["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Stockholm-Käppala",
@@ -217,16 +316,16 @@ fig = go.Figure(
             marker=dict(color="gold", size=7),
             marker_symbol="square",
             line=dict(color="gold", width=2),
+            customdata=wastewater_StockholmKäppala["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_StockholmKäppala["detection"] == "ND",
+                    wastewater_StockholmKäppala["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
-        # go.Scatter(
-        #     name="Tierp",
-        #     x=wastewater_Tierp.date,
-        #     y=wastewater_Tierp.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color=px.colors.diverging.RdBu[9], size=7),
-        #     marker_symbol="cross",
-        #     line=dict(color=px.colors.diverging.RdBu[9], width=2),
-        # ),
         go.Scatter(
             name="Umeå",
             x=wastewater_Umeå.date,
@@ -235,6 +334,15 @@ fig = go.Figure(
             marker=dict(color=px.colors.diverging.RdBu[10], size=7),
             marker_symbol="hourglass",
             line=dict(color=px.colors.diverging.RdBu[10], width=2),
+            customdata=wastewater_Umeå["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Umeå["detection"] == "ND",
+                    wastewater_Umeå["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Uppsala",
@@ -244,6 +352,15 @@ fig = go.Figure(
             marker=dict(color="#663399", size=7),
             marker_symbol="square",
             line=dict(color="#663399", width=2),
+            customdata=wastewater_Uppsala["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Uppsala["detection"] == "ND",
+                    wastewater_Uppsala["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Västerås",
@@ -253,25 +370,16 @@ fig = go.Figure(
             marker=dict(color="#B691d2", size=7),
             marker_symbol="hourglass",
             line=dict(color="#B691d2", width=2),
+            customdata=wastewater_Västerås["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Västerås["detection"] == "ND",
+                    wastewater_Västerås["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
-        # go.Scatter(
-        #     name="Vaxholm",
-        #     x=wastewater_Vaxholm.date,
-        #     y=wastewater_Vaxholm.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color="#9400d3", size=7),
-        #     marker_symbol="cross",
-        #     line=dict(color="#9400d3", width=2),
-        # ),
-        # go.Scatter(
-        #     name="Älvkarleby",
-        #     x=wastewater_Älvkarleby.date,
-        #     y=wastewater_Älvkarleby.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color="#ff00ff", size=7),
-        #     marker_symbol="hourglass",
-        #     line=dict(color="#ff00ff", width=2),
-        # ),
         go.Scatter(
             name="Örebro",
             x=wastewater_Örebro.date,
@@ -280,6 +388,15 @@ fig = go.Figure(
             marker=dict(color="darkgoldenrod", size=7),
             marker_symbol="square",
             line=dict(color="darkgoldenrod", width=2),
+            customdata=wastewater_Örebro["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Örebro["detection"] == "ND",
+                    wastewater_Örebro["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
         go.Scatter(
             name="Östersund",
@@ -289,16 +406,16 @@ fig = go.Figure(
             marker=dict(color="#997950", size=7),
             marker_symbol="hourglass",
             line=dict(color="#997950", width=2),
+            customdata=wastewater_Östersund["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Östersund["detection"] == "ND",
+                    wastewater_Östersund["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
-        # go.Scatter(
-        #     name="Österåker",
-        #     x=wastewater_Österåker.date,
-        #     y=wastewater_Österåker.influenza,
-        #     mode="lines+markers",
-        #     marker=dict(color="gold", size=7),
-        #     marker_symbol="cross",
-        #     line=dict(color="gold", width=2),
-        # ),
         go.Scatter(
             name="Östhammar",
             x=wastewater_Östhammar.date,
@@ -307,6 +424,15 @@ fig = go.Figure(
             marker=dict(color="lightslategray", size=7),
             marker_symbol="hourglass",
             line=dict(color="lightslategray", width=2),
+            customdata=wastewater_Östhammar["detection"],
+            hovertemplate=np.select(
+                [
+                    wastewater_Östhammar["detection"] == "ND",
+                    wastewater_Östhammar["detection"] == "D",
+                ],
+                ["%{customdata}", "%{customdata}"],
+                "%{y:.2f}",
+            ),
         ),
     ]
 )
