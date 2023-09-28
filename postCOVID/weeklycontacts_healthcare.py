@@ -105,11 +105,16 @@ fig = go.Figure(
 )
 fig.update_layout(
     plot_bgcolor="white",
-    #    autosize=False,
-    font=dict(size=14),
-    margin=dict(r=150, t=0, b=0, l=0),
+    autosize=True,
+    font=dict(size=12),
+    margin=dict(r=0, t=50, b=0, l=0),
     legend=dict(
-        title="<b>Diagnosis</b>",
+        orientation="h",
+        # title="<b>Sex:</b>",
+        yanchor="bottom",
+        y=1,
+        xanchor="left",
+        x=-0.1,
     ),
     hovermode="x unified",
     hoverdistance=1,

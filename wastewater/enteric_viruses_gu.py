@@ -146,7 +146,7 @@ fig.update_yaxes(
 
 # select viruses
 
-button_layer_1_height = 1.26
+button_layer_1_height = 1.0
 fig.update_layout(
     updatemenus=[
         dict(
@@ -269,10 +269,10 @@ fig.update_layout(
                 ]
             ),
             type="buttons",
-            direction="right",
+            # direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.1,
+            x=1.07,
             xanchor="left",
             y=button_layer_1_height,
             yanchor="top",
@@ -280,18 +280,18 @@ fig.update_layout(
     ]
 )
 
-fig.update_layout(
-    annotations=[
-        dict(
-            text="Virus:",
-            x=0.00,
-            xref="paper",
-            y=1.23,
-            yref="paper",
-            showarrow=False,
-        ),
-    ]
-)
+# fig.update_layout(
+#     annotations=[
+#         dict(
+#             text="Virus:",
+#             x=1.1,
+#             xref="paper",
+#             y=1.05,
+#             yref="paper",
+#             showarrow=False,
+#         ),
+#     ]
+# )
 
 # Below can show figure locally in tests
 # fig.show()

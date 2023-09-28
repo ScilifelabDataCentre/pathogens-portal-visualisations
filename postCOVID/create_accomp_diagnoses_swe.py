@@ -4,9 +4,15 @@ import plotly.graph_objects as go
 import os
 import argparse
 
-aparser = argparse.ArgumentParser(description="Generate accompanying diagnosis in Swedish blob")
-aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
-                     help="Output directory where the files will be saved")
+aparser = argparse.ArgumentParser(
+    description="Generate accompanying diagnosis in Swedish blob"
+)
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="postcovid_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # Import and sort data
@@ -29,6 +35,15 @@ accom_diag.columns = [
 accom_diag["percentage_of_patients"] = (
     accom_diag["percentage_of_patients"].astype(float).map("{:.0%}".format)
 )
+
+dic = {
+    "Njur": "Njurbesvär",
+    "Neuro": "Neurologiska besvär",
+    "Sömn": "Sömnproblem",
+}
+
+accom_diag["diagnoses_group"] = accom_diag["diagnoses_group"].replace(dic, regex=True)
+
 
 # print(accom_diag)
 
