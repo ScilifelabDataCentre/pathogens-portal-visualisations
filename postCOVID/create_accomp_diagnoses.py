@@ -5,8 +5,12 @@ import os
 import argparse
 
 aparser = argparse.ArgumentParser(description="Generate accompanying diagnosis blob")
-aparser.add_argument("--output-dir", nargs="?", default="postcovid_plots",
-                     help="Output directory where the files will be saved")
+aparser.add_argument(
+    "--output-dir",
+    nargs="?",
+    default="postcovid_plots",
+    help="Output directory where the files will be saved",
+)
 args = aparser.parse_args()
 
 # Import and sort data
@@ -43,10 +47,13 @@ dic = {
     "Hjärtklappning/POTS": "Palpitations",
     "Kol/Astma": "COPD/Asthma",
     "Pneumoni": "Pneumonia",
-    "Njurbesvär": "Kidney issues",
+    "Njure": "Kidney issues",
+    # "Njurbesvär": "Kidney issues",
     "Lukt/Smak": "Smell/Taste",
-    "Neurologiska besvär": "Neurological problems",
-    "Sömnproblem": "Sleep disorder",
+    "Neuro": "Neurological problems",
+    # "Neurologiska besvär": "Neurological problems",
+    "Sömn": "Sleep disorders",
+    # "Sömnproblem": "Sleep disorder",
     "Feber": "Fever",
     "Yrsel/Illamående": "Dizziness/Nausea",
     "Depression/Ångest": "Depression/Anxiety",

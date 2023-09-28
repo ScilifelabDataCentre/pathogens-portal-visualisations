@@ -51,8 +51,8 @@ fig.add_trace(
 fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
-    font=dict(size=14),
-    margin=dict(r=150, t=0, b=0, l=0),  # changed from 65 when buttons remove
+    font=dict(size=12),
+    margin=dict(r=0, t=100, b=0, l=0),  # changed from 65 when buttons remove
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
     hoverdistance=1,
@@ -116,12 +116,12 @@ fig.update_layout(
                 ],
             ),
             type="buttons",
-            direction="right",
+            # direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.1,
+            x=0,
             xanchor="left",
-            y=1.1,
+            y=1.25,
             yanchor="top",
         ),
     ]
@@ -130,6 +130,6 @@ fig.update_layout(
 # fig.show()
 
 # Prints as a json file
-# fig.write_json("wastewater_kthmalmö.json")
+fig.write_json("wastewater_kthmalmö.json")
 
-print(fig.to_json())
+# print(fig.to_json())

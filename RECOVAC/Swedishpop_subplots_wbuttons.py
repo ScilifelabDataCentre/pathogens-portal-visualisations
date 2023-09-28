@@ -13,16 +13,29 @@ def get_xaxis(x1, x2):
     r_start = max(min(x1), min(x2))
     r_end = min(max(x1), max(x2))
     x_axes = {
-        "xaxis" : {
+        "xaxis": {
             "all": dict(title="<b>Date</b>", range=[min(x1), max(x1)], anchor="y"),
-            "align": dict(title="<b>Date</b>", range=[r_start, r_end], anchor="y")
+            "align": dict(title="<b>Date</b>", range=[r_start, r_end], anchor="y"),
         },
-        "xaxis2" : {
-            "all": dict(title="<b>Date</b>", showgrid=True, linecolor="black", range=[min(x2), max(x2)], anchor="y2"),
-            "align": dict(title="<b>Date</b>", showgrid=True, linecolor="black", range=[r_start, r_end], anchor="y2")
-        }
-    }    
+        "xaxis2": {
+            "all": dict(
+                title="<b>Date</b>",
+                showgrid=True,
+                linecolor="black",
+                range=[min(x2), max(x2)],
+                anchor="y2",
+            ),
+            "align": dict(
+                title="<b>Date</b>",
+                showgrid=True,
+                linecolor="black",
+                range=[r_start, r_end],
+                anchor="y2",
+            ),
+        },
+    }
     return x_axes
+
 
 fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 
@@ -485,7 +498,7 @@ fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
     font=dict(size=12),
-    margin=dict(r=100, t=175, b=0, l=0),
+    margin=dict(r=0, t=150, b=0, l=0),
     # width=1500,
     # height=800,
     # legend=dict(title="<b>Vaccine Doses</b>"),
@@ -608,7 +621,7 @@ fig.update_layout(
                         args=[
                             {
                                 "xaxis": x_axes["xaxis"]["all"],
-                                "xaxis2": x_axes["xaxis2"]["all"]
+                                "xaxis2": x_axes["xaxis2"]["all"],
                             }
                         ],
                     ),
@@ -618,7 +631,7 @@ fig.update_layout(
                         args=[
                             {
                                 "xaxis": x_axes["xaxis"]["align"],
-                                "xaxis2": x_axes["xaxis2"]["align"]
+                                "xaxis2": x_axes["xaxis2"]["align"],
                             }
                         ],
                     ),
@@ -642,7 +655,7 @@ fig.update_layout(
             text="Age Range:",
             x=-0.03,
             xref="paper",
-            y=button_layer_1_height*0.978,
+            y=button_layer_1_height * 0.978,
             yref="paper",
             align="left",
             showarrow=False,
@@ -651,14 +664,14 @@ fig.update_layout(
             text="Timeframe:",
             x=-0.03,
             xref="paper",
-            y=button_layer_2_height*0.978,
+            y=button_layer_2_height * 0.978,
             yref="paper",
             showarrow=False,
         ),
     ]
 )
 
-#fig.show()
+fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")

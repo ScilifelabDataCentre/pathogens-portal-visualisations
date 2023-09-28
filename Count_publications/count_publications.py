@@ -57,8 +57,16 @@ data = [trace2, trace1]
 fig = go.Figure(data=data)
 fig.update_layout(
     plot_bgcolor="white",
-    font=dict(size=14),
-    margin=dict(r=150),
+    font=dict(size=12),
+    margin=dict(r=0, t=0),
+    autosize=True,
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1,
+        xanchor="left",
+        x=-0.1,
+    ),
     # width = 1000,
     # height = 500
 )
@@ -68,7 +76,7 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
-    dtick="M1",
+    # dtick="M1",
     # set start point of x-axis
     tick0="2020-01-01",
 )

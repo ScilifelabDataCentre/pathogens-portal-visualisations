@@ -129,9 +129,9 @@ fig.add_trace(
 fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
-    font=dict(size=14),
-    margin=dict(r=150, t=65, b=0, l=0),
-    legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
+    font=dict(size=12),
+    margin=dict(r=0, t=120, b=0, l=0),
+    legend=dict(yanchor="top", y=1, xanchor="left", x=0.99, font=dict(size=12)),
     hovermode="x unified",
     hoverdistance=1,
     hoverlabel_namelength=-1,
@@ -177,12 +177,12 @@ fig.update_layout(
                 ]
             ),
             type="buttons",
-            direction="right",
+            # direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=1.1,
+            x=1.05,
             xanchor="left",
-            y=1.1,
+            y=1.3,
             yanchor="top",
         ),
         dict(
@@ -223,12 +223,12 @@ fig.update_layout(
                 ],
             ),
             type="buttons",
-            direction="right",
+            # direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.1,
+            x=0,
             xanchor="left",
-            y=1.1,
+            y=1.3,
             yanchor="top",
         ),
     ]
@@ -242,7 +242,7 @@ fig.update_layout(
 #     "wastewater_combined_stockholm.html", include_plotlyjs=True, full_html=True)
 
 # Prints as a json file
-# fig.write_json("wastewater_combined_stockholm_new.json")
+# fig.write_json("wastewater_combined_stockholm.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_combined_graph.png")

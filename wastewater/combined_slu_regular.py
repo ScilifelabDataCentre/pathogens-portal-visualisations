@@ -316,7 +316,7 @@ fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
     font=dict(size=14),
-    margin=dict(r=150, t=65, b=0, l=0),
+    margin=dict(r=0, t=100, b=0, l=0),
     # width=900,
     # height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
@@ -345,10 +345,10 @@ fig.update_layout(
     updatemenus=[
         dict(
             type="buttons",
-            direction="right",
+            # direction="right",
             active=0,
-            x=1.1,
-            y=1.1,
+            x=1.2,
+            y=1.15,
             xanchor="right",
             yanchor="top",
             buttons=list(
