@@ -130,6 +130,6 @@ fig.update_layout(
 # fig.show()
 
 # Prints as a json file
-fig.write_json("wastewater_kthmalmö.json")
+#fig.write_json("wastewater_kthmalmö.json")
 
-# print(fig.to_json())
+print(fig.to_json())
