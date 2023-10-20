@@ -60,7 +60,7 @@ lineage1_perc["date"] = lineage1_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 
-print(lineage1_perc)
+# print(lineage1_perc)
 
 # Work on lineage 2
 
@@ -80,6 +80,86 @@ lineage2_perc = pd.merge(
 lineage2_perc["percentage"] = (
     lineage2_perc["no_lineage2"] / lineage2_perc["strains_weekly"]
 ) * 100
+
+# # Now need to format dates in a manner recognisable to plotly
+lineage2_perc["year"] = (lineage2_perc["Year-Week"].str[:4]).astype(int)
+lineage2_perc["week_no"] = lineage2_perc["Year-Week"].str[-3:]
+lineage2_perc["week_no"] = (
+    lineage2_perc["week_no"].str.replace("-", "", regex=True)
+).astype(int)
+# set the date to the start of the week (Monday)
+lineage2_perc["day"] = 1
+lineage2_perc["date"] = lineage2_perc.apply(
+    lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
+)
+
+# print(lineage2_perc)
+
+# Work on lineage 3
+
+group_lineage_three = (
+    strain_data.groupby(["Year-Week", "lineage_groups03"])
+    .size()
+    .reset_index(name="no_lineage3")
+)
+
+lineage3_perc = pd.merge(
+    group_lineage_three,
+    number_samples_weekly,
+    how="left",
+    on="Year-Week",
+)
+
+lineage3_perc["percentage"] = (
+    lineage3_perc["no_lineage3"] / lineage3_perc["strains_weekly"]
+) * 100
+
+# # Now need to format dates in a manner recognisable to plotly
+lineage3_perc["year"] = (lineage3_perc["Year-Week"].str[:4]).astype(int)
+lineage3_perc["week_no"] = lineage3_perc["Year-Week"].str[-3:]
+lineage3_perc["week_no"] = (
+    lineage3_perc["week_no"].str.replace("-", "", regex=True)
+).astype(int)
+# set the date to the start of the week (Monday)
+lineage3_perc["day"] = 1
+lineage3_perc["date"] = lineage3_perc.apply(
+    lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
+)
+
+# print(lineage3_perc)
+
+# Work on lineage 4
+
+group_lineage_four = (
+    strain_data.groupby(["Year-Week", "lineage_groups04"])
+    .size()
+    .reset_index(name="no_lineage4")
+)
+
+lineage4_perc = pd.merge(
+    group_lineage_four,
+    number_samples_weekly,
+    how="left",
+    on="Year-Week",
+)
+
+lineage4_perc["percentage"] = (
+    lineage4_perc["no_lineage4"] / lineage4_perc["strains_weekly"]
+) * 100
+
+# # Now need to format dates in a manner recognisable to plotly
+lineage4_perc["year"] = (lineage4_perc["Year-Week"].str[:4]).astype(int)
+lineage4_perc["week_no"] = lineage4_perc["Year-Week"].str[-3:]
+lineage4_perc["week_no"] = (
+    lineage4_perc["week_no"].str.replace("-", "", regex=True)
+).astype(int)
+# set the date to the start of the week (Monday)
+lineage4_perc["day"] = 1
+lineage4_perc["date"] = lineage4_perc.apply(
+    lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
+)
+
+print(lineage4_perc)
 
 
 def update_prop_graph(variants, lineage_groups):
@@ -120,7 +200,7 @@ def update_prop_graph(variants, lineage_groups):
         font={"size": 20},
         width=2000,
         height=1000,
-        margin=dict(r=0, t=100, b=0, l=0),
+        margin=dict(r=0, t=120, b=0, l=0),
         # showlegend=False,
         legend=dict(
             yanchor="top",
@@ -169,11 +249,11 @@ def update_prop_graph(variants, lineage_groups):
                 ),
                 type="buttons",
                 # direction="right",
-                pad={"r": 10, "t": 20},
+                pad={"r": 0, "t": 20},
                 showactive=True,
                 x=1.05,
                 xanchor="left",
-                y=1.1,
+                y=1.15,
                 yanchor="top",
             ),
             dict(
@@ -218,11 +298,11 @@ def update_prop_graph(variants, lineage_groups):
                 ),
                 type="buttons",
                 # direction="right",
-                pad={"r": 10, "t": 10},
+                pad={"r": 0, "t": 15},
                 showactive=True,
                 x=0,
                 xanchor="left",
-                y=1.1,
+                y=1.15,
                 yanchor="top",
             ),
         ]
@@ -231,3 +311,6 @@ def update_prop_graph(variants, lineage_groups):
 
 
 update_prop_graph(lineage1_perc, "lineage_groups01")
+update_prop_graph(lineage2_perc, "lineage_groups02")
+update_prop_graph(lineage3_perc, "lineage_groups03")
+update_prop_graph(lineage4_perc, "lineage_groups04")
