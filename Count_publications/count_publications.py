@@ -34,9 +34,9 @@ df2 = df.groupby(["index"]).size().reset_index(name="Number Added")
 trace2 = go.Bar(
     x=df2["index"],
     y=df2["Number Added"],
-    name="Added Per Month",
+    name="New publications each month",
     marker_color="rgb(222,44,108)",
-    hovertemplate="Month: %{x|%B %Y}" + "<br>Publications Added: %{y}",
+    hovertemplate="Month: %{x|%B %Y}" + "<br>New publications: %{y}<extra></extra>",
 )
 
 # line graph
@@ -47,7 +47,7 @@ trace1 = go.Scatter(
     name="Cumulative Total",
     marker_color="rgb(46,104,165)",
     line_width=5,
-    hovertemplate="Date: %{x}" + "<br>Total Publications: %{y}",
+    hovertemplate="Date: %{x}" + "<br>Total Publications: %{y}<extra></extra>",
 )
 
 # combine traces
@@ -58,7 +58,7 @@ fig = go.Figure(data=data)
 fig.update_layout(
     plot_bgcolor="white",
     font=dict(size=12),
-    margin=dict(r=0, t=0),
+    margin=dict(r=0, t=50),
     autosize=True,
     legend=dict(
         orientation="h",
@@ -93,6 +93,9 @@ fig.update_yaxes(
 # Below produces a .html file
 # fig.write_html('Count_by_today.html', include_plotlyjs=False, full_html=False)
 
-# Below produces a .json file now used on the portal
+# Below for testing
 # fig.show()
-fig.write_json("Count_by_today.json")
+# fig.write_json("COVID_publication_count.json")
+
+# Below for dynamic use
+print(fig.to_json())
