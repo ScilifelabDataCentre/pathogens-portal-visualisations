@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2023-10-08_complete.csv",
+    "data/Uppsala_data_2023-10-30.csv",
     sep=",",
 )
 
@@ -112,22 +112,21 @@ fig.update_layout(
         "tickvals": ["0", "20", "40", "60", "80", "100"],
         "range": [0, 100],
     },
-    font={"size": 20},
-    width=2000,
-    height=1000,
-    margin=dict(r=0, t=120, b=0, l=0),
+    font={"size": 12},
+    autosize=True,
+    margin=dict(r=0, t=100, b=120, l=0),
     # showlegend=False,
     legend=dict(
         yanchor="top",
         y=1.0,
         xanchor="left",
         x=1.01,
-        font=dict(size=20),
+        font=dict(size=12),
         title="<b>Lineage</b><br>",
     ),
     hovermode="x unified",
     xaxis={
-        "title": "<b><br>Date</b>",
+        "title": "<b>Date</b>",
         "tickangle": 0,
         "hoverformat": "%b %d, %Y (week %W)",
         # Use this to show just the first 16 weeks in the first instance
@@ -174,14 +173,14 @@ fig.update_layout(
             showactive=True,
             x=0.98,
             xanchor="left",
-            y=1.13,
+            y=1.23,
             yanchor="top",
         ),
         dict(
             buttons=list(
                 [
                     dict(
-                        label="Whole timeline",
+                        label="Data since Jan 2023",
                         method="relayout",
                         args=[
                             {
@@ -223,11 +222,11 @@ fig.update_layout(
             showactive=True,
             x=0,
             xanchor="left",
-            y=1.13,
+            y=1.23,
             yanchor="top",
         ),
     ]
 )
-fig.show()
+# fig.show()
 # Prints as a json file
-fig.write_json("lineage_four_wholetime.json")
+fig.write_json("lineage_four_recent.json")
