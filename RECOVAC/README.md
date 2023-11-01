@@ -1,6 +1,6 @@
 ## RECOVAC
 
-This folder contains all the initial files required to produce the visualisations shown on the page for the RECOVAC page on the portal.
+This folder contains all the initial files required to produce the visualisations shown on the page for the RECOVAC project on the portal.
 
 **Script Archive** - Folder containing older scripts for this project. Largely includes scripts that produce individual plots from the data (typically use the same dataprep files, or data is prepared within the script).
 
