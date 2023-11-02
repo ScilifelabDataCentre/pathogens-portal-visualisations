@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2023-10-30.csv",
+    "data/Uppsala_data_2023-11-02.csv",
     sep=",",
 )
 
@@ -64,6 +64,29 @@ lineage4_perc["date"] = lineage4_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 
+lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(
+    lambda x: {
+        "BA.1": 1,
+        "BA.2": 2,
+        "CH": 3,
+        "DV.7.1": 4,
+        "BA.2.75 Other": 5,
+        "BA.2.86/Pirola": 6,
+        "BA.4": 7,
+        "BA.5": 8,
+        "XBB.1.5": 9,
+        "XBB.1.9.1": 10,
+        "XBB.1.9.2": 11,
+        "EG.5/Eris": 12,
+        "BQ": 13,
+        "XBB.1.16": 14,
+        "XBB.2.3": 15,
+        "XBB Other": 16,
+        "Omicron Other": 17,
+    }[x]
+)
+# NB: an wrror may be thrown if the lineage is not in the dictionary.
+lineage4_perc.sort_values(by=["sort_lineages"], inplace=True)
 # print(lineage4_perc)
 
 
@@ -107,7 +130,7 @@ fig = px.area(
 fig.update_layout(
     title=" ",
     yaxis={
-        "title": "<b>Percentage of Strains<br></b>",
+        "title": "<b>Percentage of Lineages<br></b>",
         "ticktext": [" ", "20%", "40%", "60%", "80%", "100%"],
         "tickvals": ["0", "20", "40", "60", "80", "100"],
         "range": [0, 100],
@@ -123,6 +146,7 @@ fig.update_layout(
         x=1.01,
         font=dict(size=12),
         title="<b>Lineage</b><br>",
+        traceorder="normal",
     ),
     hovermode="x unified",
     xaxis={

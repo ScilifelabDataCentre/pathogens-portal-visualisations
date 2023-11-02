@@ -60,6 +60,8 @@ lineage1_perc["date"] = lineage1_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 
+# sort values to ensure that the traces show in the desired order.
+lineage1_perc.sort_values(by=["lineage_groups01"], ascending=False, inplace=True)
 # print(lineage1_perc)
 
 
@@ -104,7 +106,7 @@ def update_prop_graph(variants, lineage_groups):
     fig.update_layout(
         title=" ",
         yaxis={
-            "title": "<b>Percentage of Strains<br></b>",
+            "title": "<b>Percentage of Lineages<br></b>",
             "ticktext": [" ", "20%", "40%", "60%", "80%", "100%"],
             "tickvals": ["0", "20", "40", "60", "80", "100"],
             "range": [0, 100],
@@ -120,6 +122,7 @@ def update_prop_graph(variants, lineage_groups):
             x=1.01,
             font=dict(size=12),
             title="<b>Lineage</b><br>",
+            traceorder="reversed",
         ),
         hovermode="x unified",
         xaxis={
