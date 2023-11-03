@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2023-11-02.csv",
+    "data/Uppsala_data_2023-11-03.csv",
     sep=",",
 )
 
@@ -64,31 +64,51 @@ lineage4_perc["date"] = lineage4_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 
-lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(
-    lambda x: {
-        "BA.1": 1,
-        "BA.2": 2,
-        "CH": 3,
-        "DV.7.1": 4,
-        "BA.2.75 Other": 5,
-        "BA.2.86/Pirola": 6,
-        "BA.4": 7,
-        "BA.5": 8,
-        "XBB.1.5": 9,
-        "XBB.1.9.1": 10,
-        "XBB.1.9.2": 11,
-        "EG.5/Eris": 12,
-        "BQ": 13,
-        "XBB.1.16": 14,
-        "XBB.2.3": 15,
-        "XBB Other": 16,
-        "Omicron Other": 17,
-    }[x]
-)
+
+def condition(x):
+    if x == "BA.1":
+        return 1
+    elif x == "BA.2":
+        return 2
+    elif x == "CH":
+        return 3
+    elif x == "DV.7.1":
+        return 4
+    elif x == "BA.2.75 Other":
+        return 5
+    elif x == "BA.2.86/Pirola":
+        return 6
+    elif x == "BA.4":
+        return 7
+    elif x == "BA.5":
+        return 8
+    elif x == "BQ":
+        return 9
+    elif x == "XBB.1.5":
+        return 10
+    elif x == "XBB.1.9.1":
+        return 11
+    elif x == "XBB.1.9.2":
+        return 12
+    elif x == "EG.5/Eris":
+        return 13
+    elif x == "XBB.1.16":
+        return 14
+    elif x == "XBB.2.3":
+        return 15
+    elif x == "XBB Other":
+        return 16
+    elif x == "Omicron Other":
+        return 17
+    else:
+        return 18
+
+
+lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(condition)
+
 # NB: an wrror may be thrown if the lineage is not in the dictionary.
 lineage4_perc.sort_values(by=["sort_lineages"], inplace=True)
 # print(lineage4_perc)
-
 
 colours = [
     "#FCD12A",
