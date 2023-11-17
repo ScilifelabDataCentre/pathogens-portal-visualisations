@@ -386,19 +386,19 @@ fig.add_trace(
 map_colour = px.colors.diverging.RdBu
 
 # cvd traces
-# fig.add_trace(
-#     go.Bar(
-#         name="Four doses",
-#         x=RECO_cardio.date,
-#         y=RECO_cardio.vacc4,
-#         visible=True,
-#         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-#         customdata=(RECO_cardio["c19_d2"]),
-#         hovertemplate="%{y} <b>Tot</b>: %{customdata}",
-#     ),
-#     2,
-#     1,
-# )
+fig.add_trace(
+    go.Bar(
+        name="Four doses",
+        x=RECO_cardio.date,
+        y=RECO_cardio.vacc4,
+        visible=True,
+        marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
+        customdata=(RECO_cardio["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
 fig.add_trace(
     go.Bar(
         name="Three doses",
@@ -406,8 +406,6 @@ fig.add_trace(
         y=RECO_cardio.vacc3,
         visible=True,
         marker=dict(color="rgba(146,197,222,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_cardio["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -447,19 +445,19 @@ fig.add_trace(
 )
 
 # diabetes traces
-# fig.add_trace(
-#     go.Bar(
-#         name="Four doses",
-#         x=RECO_diabetes.date,
-#         y=RECO_diabetes.vacc4,
-#         visible=True,
-#         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-#         customdata=(RECO_diabetes["c19_d2"]),
-#         hovertemplate="%{y} <b>Tot</b>: %{customdata}",
-#     ),
-#     2,
-#     1,
-# )
+fig.add_trace(
+    go.Bar(
+        name="Four doses",
+        x=RECO_diabetes.date,
+        y=RECO_diabetes.vacc4,
+        visible=False,
+        marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
+        customdata=(RECO_diabetes["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
 fig.add_trace(
     go.Bar(
         name="Three doses",
@@ -467,8 +465,6 @@ fig.add_trace(
         y=RECO_diabetes.vacc3,
         visible=False,
         marker=dict(color="rgba(146,197,222,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_diabetes["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -508,19 +504,19 @@ fig.add_trace(
 )
 
 # respiratory disease traces
-# fig.add_trace(
-#     go.Bar(
-#         name="Four doses",
-#         x=RECO_resp.date,
-#         y=RECO_resp.vacc4,
-#         visible=True,
-#         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-#         customdata=(RECO_resp["c19_d2"]),
-#         hovertemplate="%{y} <b>Tot</b>: %{customdata}",
-#     ),
-#     2,
-#     1,
-# )
+fig.add_trace(
+    go.Bar(
+        name="Four doses",
+        x=RECO_resp.date,
+        y=RECO_resp.vacc4,
+        visible=False,
+        marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
+        customdata=(RECO_resp["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
 fig.add_trace(
     go.Bar(
         name="Three doses",
@@ -528,8 +524,6 @@ fig.add_trace(
         y=RECO_resp.vacc3,
         visible=False,
         marker=dict(color="rgba(146,197,222,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_resp["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -569,19 +563,19 @@ fig.add_trace(
 )
 
 # cancer traces
-# fig.add_trace(
-#     go.Bar(
-#         name="Four doses",
-#         x=RECO_cancer.date,
-#         y=RECO_cancer.vacc4,
-#         visible=True,
-#         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-#         customdata=(RECO_cancer["c19_d2"]),
-#         hovertemplate="%{y} <b>Tot</b>: %{customdata}",
-#     ),
-#     2,
-#     1,
-# )
+fig.add_trace(
+    go.Bar(
+        name="Four doses",
+        x=RECO_cancer.date,
+        y=RECO_cancer.vacc4,
+        visible=False,
+        marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
+        customdata=(RECO_cancer["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
 fig.add_trace(
     go.Bar(
         name="Three doses",
@@ -589,8 +583,6 @@ fig.add_trace(
         y=RECO_cancer.vacc3,
         visible=False,
         marker=dict(color="rgba(146,197,222,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_cancer["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -717,22 +709,6 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
-                                    True,
-                                    True,
-                                    True,
-                                    True,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
                                 ]
                             }
                         ],
@@ -755,22 +731,6 @@ fig.update_layout(
                                     True,
                                     False,
                                     False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    True,
-                                    True,
-                                    True,
-                                    True,
                                     False,
                                     False,
                                     False,
@@ -809,22 +769,6 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    True,
-                                    True,
-                                    True,
-                                    True,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
                                 ]
                             }
                         ],
@@ -855,22 +799,6 @@ fig.update_layout(
                                     True,
                                     True,
                                     True,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    False,
-                                    True,
-                                    True,
-                                    True,
-                                    True,
                                 ]
                             }
                         ],
@@ -882,7 +810,7 @@ fig.update_layout(
             direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.06,
+            x=0.1,
             xanchor="left",
             y=button_layer_1_height,
             yanchor="top",
@@ -916,7 +844,7 @@ fig.update_layout(
             direction="right",
             pad={"r": 10, "t": 10},
             showactive=True,
-            x=0.06,
+            x=0.1,
             xanchor="left",
             y=button_layer_2_height,
             yanchor="top",
@@ -928,16 +856,16 @@ fig.update_layout(
     annotations=[
         dict(
             text="Comorbidity:",
-            x=-0.07,
-            xref="bottom",
+            x=-0.03,
+            xref="paper",
             y=button_layer_1_height * 0.978,
-            yref="left",
+            yref="paper",
             align="left",
             showarrow=False,
         ),
         dict(
             text="Timeframe:",
-            x=-0.07,
+            x=-0.03,
             xref="paper",
             y=button_layer_2_height * 0.978,
             yref="paper",

@@ -671,7 +671,7 @@ fig.update_layout(
     ]
 )
 
-fig.show()
+# fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")
