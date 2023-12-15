@@ -12,7 +12,7 @@ from plotly.io import write_image
 #  Method to get proper range for y axis
 def get_yaxis_range(data):
     nz_data = data[data != 0]
-    return [0, max((nz_data.mean() * 10), max(nz_data)) * 1.15]
+    return [0, max((nz_data.mean() * 10), max(nz_data)) * 1.05]
 
 
 wastewater_data = pd.read_excel(
@@ -120,7 +120,7 @@ fig.update_layout(
     # width=900,
     # height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
-    # hovermode="x unified",
+    hovermode="x unified",
     hoverdistance=1,
 )
 fig.update_xaxes(
@@ -134,6 +134,7 @@ fig.update_yaxes(
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
+    tickformat="2e",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     rangemode="tozero",
     # Using enterovirus for range as it is the first trace in that graph

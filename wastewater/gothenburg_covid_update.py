@@ -68,6 +68,7 @@ fig.update_yaxes(
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
+    tickformat="2e",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     zeroline=True,
     zerolinecolor="black",
@@ -76,7 +77,7 @@ fig.update_yaxes(
     # Below sets the range to be at least 10 times
     range=[
         0,
-        max((wastewater_data["covid"].mean()) * 10, max(wastewater_data.covid)) * 1.15,
+        max((wastewater_data["covid"].mean()) * 10, max(wastewater_data.covid)) * 1.05,
     ],
 )
 
