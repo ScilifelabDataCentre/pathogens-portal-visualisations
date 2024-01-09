@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2023-11-03.csv",
+    "data/Uppsala_data_2023-12-11_Nextclade.csv",
     sep=",",
 )
 

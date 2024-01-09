@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2023-11-03.csv",
+    "data/Uppsala_data_2023-12-11_Nextclade.csv",
     sep=",",
 )
 
@@ -98,10 +98,12 @@ def condition(x):
         return 15
     elif x == "XBB Other":
         return 16
-    elif x == "Omicron Other":
+    elif x == "XDA":
         return 17
-    else:
+    elif x == "Omicron Other":
         return 18
+    else:
+        return 19
 
 
 lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(condition)
@@ -126,9 +128,9 @@ colours = [
     "#EFFD5F",
     "#7852A9",
     "#BF0A30",
-    "#D30000",
-    "#151B54",
     "#FFF200",
+    "#151B54",
+    "#D30000",
     "#B200ED",
     "#8D021F",
     "#0000FF",
