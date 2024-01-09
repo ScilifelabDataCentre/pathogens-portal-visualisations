@@ -222,7 +222,7 @@ def update_prop_graph(variants, lineage_groups):
             # ),
         ]
     )
-    fig.show()
+    # fig.show()
     # Prints as a json file
     fig.write_json("lineage_one_wholetime.json")
 
