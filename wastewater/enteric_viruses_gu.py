@@ -12,11 +12,11 @@ from plotly.io import write_image
 #  Method to get proper range for y axis
 def get_yaxis_range(data):
     nz_data = data[data != 0]
-    return [0, max(min(nz_data) * 10, max(nz_data)) * 1.15]
+    return [0, max((nz_data.mean() * 10), max(nz_data)) * 1.05]
 
 
 wastewater_data = pd.read_excel(
-    "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
+    "data/wastewater_data_gu_allviruses_2023.xlsx",
     sheet_name="all_viruses",
     header=0,
     engine="openpyxl",
@@ -120,7 +120,7 @@ fig.update_layout(
     # width=900,
     # height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
-    # hovermode="x unified",
+    hovermode="x unified",
     hoverdistance=1,
 )
 fig.update_xaxes(
@@ -130,16 +130,20 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>Relative amount of virus</b>",
+    title="<b>Number of viral genome copies per day<br></b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
+    tickformat="2e",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     rangemode="tozero",
     # Using enterovirus for range as it is the first trace in that graph
     range=[
         0,
-        max(min(wastewater_data.enterovirus) * 10, max(wastewater_data.enterovirus))
+        max(
+            (wastewater_data["enterovirus"].mean() * 10),
+            max(wastewater_data.enterovirus),
+        )
         * 1.15,
     ],
 )
@@ -298,6 +302,6 @@ fig.update_layout(
 
 # if not os.path.isdir("Plots/"):
 #     os.mkdir("Plots/")
-# fig.write_json("Plots/enteric_graph_gu.json")
+# fig.write_json("Plots/enteric_graph_gu_new.json")
 
 print(fig.to_json())

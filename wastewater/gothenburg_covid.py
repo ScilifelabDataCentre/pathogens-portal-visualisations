@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from plotly.io import write_image
 
 wastewater_data = pd.read_excel(
-    "https://blobserver.dc.scilifelab.se/blob/wastewater_data_gu_allviruses.xlsx",
+    "data/wastewater_data_gu_allviruses_2023.xlsx",
     sheet_name="all_viruses",
     header=0,
     engine="openpyxl",
@@ -32,12 +32,7 @@ wastewater_data["date"] = wastewater_data.apply(
 # colours for plot
 colours = px.colors.diverging.RdBu
 
-# d1 = date(2022, 11, 13)
-# d2 = date(2023, 1, 10)
-
-# # this will give you a list containing all of the dates
-
-# dd = [d1 + timedelta(days=x) for x in range((d2 - d1).days + 1)]
+wastewater_data.rename(columns={"SARS-CoV-2": "covid"}, inplace=True)
 
 fig = go.Figure()
 
@@ -45,7 +40,7 @@ fig.add_trace(
     go.Bar(
         name="Relative amount of SARS-CoV-2",
         x=wastewater_data.date,
-        y=wastewater_data.relative_amount_CoV,
+        y=wastewater_data.covid,
         marker_color=px.colors.diverging.RdBu[1],
         customdata=wastewater_data,
         hovertemplate="Week: %{customdata[0]}<br>Relative amount of SARS-CoV-2: %{y}<extra></extra>",
@@ -69,26 +64,32 @@ fig.update_xaxes(
     # rangebreaks=[dict(values=dd)],
 )
 fig.update_yaxes(
-    title="<b>Relative amount of SARS-CoV-2</b>",
+    title="<b>Number of SARS-CoV-2 viral genome copies per day</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
+    tickformat="2e",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     zeroline=True,
     zerolinecolor="black",
-    # Below will set the y-axis range to constant, if you wish
-    # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
+    # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
+    rangemode="tozero",
+    # Below sets the range to be at least 10 times
+    range=[
+        0,
+        max((wastewater_data["covid"].mean()) * 10, max(wastewater_data.covid)) * 1.05,
+    ],
 )
 
-fig.add_vrect(
-    x0="2022-11-10",
-    x1="2023-01-06",
-    # annotation_text="Data missing",
-    # annotation_position="top left",
-    fillcolor=px.colors.diverging.RdBu[10],
-    opacity=0.5,
-    line_width=0,
-)
+# fig.add_vrect(
+#     x0="2022-11-10",
+#     x1="2023-01-06",
+#     # annotation_text="Data missing",
+#     # annotation_position="top left",
+#     fillcolor=px.colors.diverging.RdBu[10],
+#     opacity=0.5,
+#     line_width=0,
+# )
 # fig.add_vline(
 #     x=datetime.datetime.strptime("2023-01-11", "%Y-%m-%d").timestamp() * 1000,
 #     # annotation_text=" Break in data collection",
@@ -133,8 +134,8 @@ fig.add_vrect(
 # Below can show figure locally in tests
 # fig.show()
 
-# # Prints as a json file
-# fig.write_json("wastewater_gothenburg.json")
+# Prints as a json file
+# fig.write_json("wastewater_gothenburg_new.json")
 
 # fig.write_image("wastewater_gothenburg_line.png")
 
