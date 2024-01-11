@@ -1,6 +1,6 @@
 # Covid_portal_vis
 
-This repository holds the inital visualisation scripts produced for the COVID-19 data portal, and some other scripts for plots under development. Some of the scripts here are also used in the dynamic repository, where they are used in cron jobs so that the plots update automatically.
+This repository holds the inital visualisation scripts produced for the [Swedish Pathogens Portal](https://pathogens.se), and some other scripts for plots under development. Some of the scripts here are also used in the dynamic repository, where they are used in cron jobs so that the plots update automatically.
 
 ## Count_publications
 
