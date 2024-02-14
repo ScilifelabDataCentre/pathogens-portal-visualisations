@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 # Import data
 strain_data = pd.read_csv(
-    "data/Uppsala_data_2024-02-06_Nextclade.csv",
+    "data/Uppsala_data_2024-02-09_Nextclade.csv",
     sep=",",
 )
 
@@ -222,7 +222,7 @@ def update_prop_graph(variants, lineage_groups):
             # ),
         ]
     )
-    # fig.show()
+    #fig.show()
     # Prints as a json file
     fig.write_json("lineage_one_wholetime.json")
 
