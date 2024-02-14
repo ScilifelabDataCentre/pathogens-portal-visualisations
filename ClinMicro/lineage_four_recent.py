@@ -271,6 +271,6 @@ fig.update_layout(
         ),
     ]
 )
-fig.show()
+#fig.show()
 # Prints as a json file
 fig.write_json("lineage_four_recent.json")
