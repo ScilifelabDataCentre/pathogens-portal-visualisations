@@ -45,6 +45,36 @@ fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 fig.add_trace(
     go.Scatter(
         x=RECO_18plus["date"],
+        y=RECO_18plus["six_dose"],
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18plus["date"],
+        y=RECO_18plus["five_dose"],
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18plus["date"],
         y=RECO_18plus["four_dose"],
         # hoverinfo='x+y',
         name="Four Doses",
@@ -119,6 +149,38 @@ fig.add_trace(
 )
 
 # traces for 18-59 age category
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18to59["date"],
+        y=RECO_18to59["six_dose"],
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_18to59["date"],
+        y=RECO_18to59["five_dose"],
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_18to59["date"],
@@ -201,6 +263,38 @@ fig.add_trace(
 )
 
 # traces for 60+ age category
+fig.add_trace(
+    go.Scatter(
+        x=RECO_60plus["date"],
+        y=RECO_60plus["six_dose"],
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_60plus["date"],
+        y=RECO_60plus["five_dose"],
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        visible=False,
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one"  # define stack group
+        # hovertemplate="Number of Doses: %{x}" + "<br>Percent Receiving the Dose: %{y:.2f}%",
+    ),
+    1,
+    1,
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_60plus["date"],
@@ -290,12 +384,32 @@ map_colour[5] = "rgb(235, 235, 0)"
 # traces for 18 plus age groups
 fig.add_trace(
     go.Bar(
+        name="Six Doses",
+        x=RECO_icu_18plus.date,
+        y=RECO_icu_18plus.vacc6,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_icu_18plus["c19_i1"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five Doses",
+        x=RECO_icu_18plus.date,
+        y=RECO_icu_18plus.vacc5,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four Doses",
         x=RECO_icu_18plus.date,
         y=RECO_icu_18plus.vacc4,
         marker=dict(color=map_colour[10], line=dict(color="#000000", width=1)),
-        customdata=(RECO_icu_18plus["c19_i1"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -346,13 +460,35 @@ fig.add_trace(
 # traces for 18-59 age groups
 fig.add_trace(
     go.Bar(
+        name="Six Doses",
+        x=RECO_icu_18to59.date,
+        y=RECO_icu_18to59.vacc6,
+        visible=False,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_icu_18to59["c19_i1"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five Doses",
+        x=RECO_icu_18to59.date,
+        y=RECO_icu_18to59.vacc5,
+        visible=False,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four Doses",
         x=RECO_icu_18to59.date,
         y=RECO_icu_18to59.vacc4,
         visible=False,
         marker=dict(color=map_colour[10], line=dict(color="#000000", width=1)),
-        customdata=(RECO_icu_18to59["c19_i1"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -407,13 +543,35 @@ fig.add_trace(
 # traces for 60 plus age groups
 fig.add_trace(
     go.Bar(
+        name="Six Doses",
+        x=RECO_icu_60plus.date,
+        y=RECO_icu_60plus.vacc6,
+        visible=False,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_icu_60plus["c19_i1"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five Doses",
+        x=RECO_icu_60plus.date,
+        y=RECO_icu_60plus.vacc5,
+        visible=False,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four Doses",
         x=RECO_icu_60plus.date,
         y=RECO_icu_60plus.vacc4,
         visible=False,
         marker=dict(color=map_colour[10], line=dict(color="#000000", width=1)),
-        customdata=(RECO_icu_60plus["c19_i1"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -537,6 +695,12 @@ fig.update_layout(
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    True,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -562,11 +726,17 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
                                     True,
                                     True,
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    True,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -592,6 +762,12 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    True,
+                                    True,
                                     True,
                                     True,
                                     True,
@@ -671,7 +847,7 @@ fig.update_layout(
     ]
 )
 
-# fig.show()
+fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")

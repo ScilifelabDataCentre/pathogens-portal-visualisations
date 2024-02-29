@@ -53,7 +53,7 @@ def date_func(dataset):
     pd.to_datetime(dataset["date"])
     dataset.drop(columns=["Week", "Year", "day", "wk"], axis=1, inplace=True)
     dataset["date"] = dataset["date"].astype(str)
-    # print(dataset.head())
+    # print(dataset.info())
 
 
 # Need to do some calculations to get JUST those with 1 dose, with 2 doses.. and calc. 0 doses
@@ -61,19 +61,33 @@ def date_func(dataset):
 def calc_func(dataset):
     # need to work out proportions UNVACCINATED - sum rest and minus from 1
     dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
-    dataset.set_axis(["vacc1", "vacc2", "vacc3", "vacc4", "date"], axis=1, inplace=True)
+    dataset.set_axis(
+        ["vacc1", "vacc2", "vacc3", "vacc4", "vacc5", "vacc6", "date"],
+        axis=1,
+        inplace=True,
+    )
     dataset["no_dose"] = (1 - dataset["vacc1"]) * 100
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
     dataset["three_dose"] = (dataset["vacc3"] - dataset["vacc4"]) * 100
-    dataset["four_dose"] = dataset["vacc4"] * 100
+    dataset["four_dose"] = (dataset["vacc4"] - dataset["vacc5"]) * 100
+    dataset["five_dose"] = (dataset["vacc5"] - dataset["vacc6"]) * 100
+    dataset["six_dose"] = dataset["vacc6"] * 100
     # will need to modify and expand this as more doses are added
     dataset.drop(
-        columns=["vacc1", "vacc2", "vacc3", "vacc4"],
+        columns=["vacc1", "vacc2", "vacc3", "vacc4", "vacc5", "vacc6"],
         axis=1,
         inplace=True,
     )
-    cols = ["no_dose", "one_dose", "two_dose", "three_dose", "four_dose"]
+    cols = [
+        "no_dose",
+        "one_dose",
+        "two_dose",
+        "three_dose",
+        "four_dose",
+        "five_dose",
+        "six_dose",
+    ]
     dataset[cols] = dataset[cols].ffill()
 
 

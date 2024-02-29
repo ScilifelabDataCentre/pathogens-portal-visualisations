@@ -41,6 +41,7 @@ healthcare_contacts = healthcare_contacts.replace(
         "2021 ": "",
         "2022 ": "",
         "2023 ": "",
+        "2024 ": "",
     },
     regex=True,
 )
@@ -50,7 +51,8 @@ healthcare_contacts.loc[:32, "Year"] = 2020
 healthcare_contacts.loc[32:84, "Year"] = 2021
 healthcare_contacts.loc[84:136, "Year"] = 2022
 healthcare_contacts.loc[136:188, "Year"] = 2023
-# if this is still being used in 2024, we will need to add (written week 2 of 2022)
+healthcare_contacts.loc[188:240, "Year"] = 2024
+# if this is still being used in 2025, we will need to add (written week 7 of 2024)
 
 # Need to drop last 3 rows because notes are included in the datafile.
 # remove/edit if this changes in future, but without it, you get an error generating the date.
