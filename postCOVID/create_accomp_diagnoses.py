@@ -48,10 +48,10 @@ dic = {
     "Kol/Astma": "COPD/Asthma",
     "Pneumoni": "Pneumonia",
     "Njure": "Kidney issues",
-    # "Njurbesvär": "Kidney issues",
+    "Njurbesvär": "Kidney issues",
     "Lukt/Smak": "Smell/Taste",
-    "Neuro": "Neurological problems",
-    # "Neurologiska besvär": "Neurological problems",
+    # "Neuro": "Neurological problems",
+    "Neurologiska besvär": "Neurological problems",
     "Sömn": "Sleep disorders",
     # "Sömnproblem": "Sleep disorder",
     "Feber": "Fever",
@@ -93,6 +93,7 @@ fig = go.Figure(
     ]
 )
 fig.update_layout(margin={"r": 5, "t": 5, "l": 0, "b": 0})
+# fig.show()
 if not os.path.isdir(args.output_dir):
     os.mkdir(args.output_dir)
 fig.write_json(os.path.join(args.output_dir, "accompdiag_table.json"))

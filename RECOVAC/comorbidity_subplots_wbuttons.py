@@ -57,6 +57,38 @@ fig = make_subplots(rows=2, cols=1, vertical_spacing=0.1)
 fig.add_trace(
     go.Scatter(
         x=RECO_cvd_V["date"],
+        y=RECO_cvd_V["six_dose"],
+        visible=True,
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_cvd_V["date"],
+        y=RECO_cvd_V["five_dose"],
+        visible=True,
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_cvd_V["date"],
         y=RECO_cvd_V["four_dose"],
         visible=True,
         # hoverinfo='x+y',
@@ -136,6 +168,38 @@ fig.add_trace(
 )
 
 # DM traces for vaccination
+fig.add_trace(
+    go.Scatter(
+        x=RECO_dm_V["date"],
+        y=RECO_dm_V["six_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_dm_V["date"],
+        y=RECO_dm_V["five_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_dm_V["date"],
@@ -221,6 +285,38 @@ fig.add_trace(
 fig.add_trace(
     go.Scatter(
         x=RECO_resp_V["date"],
+        y=RECO_resp_V["six_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_resp_V["date"],
+        y=RECO_resp_V["five_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_resp_V["date"],
         y=RECO_resp_V["four_dose"],
         visible=False,
         # hoverinfo='x+y',
@@ -300,6 +396,38 @@ fig.add_trace(
 )
 
 # CANCER traces for vaccination
+fig.add_trace(
+    go.Scatter(
+        x=RECO_cancer_V["date"],
+        y=RECO_cancer_V["six_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Six Doses",
+        mode="lines",
+        line=dict(width=1, color="grey"),
+        fillcolor="grey",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=RECO_cancer_V["date"],
+        y=RECO_cancer_V["five_dose"],
+        visible=False,
+        # hoverinfo='x+y',
+        name="Five Doses",
+        mode="lines",
+        line=dict(width=1, color="black"),
+        fillcolor="black",
+        stackgroup="one",  # define stack group
+        hovertemplate="%{y:.2f}%",
+    ),
+    1,
+    1,
+)
 fig.add_trace(
     go.Scatter(
         x=RECO_cancer_V["date"],
@@ -388,13 +516,35 @@ map_colour = px.colors.diverging.RdBu
 # cvd traces
 fig.add_trace(
     go.Bar(
+        name="Six doses",
+        x=RECO_cardio.date,
+        y=RECO_cardio.vacc6,
+        visible=True,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_cardio["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five doses",
+        x=RECO_cardio.date,
+        y=RECO_cardio.vacc5,
+        visible=True,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four doses",
         x=RECO_cardio.date,
         y=RECO_cardio.vacc4,
         visible=True,
         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_cardio["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -447,13 +597,36 @@ fig.add_trace(
 # diabetes traces
 fig.add_trace(
     go.Bar(
+        name="Six doses",
+        x=RECO_diabetes.date,
+        y=RECO_diabetes.vacc6,
+        visible=False,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_diabetes["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five doses",
+        x=RECO_diabetes.date,
+        y=RECO_diabetes.vacc5,
+        visible=False,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four doses",
         x=RECO_diabetes.date,
         y=RECO_diabetes.vacc4,
         visible=False,
         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
         customdata=(RECO_diabetes["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -506,13 +679,35 @@ fig.add_trace(
 # respiratory disease traces
 fig.add_trace(
     go.Bar(
+        name="Six doses",
+        x=RECO_resp.date,
+        y=RECO_resp.vacc6,
+        visible=False,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_resp["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five doses",
+        x=RECO_resp.date,
+        y=RECO_resp.vacc5,
+        visible=False,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four doses",
         x=RECO_resp.date,
         y=RECO_resp.vacc4,
         visible=False,
         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_resp["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -565,13 +760,35 @@ fig.add_trace(
 # cancer traces
 fig.add_trace(
     go.Bar(
+        name="Six doses",
+        x=RECO_cancer.date,
+        y=RECO_cancer.vacc6,
+        visible=False,
+        marker=dict(color="grey", line=dict(color="#000000", width=1)),
+        customdata=(RECO_cancer["c19_d2"]),
+        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
+        name="Five doses",
+        x=RECO_cancer.date,
+        y=RECO_cancer.vacc5,
+        visible=False,
+        marker=dict(color="black", line=dict(color="#000000", width=1)),
+    ),
+    2,
+    1,
+)
+fig.add_trace(
+    go.Bar(
         name="Four doses",
         x=RECO_cancer.date,
         y=RECO_cancer.vacc4,
         visible=False,
         marker=dict(color="rgba(5,48,97,1)", line=dict(color="#000000", width=1)),
-        customdata=(RECO_cancer["c19_d2"]),
-        hovertemplate="%{y} <b>Tot</b>: %{customdata}",
     ),
     2,
     1,
@@ -694,6 +911,14 @@ fig.update_layout(
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    True,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -724,11 +949,19 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
                                     True,
                                     True,
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    True,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -759,11 +992,19 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
                                     True,
                                     True,
                                     True,
                                     True,
                                     True,
+                                    True,
+                                    True,
+                                    False,
+                                    False,
                                     False,
                                     False,
                                     False,
@@ -794,6 +1035,14 @@ fig.update_layout(
                                     False,
                                     False,
                                     False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    False,
+                                    True,
+                                    True,
                                     True,
                                     True,
                                     True,
@@ -875,7 +1124,7 @@ fig.update_layout(
     ]
 )
 
-# fig.show()
+fig.show()
 
 if not os.path.isdir("Plots/"):
     os.mkdir("Plots/")

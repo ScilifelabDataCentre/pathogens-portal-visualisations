@@ -42,11 +42,13 @@ healthcare_contacts_week_sex = healthcare_contacts_week_sex.replace(
         "2022 ": "",
         "2023 ": "",
         "2023": "",  # added to account for a missing space in one of the data point labels
+        "2024 ": "",
+        "2024": "",
     },
     regex=True,
 )
 
-# if this is still being used in 2024, we will need to add (written week 2 of 2022)
+# if this is still being used in 2025, we will need to add (written week 8 of 2024)
 # two dataframes given on tab. Easiest to deal with both seperately (also 2 timeframes).
 
 # trim rows/columns for the two diagnoses
@@ -68,12 +70,14 @@ U089.loc[:32, "Year"] = 2020
 U089.loc[32:84, "Year"] = 2021
 U089.loc[84:136, "Year"] = 2022
 U089.loc[136:188, "Year"] = 2023
+U089.loc[188:240, "Year"] = 2024
 
 U099["Year"] = np.nan
 U099.loc[:11, "Year"] = 2020
 U099.loc[11:63, "Year"] = 2021
 U099.loc[63:115, "Year"] = 2022
 U099.loc[115:167, "Year"] = 2023
+U099.loc[167:219, "Year"] = 2024
 
 # if this is still being used in 2024, we will need to add (written week 2 of 2022)
 
