@@ -74,12 +74,12 @@ fig = px.bar(
     wastewater_data,
     x="Week",
     y="SARS-CoV2",
+    color_discrete_sequence=["#1A6978"],
     custom_data=wastewater_data,
 )
 
 
 fig.update_traces(
-    marker_color=px.colors.diverging.RdBu[1],
     hovertemplate="""
     Date: %{customdata[0]}<br>
     Relative SARS-CoV-2 amount: %{y}%
