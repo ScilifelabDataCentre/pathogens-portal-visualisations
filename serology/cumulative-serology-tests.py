@@ -10,24 +10,34 @@ serology_data = pd.read_csv(
 )
 
 
-# Create a stacked bar graph using Plotly Express
-fig = px.bar(
+# Calculate the cumulative count for each class
+serology_data.insert(
+    len(serology_data.columns),
+    "cumulative sum",
+    serology_data.groupby("class")["count"].cumsum(),
+)
+
+
+# Create a line graph using Plotly Express
+fig = px.line(
     serology_data,
     x="week",
-    y="count",
+    y="cumulative sum",
     color="class",
     color_discrete_map={
         "R&D": "#FCC892",
         "positive": "#F47BA4",
         "negative": "#1A6978",
     },
-    category_orders={
-        "class": [
-            "positive",
-            "negative",
-            "R&D",
-        ]
-    },
+    markers=True,
+)
+
+
+# Set the colours for each class
+fig.update_traces(
+    marker_color="white",
+    marker_line_width=3,
+    marker_size=8,
 )
 
 
@@ -51,12 +61,12 @@ fig.update_layout(
 fig.update_xaxes(
     type="category",
     title="<b>Week</b>",
-    linecolor="black",
+    range=[0, serology_data["class"].value_counts().max()],
 )
 
 
 fig.update_yaxes(
-    title="<b>Number of tests</b>",
+    title="<b>Cumulative number of tests</b>",
     linecolor="black",
     showgrid=True,
     gridcolor="lightgrey",
@@ -70,4 +80,4 @@ fig.update_yaxes(
 
 
 # Save figure to JSON file
-pio.write_json(fig, "weekly_serology_tests.json")
+pio.write_json(fig, "cumulative_serology_tests.json")
