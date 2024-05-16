@@ -101,15 +101,13 @@ fig = px.bar(
     wastewater_data,
     x="Formatted_Weeks",
     y="fixed_Gene",
-    custom_data=wastewater_data,
     )
 
 # Update the figure traces
 fig.update_traces(
-    marker_color=px.colors.diverging.RdBu[1],
+    marker_color="#1A6978",
     hovertemplate="""
-    Week: <b>%{x} </b> <br>
-    Gene copy number with <b>%{y}</b> bovine + PMMoV factor (× 10^18)
+    Gene copy number with bovine + PMMoV factor (× 10<sup>18</sup>): <b>%{y:.2f}</b>
     """,
     )
 
@@ -118,43 +116,41 @@ fig.update_traces(
 fig.update_layout(
     plot_bgcolor="white",
     autosize=True,
+    font=dict(size=12),
     margin=dict(r=0, t=10, b=0, l=0),
-    hovermode='closest',
+    hovermode="x unified",
     hoverdistance=1,
     hoverlabel=dict(
         bgcolor="white",
-        font_size=16,
-        font_family="Rockwell"
     ),
-    
 )
 
 # Update x-axis properties
 fig.update_xaxes(
     tickvals=wastewater_data["Formatted_Weeks"], 
-    ticktext=wastewater_data["Formatted_Weeks"].str.replace('W',''),
-    title_text="Year-Week",
-    title_font_weight="bold",
+    title_text="<br><b>Year-Week</b>",
     linecolor="black",
     tickangle=45,
+    showgrid=True,
 )
 
 # Update y-axis properties
 fig.update_yaxes(
-    title_text="Gene copy number with bovine + PMMoV factor (× 10^18)",
-    title_font_weight="bold",
+    title_text="<b>Gene copy number with<br>bovine + PMMoV factor (× 10<sup>18</sup>)</b>",
     showgrid=True,
     linecolor="black",
     gridcolor="lightgrey",
     zeroline=True,
     zerolinecolor="black",
+    # Below will set the y-axis range to constant, if you wish
+    range=[0, max(wastewater_data["fixed_Gene"] * 1.15)],
 )
 
 # Display the chart
-# fig.show()
+fig.show()
 
 # #write the figure to a json file
-# pio.write_json(fig, "wastewater_data_stockholm.json")
+pio.write_json(fig, "wastewater_data_stockholm.json")
 
 # #writing the figure to a .png
 # fig.write_image("wastewater_graph_stockholm.png")
