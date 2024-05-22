@@ -7,6 +7,7 @@ and creates a bar chart using Plotly.
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
+import numpy as np
 # import kaleido
 
 # Read data from URL
@@ -21,7 +22,7 @@ wastewater_data.columns = ["Weeks", "Gene"]
 
 # Remove "Week" and "*" from the "Weeks" column and convert to numeric
 # This is done to clean the data and make it easier to work with
-wastewater_data["Weeks"] = wastewater_data["Weeks"].str.replace("Week", "").str.replace("*", "").astype(int)
+wastewater_data["Weeks"] = wastewater_data["Weeks"].str.replace("Week", "",regex=False).str.replace("*", "", regex=False).astype(int)
 
 # print(wastewater_data)
 
@@ -75,9 +76,10 @@ def format_week(week_num, index):
         year = "2020"
     else:
         year = "2021"
-    year_week = f"{year}-W{week_num:02d}"
+    year_week = f"{year}-W{int(week_num):02d}"
     return year_week
 
+# print(type(wastewater_data["Weeks"]))
 # Applying the format_week function to the "Weeks" column
 wastewater_data["Formatted_Weeks"] = [
     format_week(row["Weeks"], index) for index, row in wastewater_data.iterrows()
@@ -89,7 +91,15 @@ def convert_to_fixed_10_18(scientific_notation):
     # Convert the scientific notation to float, if it's not an empty string, else assign 0
     value = float(scientific_notation) if scientific_notation != '' else 0
     # Convert the float to an integer and divide by 10^18 to get the fixed-point representation
-    fixed_value = int(value) / (10 ** 18)
+    # print(value)
+     # Check if the value is NaN
+    if np.isnan(value):
+        # If it's NaN, assign a default value, like 0
+        fixed_value = 0
+    else:
+        # Convert the float to an integer and divide by 10^18 to get the fixed-point representation
+        fixed_value = int(value) / (10 ** 18)
+    # fixed_value = int(value) / (10 ** 18)
     return fixed_value
 
 # Apply the convert_to_fixed_10_18 function to the 'Gene' column of the dataframe
@@ -132,6 +142,8 @@ fig.update_xaxes(
     linecolor="black",
     tickangle=45,
     showgrid=True,
+    nticks=20,
+    tickmode="auto",
 )
 
 # Update y-axis properties
@@ -147,10 +159,10 @@ fig.update_yaxes(
 )
 
 # Display the chart
-fig.show()
+# fig.show()
 
 # #write the figure to a json file
-pio.write_json(fig, "wastewater_data_stockholm.json")
+# pio.write_json(fig, "wastewater_data_stockholm.json")
 
 # #writing the figure to a .png
 # fig.write_image("wastewater_graph_stockholm.png")
