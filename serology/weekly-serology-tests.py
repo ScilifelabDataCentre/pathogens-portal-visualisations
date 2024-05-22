@@ -23,8 +23,8 @@ fig = px.bar(
     },
     category_orders={
         "class": [
-            "positive",
             "negative",
+            "positive",
             "R&D",
         ]
     },
@@ -44,13 +44,14 @@ fig.update_layout(
     margin=dict(r=0, t=0, b=0, l=0),
     hovermode="x unified",
     legend_traceorder="reversed",
+    legend_title="<b>Test results</b>",
 )
 
 
 # Set axis properties (type='category' ensures one bar per week)
 fig.update_xaxes(
     type="category",
-    title="<b>Week</b>",
+    title="<b>Date (year-week)</b>",
     linecolor="black",
 )
 

@@ -49,14 +49,15 @@ fig.update_layout(
     margin=dict(r=180, t=0, b=0, l=0),
     hovermode="x unified",
     legend_traceorder="reversed",
+    legend_title="<b>Test results</b>",
 )
 
 
 # Set axis properties (type='category' ensures one bar per week)
 fig.update_xaxes(
     type="category",
-    title="<b>Week</b>",
-    range=[0, serology_data["class"].value_counts().max()],
+    title="<b>Date (year-week)</b>",
+    range=[0, serology_data["class"].value_counts().max()]
 )
 
 
@@ -67,6 +68,7 @@ fig.update_yaxes(
     gridcolor="lightgrey",
     zeroline=True,
     zerolinecolor="black",
+    range=[-1000, serology_data["cumulative sum"].max()+10000]
 )
 
 
