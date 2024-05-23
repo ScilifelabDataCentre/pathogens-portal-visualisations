@@ -37,3 +37,7 @@ This folder contains all of the scripts and associated files required to produce
 ## wastewater
 
 This folder contains all of the plots on the wastewater page that were created using plotly in python. This includes the 'combined' graphs, showing data from multiple areas displayed on both a linear and log scale.
+
+## National Pandemic Centre SARS-CoV-2 (COVID-19) test statistics
+
+This folder contains all of the scripts and associated files required to produce the visualisations displayed on the  page "National Pandemic Centre SARS-CoV-2 (COVID-19) test statistics" that were produced in plotly using python.
