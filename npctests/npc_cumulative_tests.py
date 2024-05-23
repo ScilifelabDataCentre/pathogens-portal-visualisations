@@ -7,7 +7,7 @@ import plotly.io as pio
 
 
 url = (
-    "https://datagraphics.dc.scilifelab.se/dataset/bbbaf64a25a1452287a8630503f07418.csv"
+    "https://blobserver.dc.scilifelab.se/blob/NPC-statistics-data-set.csv"
 )
 
 # Read data

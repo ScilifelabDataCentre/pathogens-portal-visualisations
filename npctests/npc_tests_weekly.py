@@ -6,7 +6,7 @@ import plotly.express as px
 import plotly.io as pio
 
 
-url = "https://datagraphics.dc.scilifelab.se/dataset/bbbaf64a25a1452287a8630503f07418.csv"
+url = "https://blobserver.dc.scilifelab.se/blob/NPC-statistics-data-set.csv"
 
 # Read data
 npc_data = pd.read_csv(url)
