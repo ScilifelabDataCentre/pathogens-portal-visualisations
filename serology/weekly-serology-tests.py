@@ -71,4 +71,8 @@ fig.update_yaxes(
 
 
 # Save figure to JSON file
-pio.write_json(fig, "weekly_serology_tests.json")
+# pio.write_json(fig, "weekly_serology_tests.json")
+
+
+# Convert figure to JSON string and print it to stdout
+print(pio.to_json(fig))
