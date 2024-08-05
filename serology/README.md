@@ -1,3 +1,5 @@
+>**Status:** Active, automatically run in `dc-dynamic`'s [runner_every10mins.sh](https://github.com/ScilifelabDataCentre/dc-dynamic/blob/master/runner_every10mins.sh)
+
 ## Serology
 
 This folder contains the two scripts required to produce the visualisations displayed on the serology dashboard page.

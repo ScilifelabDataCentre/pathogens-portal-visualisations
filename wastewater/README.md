@@ -1,3 +1,5 @@
+>**Status:** Active, automatically run in `dc-dynamic`'s [runner_every10mins.sh](https://github.com/ScilifelabDataCentre/dc-dynamic/blob/master/runner_every10mins.sh)
+
 ## wastewater
 
 This folder contains all of the scripts and associated files required to produce the visualisations displayed on the wastewater page that were produced in plotly using python. The plots run directly on cron and are updated every 10 minutes. Remember to rebuild in cron if you update.
@@ -9,8 +11,6 @@ This folder contains all of the scripts and associated files required to produce
 **combined_stockholm_logaxis.py** - This script produces a graph with wastewater data from Stockholm (combined graph) presented on a log axis.
 
 **combined_stockhom_regular.py** - This script produces a graph with wastewater data from Stockholm (combined graph) presented on linear axes.
-
-**requirements.txt** - the requirements file used to recreate the environment needed to run the python script.
 
 **sweden-counties.geojson** - Underlying basemap geojson file, created using publicly available data from multiple sources.
 

@@ -1,6 +1,8 @@
+>**Status:** Manually run whenever there is new data.
+
 ## Scripts related to clinical microbiology
 
-This folder contains all the initial files required to produce the visualisations shown on the page for the clinical microbiology dashboard on the portal.
+This folder contains all the initial files required to produce the visualisations shown on the page for the [SARS-CoV-2 variants](https://www.pathogens.se/dashboards/variants_region_uppsala/) dashboard on the portal.
 
 **lineage_five_recent.py** - script to prepare the data and produce the graph for lineages classified according to their Pango lineage more granularly than in the 'four' lineage plot. Data are limited to the period since October 2023.
 
