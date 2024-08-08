@@ -5,7 +5,8 @@ import plotly.express as px
 from datetime import datetime as dt
 from plotly.io import write_image
 
-
+# datagraphics is shut down, raw data is moved to blobserver, generate csv from it
+# https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data.csv
 wastewater_data = pd.read_csv(
     "https://datagraphics.dc.scilifelab.se/api/dataset/0ac8fa02871745048491de74e5689da9.csv",
     sep=",",
