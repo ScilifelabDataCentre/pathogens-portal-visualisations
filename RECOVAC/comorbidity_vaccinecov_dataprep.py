@@ -60,12 +60,10 @@ def date_func(dataset):
 # In the original dataset e.g. one dose included anyone that had had a dose (so includes 2 dose, 3 dose..)
 def calc_func(dataset):
     # need to work out proportions UNVACCINATED - sum rest and minus from 1
-    dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
-    dataset.set_axis(
-        ["vacc1", "vacc2", "vacc3", "vacc4", "vacc5", "vacc6", "date"],
-        axis=1,
-        inplace=True,
-    )
+    # the following context block is to supress the "FutureWarning: Downcasting behavior" while calling "replace"
+    with pd.option_context("future.no_silent_downcasting", True):
+        dataset.replace(r"^\s*$", 0.0, regex=True, inplace=True)
+    dataset.columns = ["vacc1", "vacc2", "vacc3", "vacc4", "vacc5", "vacc6", "date"]
     dataset["no_dose"] = (1 - dataset["vacc1"]) * 100
     dataset["one_dose"] = (dataset["vacc1"] - dataset["vacc2"]) * 100
     dataset["two_dose"] = (dataset["vacc2"] - dataset["vacc3"]) * 100
