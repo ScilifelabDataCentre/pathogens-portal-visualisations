@@ -38,7 +38,7 @@ wastewater_data["influenza_b"] = wastewater_data["influenza_b"].astype(str)
 
 # Below sets up having 'ND' and 'D' shown, so it's possible to show when there is a sample, but it is below detection or quantification limits, respectively
 wastewater_data["detection"] = np.where(
-    wastewater_data.influenza_b.str.contains("\d"), np.nan, wastewater_data.influenza_b
+    wastewater_data.influenza_b.str.contains("\\d"), np.nan, wastewater_data.influenza_b
 )
 
 wastewater_data["influenza_b"] = wastewater_data["influenza_b"].str.replace(

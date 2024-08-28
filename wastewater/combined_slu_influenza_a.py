@@ -37,7 +37,7 @@ wastewater_data["influenza"] = wastewater_data["influenza"].astype(str)
 
 
 wastewater_data["detection"] = np.where(
-    wastewater_data.influenza.str.contains("\d"), np.nan, wastewater_data.influenza
+    wastewater_data.influenza.str.contains("\\d"), np.nan, wastewater_data.influenza
 )
 
 wastewater_data["influenza"] = wastewater_data["influenza"].str.replace(
