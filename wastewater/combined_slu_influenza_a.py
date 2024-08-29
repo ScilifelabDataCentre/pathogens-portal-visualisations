@@ -15,10 +15,8 @@ wastewater_data = pd.read_csv(
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
 wastewater_data["week_no"] = wastewater_data["week"].str[-3:]
-wastewater_data["week_no"] = wastewater_data["week_no"].str.replace("*", "", regex=True)
-wastewater_data["week_no"] = (
-    wastewater_data["week_no"].str.replace("-", "", regex=True)
-).astype(int)
+wastewater_data["week_no"] = wastewater_data["week_no"].str.replace("*", "")
+wastewater_data["week_no"] = wastewater_data["week_no"].str.replace("-", "").astype(int)
 # set the date to the start of the week (Monday)
 wastewater_data["day"] = 1
 wastewater_data["date"] = wastewater_data.apply(
@@ -39,7 +37,7 @@ wastewater_data["influenza"] = wastewater_data["influenza"].astype(str)
 
 
 wastewater_data["detection"] = np.where(
-    wastewater_data.influenza.str.contains("\d"), np.nan, wastewater_data.influenza
+    wastewater_data.influenza.str.contains("\\d"), np.nan, wastewater_data.influenza
 )
 
 wastewater_data["influenza"] = wastewater_data["influenza"].str.replace(

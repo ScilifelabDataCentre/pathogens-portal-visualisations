@@ -21,7 +21,7 @@ currdate = pd.to_datetime("today").date()
 df = df[df["published"] < currdate]
 df.sort_values(by="published", inplace=True)
 df1 = df["published"].value_counts().sort_index().reset_index()
-df1["cumulativecount"] = df1["published"].cumsum()
+df1["cumulativecount"] = df1["count"].cumsum()
 
 # find number of papers published in each month
 df["year"] = pd.DatetimeIndex(df["published"]).year
@@ -42,7 +42,7 @@ trace2 = go.Bar(
 # line graph
 trace1 = go.Scatter(
     mode="lines",
-    x=df1["index"],
+    x=df1["published"],
     y=df1["cumulativecount"],
     name="Cumulative Total",
     marker_color="rgb(46,104,165)",

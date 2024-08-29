@@ -1,3 +1,5 @@
+>**Status:** Historic, data not updated anymore
+
 ## postCOVID
 
 This folder contains all of the scripts and associated files required to produce the visualisations displayed on the postcovid page.
@@ -13,8 +15,6 @@ This folder contains all of the scripts and associated files required to produce
 **postcovid_mapfig_population_U089.py** - script produces a map displaying the number of U089 postcovid syndrome diagnoses as a percentage of the population up to the current time period.
 
 **postcovid_mapfig_population_U099.py** - script produces a map displaying the number of U099 postcovid syndrome diagnoses as a percentage of the population up to the current time period.
-
-**requirements.txt** - the requirements file used to recreate the environment needed to run the python script.
 
 **sweden-counties.geojson** - a geojson file showing the counties of Sweden. Used to produce the choropleth maps shown on the page. Used in the scripts related to the production of those maps.
 

@@ -1,3 +1,5 @@
+>**Status:** Active, manually run whenever there is new data.
+
 ## RECOVAC
 
 This folder contains all the initial files required to produce the visualisations shown on the page for the RECOVAC project on the portal.
@@ -15,5 +17,3 @@ This folder contains all the initial files required to produce the visualisation
 **comorbidity_subplots_wbuttons.py** - script to create the plot including subplots of data on COVID-19 cases and vaccination coverage among patients with a comorbidity of interest. The plot includes the buttons shown on the portal page. Uses data from comorbidity_cases_dataprep.py and comorbidity_vaccinecov_dataprep.py.
 
 **comorbidity_vaccinecov_dataprep.py** - script to prepare data related to vaccine coverage among patients with the comorbidities considered (cancer, cardiovascular disease, respiratory disease, and diabetes). Feeds into comorbidity_subplots_wbuttons.py (content of plot subplot).
-
-**requirements.txt** - requirements file showing packages used.

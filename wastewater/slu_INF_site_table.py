@@ -81,7 +81,7 @@ fig = go.Figure(
     ]
 )
 fig.update_layout(margin={"r": 5, "t": 5, "l": 0, "b": 0})
-fig.show()
+# fig.show()
 
 
 # # if not os.path.isdir(args.output_dir):

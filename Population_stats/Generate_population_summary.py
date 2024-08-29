@@ -2,7 +2,8 @@ import pandas as pd
 
 Raw_scb_data = pd.read_excel(
     # This link is unfortunately not consistent, so will need to change every quarter of the year (Jan, April, July, September)
-    "https://www.scb.se/contentassets/4a1cd0f086b3467b998467e7e64c587a/be0101_tabkv22023.xlsx",
+    # New data https://www.scb.se/en/finding-statistics/statistics-by-subject-area/population/population-composition/population-statistics/
+    "https://www.scb.se/contentassets/63f577487f7f476d8a46c70989696017/be0101_tabkv12024.xlsx",
     sheet_name="Totalt",
     header=7,
     engine="openpyxl",
@@ -49,7 +50,7 @@ Raw_scb_data = Raw_scb_data[Raw_scb_data["Code"].isin(county_list)]
 
 Raw_scb_data = Raw_scb_data.rename(columns={"County": "Lan"})
 
-Raw_scb_data = Raw_scb_data.replace("VästraGötaland", "Västra Götaland", regex=True)
+Raw_scb_data["Lan"] = Raw_scb_data["Lan"].str.replace("VästraGötaland", "Västra Götaland")
 
 Raw_scb_data = Raw_scb_data[["Lan", "Population"]]
 
