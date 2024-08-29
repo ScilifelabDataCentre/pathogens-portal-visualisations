@@ -1,10 +1,10 @@
+>**Status:** Active, automatically run in `dc-dynamic`'s [runner_weekly.sh](https://github.com/ScilifelabDataCentre/dc-dynamic/blob/master/runner_weekly.sh)
+
 ## Wordcloud
 
 This folder contains all the files required to produce the wordclouds shown on the portal. These scripts are used directly in cron jobs, so updating them will directly affect the visualisations on the portal. Remember to rebuild cron after an update here, or the update will not work.
 
 **examplewordclouds folder** - This folder contains images of some example wordclouds.
-
-**gitignore** - a gitignore file for this part of the reporsitory.
 
 **IBMPlexSabs-Bold.ttf** - the typeface used in wordclouds.
 
@@ -13,5 +13,3 @@ This folder contains all the files required to produce the wordclouds shown on t
 **SciLifeLab_symbol_POS_square.png** - used to produce a square shaped 'mask' for wordclouds, use this to make wordclouds in a square shape.
 
 **livewordcloud.py** - produces the wordclouds.
-
-**requirements.txt** - the requirements file used to recreate the environment needed to run the python script.

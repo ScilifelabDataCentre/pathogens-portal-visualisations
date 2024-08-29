@@ -1,8 +1,8 @@
+>**Status:** Historic, data not updated anymore
+
 ## Vaccine_page
 
 This folder contains all the initial files required to produce the visualisations shown on the vaccines page on the portal.
-
-**requirements.txt** - the requirements file used to recreate the environment needed to run the python script.
 
 **sverige-kommuner-municipalities-of-sweden-2_LHmod_v2.json** - a json file used to produce a map of Swedish kommuns (for potential later use). This map was produced using data from multiple publicly available data sources.
 
