@@ -13,7 +13,7 @@ import numpy as np
 
 # Import and sort data
 site_table = pd.read_excel(
-    "https://blobserver.dc.scilifelab.se/blob/SLU_RSV_collection_sites.xlsx",
+    "https://blobserver.dc.scilifelab.se/blob/SLU_All_sites.xlsx",
     sheet_name="Sheet1",
     header=0,
     engine="openpyxl",
@@ -89,7 +89,7 @@ fig.update_layout(margin={"r": 5, "t": 5, "l": 0, "b": 0})
 # #fig.write_json(os.path.join(args.output_dir, "slu_site_table.json"))
 
 # Prints as a json file
-fig.write_json("wastewater_sluRSVsites.json")
+fig.write_json("wastewater_slu_All_sites.json")
 
 # Below can produce a static image
 # fig.write_image("wastewater_slusites_full.png")
