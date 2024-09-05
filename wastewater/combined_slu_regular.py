@@ -76,7 +76,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %W)",
 )
 fig.update_yaxes(
-    title="<b>RSV/PMMoV x 1000</b>",
+    title="<b>SARS-Cov-2/PMMoV x 1000</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
