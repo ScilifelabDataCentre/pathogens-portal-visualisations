@@ -28,11 +28,11 @@ cities_graph_info = {
     "Vasteras": {"colour": "#b691d2", "symbol": "hourglass"},
 }
 
-# wastewater_data = pd.read_csv(
-#     "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data.csv",
-#     sep=",",
-# )
-wastewater_data = pd.read_csv("ww-data.csv", sep=",")
+wastewater_data = pd.read_csv(
+    "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data_v1.0.csv",
+    sep=",",
+)
+# wastewater_data = pd.read_csv("ww-data.csv", sep=",")
 
 # We are only intetrested in the RSV data
 ww_rsv = wastewater_data[(wastewater_data["target"] == "RSV")]
@@ -97,7 +97,7 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="Pmmov Normalised",
+                        label="Pmmov Normalised Content",
                         method="update",
                         args=[
                             {
@@ -111,7 +111,7 @@ fig.update_layout(
                         ],
                     ),
                     dict(
-                        label="Copies I",
+                        label="Genome Copies Concentration",
                         method="update",
                         args=[
                             {
@@ -125,7 +125,7 @@ fig.update_layout(
                         ],
                     ),
                     dict(
-                        label="Copies Inhabitent",
+                        label="Genome Copies/Day/Inhabitent",
                         method="update",
                         args=[
                             {
@@ -177,10 +177,12 @@ fig.show()
 
 # Below save as html
 # fig.write_html(
-#    "wastewater_combined_slu_regular.html", include_plotlyjs=True, full_html=True
+#    "wastewater_combined_slu_rsv.html", include_plotlyjs=True, full_html=True
 # )
 
 # Saves as a json file
 # fig.write_json("wastewater_slu_rsv.json")
+fig.write_json("wastewater_slu_rsv_v1.0.json")
+
 
 # print(fig.to_json())

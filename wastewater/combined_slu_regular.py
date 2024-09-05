@@ -28,11 +28,11 @@ cities_graph_info = {
     "Vasteras": {"colour": "#b691d2", "symbol": "hourglass"},
 }
 
-# wastewater_data = pd.read_csv(
-#     "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data.csv",
-#     sep=",",
-# )
-wastewater_data = pd.read_csv("ww-data.csv", sep=",")
+wastewater_data = pd.read_csv(
+    "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data_v1.0.csv",
+    sep=",",
+)
+# wastewater_data = pd.read_csv("ww-data.csv", sep=",")
 
 # We are only intetrested in the covid data
 ww_sars = wastewater_data[(wastewater_data["target"] == "SARS CoV-2")]
@@ -40,7 +40,7 @@ ww_sars = wastewater_data[(wastewater_data["target"] == "SARS CoV-2")]
 # Get unique list of city to loop over
 all_cities = sorted(ww_sars.city.drop_duplicates().to_list())
 
-# Compile plot data by looping over the cities
+# # Compile plot data by looping over the cities
 plot_data = {}
 for index, method in enumerate(["pmmov_normalised", "copies_l", "copies_day_inhabitant"], 1):
     plot_data[method] = []
@@ -76,7 +76,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %W)",
 )
 fig.update_yaxes(
-    title="<b>SARS-CoV-2/PMMoV x 1000</b>",
+    title="<b>RSV/PMMoV x 1000</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -90,14 +90,14 @@ fig.update_layout(
             direction="left",
             pad={"l": 10, "t": 25},
             active=0,
-            x=0.175,
-            xanchor="right",
+            x=-0.175,
+            xanchor="left",
             y=1.1,
             yanchor="top",
             buttons=list(
                 [
                     dict(
-                        label="Pmmov Normalised",
+                        label="Pmmov Normalised Content",
                         method="update",
                         args=[
                             {
@@ -106,12 +106,12 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["pmmov_normalised"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>SARS-CoV-2/PMMoV normalised</b>")
+                                "yaxis.title": dict(text="<b>RSV/PMMoV normalised</b>")
                             }
                         ],
                     ),
                     dict(
-                        label="Copies I",
+                        label="Genome Copies Concentration",
                         method="update",
                         args=[
                             {
@@ -120,12 +120,12 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>SARS-CoV-2/Copy I</b>")
+                                "yaxis.title": dict(text="<b>RSV/Copy I</b>")
                             }
                         ],
                     ),
                     dict(
-                        label="Copies Inhabitent",
+                        label="Genome Copies/Day/Inhabitent",
                         method="update",
                         args=[
                             {
@@ -134,7 +134,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>SARS-CoV-2/Copy Inhabitent</b>")
+                                "yaxis.title": dict(text="<b>RSV/Copy Inhabitent</b>")
                             }
                         ],
                     ),
@@ -180,7 +180,8 @@ fig.show()
 #    "wastewater_combined_slu_regular.html", include_plotlyjs=True, full_html=True
 # )
 
-# Saves as a json file
-# fig.write_json("wastewater_combined_slu_regular.json")
+# # Saves as a json file
+# # fig.write_json("wastewater_combined_slu_regular.json")
+fig.write_json("wastewater_combined_slu_regular_v1.0.json")
 
 # print(fig.to_json())
