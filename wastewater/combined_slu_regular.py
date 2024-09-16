@@ -67,6 +67,7 @@ fig.update_layout(
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=14)),
     hovermode="x unified",
     hoverdistance=1,
+    margin=dict(l=0, r=0, t=0, b=170),
 )
 fig.update_xaxes(
     title="<br><b>Date (Week Commencing)</b>",
@@ -92,7 +93,7 @@ fig.update_layout(
             active=0,
             x=-0.175,
             xanchor="left",
-            y=1.1,
+            y=1.125,
             yanchor="top",
             buttons=list(
                 [
@@ -106,7 +107,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["pmmov_normalised"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>RSV/PMMoV normalised</b>")
+                                "yaxis.title": dict(text="<b>SARS-CoV2/PMMoV x 1000</b>")
                             }
                         ],
                     ),
@@ -120,7 +121,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>RSV/Copy I</b>")
+                                "yaxis.title": dict(text="<b>SARS-CoV2/Copy I</b>")
                             }
                         ],
                     ),
@@ -134,7 +135,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>RSV/Copy Inhabitent</b>")
+                                "yaxis.title": dict(text="<b>SARS-CoV2/Copy/DayInhabitent</b>")
                             }
                         ],
                     ),
@@ -148,7 +149,7 @@ fig.update_layout(
             active=0,
             x=1.1,
             xanchor="right",
-            y=1.1,
+            y=1.125,
             yanchor="top",
             buttons=list(
                 [
