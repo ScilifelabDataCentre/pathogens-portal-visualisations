@@ -131,7 +131,7 @@ fig.update_layout(
                         ],
                     ),
                     dict(
-                        label="Genome Copies/Day/Inhabitent",
+                        label="Genome Copies/Day/Inhabitant",
                         method="update",
                         args=[
                             {
@@ -140,7 +140,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/Copy/Day/Inhabitent</b>")
+                                "yaxis.title": dict(text="<b>Influenza B/Copy/Day/Inhabitant</b>")
                             }
                         ],
                     ),
