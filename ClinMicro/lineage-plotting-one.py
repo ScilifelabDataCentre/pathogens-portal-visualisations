@@ -1,52 +1,9 @@
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime as dt
 
-
-# Import data
-strain_data = pd.read_csv(
-    "data/Uppsala_data_2024-02-09_Nextclade.csv",
-    sep=",",
-)
-
-# express date Year and week for grouping
-strain_data["date"] = pd.to_datetime(strain_data["date"])
-strain_data["Year-Week"] = strain_data["date"].dt.strftime("%Y-%W")
-# Jan 1st 2023 is Sunday before the new week, so shows as 2023-00
-strain_data["Year-Week"] = strain_data["Year-Week"].apply(
-    lambda x: x.replace("2023-00", "2022-52")
-)
-
-# Need to calculate percentages strain as a percentage.
-# Need total entries per week and each strain as a percentage of that.
-# create dataset showing how many samples each week
-
-number_samples_weekly = (
-    strain_data.groupby(["Year-Week"]).size().reset_index(name="strains_weekly")
-)
-
-# Now calculate how many of each strain in each week (multiple means of classifying strains)
-# lineage groups 1-4 could potentially be used - this plot works on whole timeline, and focuses on group 1
-
-# Work on lineage 1
-
-group_lineage_one = (
-    strain_data.groupby(["Year-Week", "lineage_groups01"])
-    .size()
-    .reset_index(name="no_lineage1")
-)
-
-lineage1_perc = pd.merge(
-    group_lineage_one,
-    number_samples_weekly,
-    how="left",
-    on="Year-Week",
-)
-
-lineage1_perc["percentage"] = (
-    lineage1_perc["no_lineage1"] / lineage1_perc["strains_weekly"]
-) * 100
+# Load the processed weekly data
+lineage1_perc = pd.read_csv("https://blobserver.dc.scilifelab.se/blob/lineage-cleaned-data.csv")
 
 # # Now need to format dates in a manner recognisable to plotly
 lineage1_perc["year"] = (lineage1_perc["Year-Week"].str[:4]).astype(int)
@@ -62,8 +19,6 @@ lineage1_perc["date"] = lineage1_perc.apply(
 
 # sort values to ensure that the traces show in the desired order.
 lineage1_perc.sort_values(by=["lineage_groups01"], ascending=False, inplace=True)
-# print(lineage1_perc)
-
 
 def update_prop_graph(variants, lineage_groups):
     colours = [
@@ -92,7 +47,7 @@ def update_prop_graph(variants, lineage_groups):
     fig = px.area(
         variants,
         x="date",
-        y="percentage",
+        y="percentage_lineage1",
         color="lineage_groups01",
         line_group="lineage_groups01",
         color_discrete_map={
@@ -100,7 +55,7 @@ def update_prop_graph(variants, lineage_groups):
             for i in range(len(lineage1_perc.lineage_groups01.unique()))
         },
         hover_data={
-            "percentage": ":.2f",
+            "percentage_lineage1": ":.2f",
         },
     )
     fig.update_layout(
@@ -171,60 +126,11 @@ def update_prop_graph(variants, lineage_groups):
                 y=1.23,
                 yanchor="top",
             ),
-            # dict(
-            #     buttons=list(
-            #         [
-            #             dict(
-            #                 label="Whole timeline",
-            #                 method="relayout",
-            #                 args=[
-            #                     {
-            #                         "xaxis.range": (
-            #                             min(variants.date),
-            #                             max(variants.date),
-            #                         ),
-            #                         "yaxis.range": (
-            #                             min(variants.percentage),
-            #                             (max(variants.percentage)),
-            #                         ),
-            #                     },
-            #                 ],
-            #             ),
-            #             dict(
-            #                 label="Last 16 weeks",
-            #                 method="relayout",
-            #                 args=[
-            #                     {
-            #                         "xaxis.range": (
-            #                             (
-            #                                 max(variants.date)
-            #                                 + pd.Timedelta(-16, unit="w")
-            #                             ),
-            #                             max(variants.date),
-            #                         ),
-            #                         "yaxis.range": (
-            #                             min(variants.percentage),
-            #                             (max(variants.percentage)),
-            #                         ),
-            #                     },
-            #                 ],
-            #             ),
-            #         ],
-            #     ),
-            #     type="buttons",
-            #     # direction="right",
-            #     pad={"r": 0, "t": 15},
-            #     showactive=True,
-            #     x=0,
-            #     xanchor="left",
-            #     y=1.13,
-            #     yanchor="top",
-            # ),
         ]
     )
-    #fig.show()
+    fig.show()
     # Prints as a json file
-    fig.write_json("lineage_one_wholetime.json")
+    fig.write_json("lineage_plot_one_wholetime.json")
 
 
 update_prop_graph(lineage1_perc, "lineage_groups01")

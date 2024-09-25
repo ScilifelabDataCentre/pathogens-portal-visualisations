@@ -1,56 +1,9 @@
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime as dt
 
-
-# Import data
-strain_data = pd.read_csv(
-    "data/Uppsala_data_2024-02-09_Nextclade.csv",
-    sep=",",
-)
-
-# express date Year and week for grouping
-strain_data["date"] = pd.to_datetime(strain_data["date"])
-strain_data["Year-Week"] = strain_data["date"].dt.strftime("%Y-%W")
-# Jan 1st 2023 is Sunday before the new week, so shows as 2023-00
-strain_data["Year-Week"] = strain_data["Year-Week"].apply(
-    lambda x: x.replace("2023-00", "2022-52")
-)
-
-strain_data = strain_data[(strain_data["date"] > "2023-01-01")]
-
-# print(strain_data)
-
-# Need to calculate percentages strain as a percentage.
-# Need total entries per week and each strain as a percentage of that.
-# create dataset showing how many samples each week
-
-number_samples_weekly = (
-    strain_data.groupby(["Year-Week"]).size().reset_index(name="strains_weekly")
-)
-
-# Now calculate how many of each strain in each week (multiple means of classifying strains)
-# lineage groups 1-4 could potentially be used - For this plot, use lineage group 4
-
-# Work on lineage 1
-
-group_lineage_four = (
-    strain_data.groupby(["Year-Week", "lineage_groups04"])
-    .size()
-    .reset_index(name="no_lineage4")
-)
-
-lineage4_perc = pd.merge(
-    group_lineage_four,
-    number_samples_weekly,
-    how="left",
-    on="Year-Week",
-)
-
-lineage4_perc["percentage"] = (
-    lineage4_perc["no_lineage4"] / lineage4_perc["strains_weekly"]
-) * 100
+# Load the processed weekly data
+lineage4_perc = pd.read_csv("https://blobserver.dc.scilifelab.se/blob/lineage-cleaned-data.csv")
 
 # # Now need to format dates in a manner recognisable to plotly
 lineage4_perc["year"] = (lineage4_perc["Year-Week"].str[:4]).astype(int)
@@ -63,7 +16,7 @@ lineage4_perc["day"] = 1
 lineage4_perc["date"] = lineage4_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
-
+lineage4_perc = lineage4_perc[(lineage4_perc["date"] > "2023-01-01")]
 
 def condition(x):
     if x == "BA.1":
@@ -110,6 +63,9 @@ lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(conditi
 lineage4_perc.sort_values(by=["sort_lineages"], inplace=True)
 # print(lineage4_perc)
 
+# lineage4_perc.to_csv("data/four.csv", index=False)
+
+
 colours = [
     "#FCD12A",
     "#784B84",
@@ -136,7 +92,7 @@ colours = [
 fig = px.area(
     lineage4_perc,
     x="date",
-    y="percentage",
+    y="percentage_lineage4",
     color="lineage_groups04",
     line_group="lineage_groups04",
     color_discrete_map={
@@ -144,7 +100,7 @@ fig = px.area(
         for i in range(len(lineage4_perc.lineage_groups04.unique()))
     },
     hover_data={
-        "percentage": ":.2f",
+        "percentage_lineage4": ":.2f",
     },
 )
 fig.update_layout(
@@ -233,8 +189,8 @@ fig.update_layout(
                                     max(lineage4_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage4_perc.percentage),
-                                    (max(lineage4_perc.percentage)),
+                                    min(lineage4_perc.percentage_lineage4),
+                                    (max(lineage4_perc.percentage_lineage4)),
                                 ),
                             },
                         ],
@@ -252,8 +208,8 @@ fig.update_layout(
                                     max(lineage4_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage4_perc.percentage),
-                                    (max(lineage4_perc.percentage)),
+                                    min(lineage4_perc.percentage_lineage4),
+                                    (max(lineage4_perc.percentage_lineage4)),
                                 ),
                             },
                         ],
@@ -271,6 +227,6 @@ fig.update_layout(
         ),
     ]
 )
-#fig.show()
+fig.show()
 # Prints as a json file
-fig.write_json("lineage_four_recent.json")
+fig.write_json("lineage_plot_four_recent.json")

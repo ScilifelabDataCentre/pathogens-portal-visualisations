@@ -1,56 +1,10 @@
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime as dt
 
+# Load the processed weekly data
+lineage5_perc = pd.read_csv("https://blobserver.dc.scilifelab.se/blob/lineage-cleaned-data.csv")
 
-# Import data
-strain_data = pd.read_csv(
-    "data/Uppsala_data_2024-08-29_Nextclade.csv",
-    sep=",",
-)
-
-# express date Year and week for grouping
-strain_data["date"] = pd.to_datetime(strain_data["date"])
-strain_data["Year-Week"] = strain_data["date"].dt.strftime("%Y-%W")
-# Jan 1st 2023 is Sunday before the new week, so shows as 2023-00
-strain_data["Year-Week"] = strain_data["Year-Week"].apply(
-    lambda x: x.replace("2023-00", "2022-52")
-)
-
-strain_data = strain_data[(strain_data["date"] > "2023-10-01")]
-
-# print(strain_data)
-
-# Need to calculate percentages strain as a percentage.
-# Need total entries per week and each strain as a percentage of that.
-# create dataset showing how many samples each week
-
-number_samples_weekly = (
-    strain_data.groupby(["Year-Week"]).size().reset_index(name="strains_weekly")
-)
-
-# Now calculate how many of each strain in each week (multiple means of classifying strains)
-# lineage groups 1-4 could potentially be used - For this plot, use lineage group 4
-
-# Work on lineage 1
-
-group_lineage_five = (
-    strain_data.groupby(["Year-Week", "lineage_groups05"])
-    .size()
-    .reset_index(name="no_lineage5")
-)
-
-lineage5_perc = pd.merge(
-    group_lineage_five,
-    number_samples_weekly,
-    how="left",
-    on="Year-Week",
-)
-
-lineage5_perc["percentage"] = (
-    lineage5_perc["no_lineage5"] / lineage5_perc["strains_weekly"]
-) * 100
 
 # # Now need to format dates in a manner recognisable to plotly
 lineage5_perc["year"] = (lineage5_perc["Year-Week"].str[:4]).astype(int)
@@ -64,6 +18,7 @@ lineage5_perc["date"] = lineage5_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
 
+lineage5_perc = lineage5_perc[(lineage5_perc["date"] > "2023-10-01")]
 
 def condition(x):
     if x == "BA.2":
@@ -159,7 +114,7 @@ colours = [
 fig = px.area(
     lineage5_perc,
     x="date",
-    y="percentage",
+    y="percentage_lineage5",
     color="lineage_groups05",
     line_group="lineage_groups05",
     color_discrete_map={
@@ -167,7 +122,7 @@ fig = px.area(
         for i in range(len(lineage5_perc.lineage_groups05.unique()))
     },
     hover_data={
-        "percentage": ":.2f",
+        "percentage_lineage5": ":.2f",
     },
 )
 fig.update_layout(
@@ -256,8 +211,8 @@ fig.update_layout(
                                     max(lineage5_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage5_perc.percentage),
-                                    (max(lineage5_perc.percentage)),
+                                    min(lineage5_perc.percentage_lineage5),
+                                    (max(lineage5_perc.percentage_lineage5)),
                                 ),
                             },
                         ],
@@ -275,8 +230,8 @@ fig.update_layout(
                                     max(lineage5_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage5_perc.percentage),
-                                    (max(lineage5_perc.percentage)),
+                                    min(lineage5_perc.percentage_lineage5),
+                                    (max(lineage5_perc.percentage_lineage5)),
                                 ),
                             },
                         ],
@@ -296,4 +251,4 @@ fig.update_layout(
 )
 fig.show()
 # Prints as a json file
-# fig.write_json("lineage_five_recent.json")
+fig.write_json("lineage_plot_five_recent.json")
