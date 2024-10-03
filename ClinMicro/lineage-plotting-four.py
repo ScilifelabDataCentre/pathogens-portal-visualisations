@@ -1,130 +1,70 @@
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime as dt
 
-
-# Import data
-strain_data = pd.read_csv(
-    "data/Uppsala_data_2024-02-09_Nextclade.csv",
-    sep=",",
-)
-
-# express date Year and week for grouping
-strain_data["date"] = pd.to_datetime(strain_data["date"])
-strain_data["Year-Week"] = strain_data["date"].dt.strftime("%Y-%W")
-# Jan 1st 2023 is Sunday before the new week, so shows as 2023-00
-strain_data["Year-Week"] = strain_data["Year-Week"].apply(
-    lambda x: x.replace("2023-00", "2022-52")
-)
-
-strain_data = strain_data[(strain_data["date"] > "2023-10-01")]
-
-# print(strain_data)
-
-# Need to calculate percentages strain as a percentage.
-# Need total entries per week and each strain as a percentage of that.
-# create dataset showing how many samples each week
-
-number_samples_weekly = (
-    strain_data.groupby(["Year-Week"]).size().reset_index(name="strains_weekly")
-)
-
-# Now calculate how many of each strain in each week (multiple means of classifying strains)
-# lineage groups 1-4 could potentially be used - For this plot, use lineage group 4
-
-# Work on lineage 1
-
-group_lineage_five = (
-    strain_data.groupby(["Year-Week", "lineage_groups05"])
-    .size()
-    .reset_index(name="no_lineage5")
-)
-
-lineage5_perc = pd.merge(
-    group_lineage_five,
-    number_samples_weekly,
-    how="left",
-    on="Year-Week",
-)
-
-lineage5_perc["percentage"] = (
-    lineage5_perc["no_lineage5"] / lineage5_perc["strains_weekly"]
-) * 100
+# Load the processed weekly data
+lineage4_perc = pd.read_csv("https://blobserver.dc.scilifelab.se/blob/lineage-cleaned-data.csv")
 
 # # Now need to format dates in a manner recognisable to plotly
-lineage5_perc["year"] = (lineage5_perc["Year-Week"].str[:4]).astype(int)
-lineage5_perc["week_no"] = lineage5_perc["Year-Week"].str[-3:]
-lineage5_perc["week_no"] = (
-    lineage5_perc["week_no"].str.replace("-", "", regex=True)
+lineage4_perc["year"] = (lineage4_perc["Year-Week"].str[:4]).astype(int)
+lineage4_perc["week_no"] = lineage4_perc["Year-Week"].str[-3:]
+lineage4_perc["week_no"] = (
+    lineage4_perc["week_no"].str.replace("-", "", regex=True)
 ).astype(int)
 # set the date to the start of the week (Monday)
-lineage5_perc["day"] = 1
-lineage5_perc["date"] = lineage5_perc.apply(
+lineage4_perc["day"] = 1
+lineage4_perc["date"] = lineage4_perc.apply(
     lambda row: dt.fromisocalendar(row["year"], row["week_no"], row["day"]), axis=1
 )
-
+lineage4_perc = lineage4_perc[(lineage4_perc["date"] > "2023-01-01")]
 
 def condition(x):
-    if x == "BA.2":
+    if x == "BA.1":
         return 1
-    elif x == "DV.7.1*":
+    elif x == "BA.2":
         return 2
-    elif x == "CH.*":
+    elif x == "CH":
         return 3
-    elif x == "BA.2.75* Other":
+    elif x == "DV.7.1":
         return 4
-    elif x == "JN.1*":
+    elif x == "BA.2.75 Other":
         return 5
-    elif x == "JN.2*":
+    elif x == "BA.2.86/Pirola":
         return 6
-    elif x == "JN.3*":
+    elif x == "BA.4":
         return 7
-    elif x == "BA.2.86* Other":
+    elif x == "BA.5":
         return 8
-    elif x == "BQ.*":
+    elif x == "BQ":
         return 9
-    elif x == "JD.*":
+    elif x == "XBB.1.5":
         return 10
-    elif x == "XBB.1.5* Other":
+    elif x == "XBB.1.9.1":
         return 11
-    elif x == "FL.*":
+    elif x == "XBB.1.9.2":
         return 12
-    elif x == "HK.*":
+    elif x == "EG.5/Eris":
         return 13
-    elif x == "JG.*":
+    elif x == "XBB.1.16":
         return 14
-    elif x == "HV.*":
+    elif x == "XBB.2.3":
         return 15
-    elif x == "EG.5.1* Other":
+    elif x == "XBB Other":
         return 16
-    elif x == "EG.5* Other":
+    elif x == "Omicron Other":
         return 17
-    elif x == "XBB.1.9.2* Other":
-        return 18
-    elif x == "FU.*":
-        return 19
-    elif x == "XBB.1.16* Other":
-        return 20
-    elif x == "FY.*":
-        return 21
-    elif x == "XBB.2.3*":
-        return 22
-    elif x == "XBB* Other":
-        return 23
-    elif x == "XDA":
-        return 24
-    elif x == "XDD":
-        return 25
     else:
-        return 26
+        return 18
 
 
-lineage5_perc["sort_lineages"] = lineage5_perc["lineage_groups05"].apply(condition)
+lineage4_perc["sort_lineages"] = lineage4_perc["lineage_groups04"].apply(condition)
 
 # NB: an wrror may be thrown if the lineage is not in the dictionary.
-lineage5_perc.sort_values(by=["sort_lineages"], inplace=True)
-# print(lineage5_perc)
+lineage4_perc.sort_values(by=["sort_lineages"], inplace=True)
+# print(lineage4_perc)
+
+# lineage4_perc.to_csv("data/four.csv", index=False)
+
 
 colours = [
     "#FCD12A",
@@ -142,32 +82,25 @@ colours = [
     "#EFFD5F",
     "#7852A9",
     "#BF0A30",
-    "#FFF200",
-    "#151B54",
     "#D30000",
+    "#151B54",
+    "#FFF200",
     "#B200ED",
     "#8D021F",
     "#0000FF",
-    "#bf02af",
-    "#0221bf",
-    "#f7f302",
-    "#030303",
-    "#5c5c5b",
-    "#5b5c5c",
-    "#5602f2",
 ]
 fig = px.area(
-    lineage5_perc,
+    lineage4_perc,
     x="date",
-    y="percentage",
-    color="lineage_groups05",
-    line_group="lineage_groups05",
+    y="percentage_lineage4",
+    color="lineage_groups04",
+    line_group="lineage_groups04",
     color_discrete_map={
-        lineage5_perc.lineage_groups05.unique()[i]: colours[i]
-        for i in range(len(lineage5_perc.lineage_groups05.unique()))
+        lineage4_perc.lineage_groups04.unique()[i]: colours[i]
+        for i in range(len(lineage4_perc.lineage_groups04.unique()))
     },
     hover_data={
-        "percentage": ":.2f",
+        "percentage_lineage4": ":.2f",
     },
 )
 fig.update_layout(
@@ -176,11 +109,11 @@ fig.update_layout(
         "title": "<b>Percentage of Lineages<br></b>",
         "ticktext": [" ", "20%", "40%", "60%", "80%", "100%"],
         "tickvals": ["0", "20", "40", "60", "80", "100"],
-        "range": [0, 100.1],
+        "range": [0, 100],
     },
     font={"size": 12},
     autosize=True,
-    margin=dict(r=0, t=180, b=120, l=0),
+    margin=dict(r=0, t=100, b=120, l=0),
     # showlegend=False,
     legend=dict(
         yanchor="top",
@@ -198,8 +131,8 @@ fig.update_layout(
         "hoverformat": "%b %d, %Y (week %W)",
         # Use this to show just the first 16 weeks in the first instance
         # "range": [
-        #     (max(lineage5_perc.date) + pd.Timedelta(-16, unit="w")),
-        #     (max(lineage5_perc["date"])),
+        #     (max(lineage4_perc.date) + pd.Timedelta(-16, unit="w")),
+        #     (max(lineage4_perc["date"])),
         # ],
     },
 )
@@ -247,17 +180,17 @@ fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        label="Data since Oct 2023",
+                        label="Data since Jan 2023",
                         method="relayout",
                         args=[
                             {
                                 "xaxis.range": (
-                                    min(lineage5_perc.date),
-                                    max(lineage5_perc.date),
+                                    min(lineage4_perc.date),
+                                    max(lineage4_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage5_perc.percentage),
-                                    (max(lineage5_perc.percentage)),
+                                    min(lineage4_perc.percentage_lineage4),
+                                    (max(lineage4_perc.percentage_lineage4)),
                                 ),
                             },
                         ],
@@ -269,14 +202,14 @@ fig.update_layout(
                             {
                                 "xaxis.range": (
                                     (
-                                        max(lineage5_perc.date)
+                                        max(lineage4_perc.date)
                                         + pd.Timedelta(-16, unit="w")
                                     ),
-                                    max(lineage5_perc.date),
+                                    max(lineage4_perc.date),
                                 ),
                                 "yaxis.range": (
-                                    min(lineage5_perc.percentage),
-                                    (max(lineage5_perc.percentage)),
+                                    min(lineage4_perc.percentage_lineage4),
+                                    (max(lineage4_perc.percentage_lineage4)),
                                 ),
                             },
                         ],
@@ -294,6 +227,6 @@ fig.update_layout(
         ),
     ]
 )
-#fig.show()
+# fig.show()
 # Prints as a json file
-fig.write_json("lineage_five_recent.json")
+fig.write_json("lineage_four_recent.json")
