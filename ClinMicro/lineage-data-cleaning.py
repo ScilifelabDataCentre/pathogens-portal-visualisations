@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime as dt
+import argparse
 
 
 def clean_and_calculate_percentages(data_path):
@@ -47,10 +48,17 @@ def clean_and_calculate_percentages(data_path):
     # strain_data
     return strain_data
 
-
+# to run this script from the command line, use the following command: 
+# python3 data-cleaning.py file-path.csv
+# the output will be saved in the data folder as lineage-cleaned-data.csv
+# the cleaned data should be uploaded to the blob server
+# then plots will be created by using the cleaned data from the blob server
 if __name__ == "__main__":
-    data_path = "data/Uppsala_data_2024-08-29_Nextclade.csv"  # Replace with your data path
-    cleaned_data = clean_and_calculate_percentages(data_path)
+    parser = argparse.ArgumentParser(description='Clean and calculate percentages of strain data.')
+    parser.add_argument('data_path', type=str, help='Path to the CSV file containing strain data.')
+    args = parser.parse_args()
+
+    cleaned_data = clean_and_calculate_percentages(args.data_path)
 
     # Save data to CSV
     cleaned_data.to_csv("data/lineage-cleaned-data.csv", index=False)
