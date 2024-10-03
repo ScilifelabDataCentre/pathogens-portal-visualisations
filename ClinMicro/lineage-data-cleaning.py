@@ -1,6 +1,9 @@
-import pandas as pd
-from datetime import datetime as dt
+
 import argparse
+import pandas as pd
+
+from datetime import datetime as dt
+from pathlib import Path
 
 
 def clean_and_calculate_percentages(data_path):
@@ -56,11 +59,18 @@ def clean_and_calculate_percentages(data_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Clean and calculate percentages of strain data.')
     parser.add_argument('data_path', type=str, help='Path to the CSV file containing strain data.')
+    parser.add_argument('--output', type=str, help='Path to where the output should be generated. If not specified, created in current directory')
     args = parser.parse_args()
 
     cleaned_data = clean_and_calculate_percentages(args.data_path)
 
+    # Create output directory is doesn't exist
+    output_file = "lineage-cleaned-data.csv"
+    if args.output:
+        Path(args.output).mkdir(parents=True, exist_ok=True)
+        output_file = "%s/%s" % (args.output, output_file) 
+
     # Save data to CSV
-    cleaned_data.to_csv("data/lineage-cleaned-data.csv", index=False)
+    cleaned_data.to_csv(output_file, index=False)
 
     print("Data cleaning and CSV generation complete!")
