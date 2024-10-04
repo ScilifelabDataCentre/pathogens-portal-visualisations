@@ -1,10 +1,5 @@
 import pandas as pd
-import numpy as np
-import datetime
 import plotly.graph_objects as go
-import plotly.express as px
-from datetime import datetime as dt
-from plotly.io import write_image
 
 # Helper function that is later used
 def get_plot_data(data, info):
@@ -40,17 +35,17 @@ wastewater_data = pd.read_csv(
 # wastewater_data = pd.read_csv("ww-data.csv", sep=",")
 
 # We are only intetrested in the RSV data
-ww_inf_b = wastewater_data[(wastewater_data["target"] == "Influenza B virus")]
+ww_rsv = wastewater_data[(wastewater_data["target"] == "RSV")]
 
 # Get unique list of city to loop over
-all_cities = sorted(ww_inf_b.city.drop_duplicates().to_list())
+all_cities = sorted(ww_rsv.city.drop_duplicates().to_list())
 
 # Compile plot data by looping over the cities
 plot_data = {}
 for index, method in enumerate(["pmmov_normalised", "copies_l", "copies_day_inhabitant"], 1):
     plot_data[method] = []
     for city in all_cities:
-        ww_city_data = ww_inf_b[(ww_inf_b["city"] == city)].sort_values(by=["sampling_date"])
+        ww_city_data = ww_rsv[(ww_rsv["city"] == city)].sort_values(by=["sampling_date"])
         plot_data[method].append(
             go.Scatter(
                 name=city,
@@ -82,7 +77,7 @@ fig.update_xaxes(
     hoverformat="%b %d, %Y (week %W)",
 )
 fig.update_yaxes(
-    title="<b>Influenza B/PMMoV x 1000</b>",
+    title="<b>RSV/PMMoV x 1000</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
@@ -112,7 +107,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["pmmov_normalised"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/PMMoV x 1000</b>")
+                                "yaxis.title": dict(text="<b>RSV/PMMoV x 1000</b>")
                             }
                         ],
                     ),
@@ -126,7 +121,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/Copy I</b>")
+                                "yaxis.title": dict(text="<b>RSV/Copy I</b>")
                             }
                         ],
                     ),
@@ -140,7 +135,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/Copy/Day/Inhabitant</b>")
+                                "yaxis.title": dict(text="<b>RSV/Copy/Day/Inhabitant</b>")
                             }
                         ],
                     ),
@@ -181,7 +176,14 @@ fig.update_layout(
 # Below can show figure locally in tests
 # fig.show()
 
-# Prints as a json file
-# fig.write_json("wastewater_slu_infB.json")
+# Below save as html
+# fig.write_html(
+#    "wastewater_combined_slu_rsv.html", include_plotlyjs=True, full_html=True
+# )
+
+# Saves as a json file
+# fig.write_json("wastewater_slu_rsv.json")
+# fig.write_json("wastewater_slu_rsv_v1.0.json")
+
 
 print(fig.to_json())
