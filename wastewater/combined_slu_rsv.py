@@ -174,7 +174,7 @@ fig.update_layout(
 )
 
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # Below save as html
 # fig.write_html(
@@ -183,7 +183,7 @@ fig.show()
 
 # Saves as a json file
 # fig.write_json("wastewater_slu_rsv.json")
-fig.write_json("wastewater_slu_rsv_v1.0.json")
+# fig.write_json("wastewater_slu_rsv_v1.0.json")
 
 
-# print(fig.to_json())
+print(fig.to_json())

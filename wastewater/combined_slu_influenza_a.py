@@ -179,10 +179,9 @@ fig.update_layout(
 )
 
 # Below can show figure locally in tests
-fig.show()
+# fig.show()
 
 # Prints as a json file
 # fig.write_json("wastewater_slu_infA.json")
-fig.write_json("wastewater_slu_infA_v1.0.json")
 
-# print(fig.to_json())
+print(fig.to_json())
