@@ -34,7 +34,7 @@ cities_graph_info = {
 }
 
 wastewater_data = pd.read_csv(
-    "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data_v1.0.csv",
+    "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data.csv",
     sep=",",
 )
 # wastewater_data = pd.read_csv("ww-data.csv", sep=",")

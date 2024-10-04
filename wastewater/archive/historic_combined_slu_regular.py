@@ -9,7 +9,7 @@ from plotly.io import write_image
 # Göteborg, Malmö and Stockholm-Käppala
 
 wastewater_data = pd.read_csv(
-    "https://blobserver.dc.scilifelab.se/blob/SLU_wastewater_data.csv",
+    "https://blobserver.dc.scilifelab.se/blob/historic_SLU_wastewater_data.csv",
     sep=",",
 )
 wastewater_data["year"] = (wastewater_data["week"].str[:4]).astype(int)
