@@ -138,4 +138,6 @@ fig.update_layout(
 # fig.show()
 
 # Prints as a json file
-fig.write_json("lineage_one_wholetime.json")
+# fig.write_json("lineage_one_wholetime.json")
+print(fig.to_json())
+
