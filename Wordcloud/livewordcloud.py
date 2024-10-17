@@ -33,8 +33,17 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
     # imports the .json file given in the path. e.g.,
     # https://publications-covid19.scilifelab.se/publications.json - all publications
     # https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab.json - just scilifelab funded papers
-    resp = requests.get(json_path)
-    txt = resp.json()
+    # resp = requests.get(json_path)
+    # txt = resp.json()
+    
+    try:
+        resp = requests.get(json_path)
+        # print(json_path)
+        # print(resp.json())
+        resp.raise_for_status()
+        txt = resp.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error occurred while making the request: {e}")
 
     # normalisation at this level accesses title/abstract
     # authors requires further 'digging' in the .json
@@ -107,7 +116,7 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
     img = io.BytesIO()
 
     plt.savefig(img, dpi=dpi)
-
+    # plt.show()
 
     return img
 
@@ -123,3 +132,45 @@ def write_file(filename: str, data: io.BytesIO):
     """
     with open(filename, "wb") as outfile:
         outfile.write(data.getbuffer())
+
+CODE_PATH = os.environ.get('CODE_PATH')
+
+if CODE_PATH is None:
+    CODE_PATH = os.getcwd()
+    os.makedirs(os.path.join(CODE_PATH, 'output'), exist_ok=True)
+
+# titles
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-titles_all.png'),
+               gen_wordcloud(field='title',
+                                 xsize=10,
+                                 shape='rectangle'))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-titles_vr.png'),
+           gen_wordcloud(field='title',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20VR.json',
+                         maxwords=100))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-titles_kaw.png'),
+           gen_wordcloud(field='title',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab%20National%20COVID%20program.json',
+                         maxwords=100))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-titles_h2020.png'),
+           gen_wordcloud(field='title',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020.json',
+                         maxwords=100))
+
+# abstracts
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-abstracts_all.png'),
+           gen_wordcloud(field='abstract',
+                         xsize=10,
+                         shape='rectangle'))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-abstracts_vr.png'),
+           gen_wordcloud(field='abstract',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20VR.json',
+                         maxwords=100))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-abstracts_kaw.png'),
+           gen_wordcloud(field='abstract',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20KAW/SciLifeLab%20National%20COVID%20program.json',
+                         maxwords=100))
+write_file(os.path.join(CODE_PATH, 'output/covid-portal-abstracts_h2020.png'),
+           gen_wordcloud(field='abstract',
+                         json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020.json',
+                         maxwords=100))
