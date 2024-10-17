@@ -116,7 +116,6 @@ def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "http
     img = io.BytesIO()
 
     plt.savefig(img, dpi=dpi)
-    # plt.show()
 
     return img
 
@@ -133,6 +132,7 @@ def write_file(filename: str, data: io.BytesIO):
     with open(filename, "wb") as outfile:
         outfile.write(data.getbuffer())
 
+# Generating wordclouds 
 CODE_PATH = os.environ.get('CODE_PATH')
 
 if CODE_PATH is None:
