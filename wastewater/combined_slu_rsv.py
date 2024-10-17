@@ -121,7 +121,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>RSV/Copy I</b>")
+                                "yaxis.title": dict(text="<b>RSV copies/liter</b>")
                             }
                         ],
                     ),
@@ -135,7 +135,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>RSV/Copy/Day/Inhabitant</b>")
+                                "yaxis.title": dict(text="<b>RSV copies/inhabitant/day</b>")
                             }
                         ],
                     ),

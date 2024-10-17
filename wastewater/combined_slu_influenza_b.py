@@ -126,7 +126,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/Copy I</b>")
+                                "yaxis.title": dict(text="<b>Influenza B copies/liter</b>")
                             }
                         ],
                     ),
@@ -140,7 +140,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>Influenza B/Copy/Day/Inhabitant</b>")
+                                "yaxis.title": dict(text="<b>Influenza B copies/inhabitant/day</b>")
                             }
                         ],
                     ),

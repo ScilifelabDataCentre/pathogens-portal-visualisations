@@ -121,7 +121,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_l"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>SARS-CoV2/Copy I</b>")
+                                "yaxis.title": dict(text="<b>SARS-CoV2 copies/liter</b>")
                             }
                         ],
                     ),
@@ -135,7 +135,7 @@ fig.update_layout(
                                 "y": get_plot_data(plot_data["copies_day_inhabitant"],"y"),
                             },
                             {
-                                "yaxis.title": dict(text="<b>SARS-CoV2/Copy/Day/Inhabitant</b>")
+                                "yaxis.title": dict(text="<b>SARS-CoV2 copies/inhabitant/day</b>")
                             }
                         ],
                     ),
