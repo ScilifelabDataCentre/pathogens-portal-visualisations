@@ -2,7 +2,7 @@
 
 ## Wordcloud
 
-This folder contains all the files required to produce the wordclouds shown on the portal. These scripts are used directly in cron jobs, so updating them will directly affect the visualisations on the portal. Remember to rebuild cron after an update here, or the update will not work.
+This folder contains all the files required to produce the wordclouds shown on the [COVID-19 publication overview](https://www.pathogens.se/dashboards/covid_publications/) dashboard. These scripts are used directly in cron jobs, so updating them will directly affect the visualisations on the portal. Remember to rebuild cron after an update here, or the update will not work.
 
 **examplewordclouds folder** - This folder contains images of some example wordclouds.
 
@@ -12,4 +12,4 @@ This folder contains all the files required to produce the wordclouds shown on t
 
 **SciLifeLab_symbol_POS_square.png** - used to produce a square shaped 'mask' for wordclouds, use this to make wordclouds in a square shape.
 
-**livewordcloud.py** - produces the wordclouds.
+**livewordcloud.py** - produces the wordclouds images.
