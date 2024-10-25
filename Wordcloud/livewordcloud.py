@@ -11,7 +11,8 @@ from PIL import Image
 import numpy as np
 import requests
 
-def gen_wordcloud(field: str = "title", data_folder='./', json_path: str = "https://publications-covid19.scilifelab.se/publications.json", xsize: int = 5, ysize: int = 5, dpi: int = 150, maxwords: int = 200, shape: str = "square") -> io.BytesIO:
+pwd = os.getcwd()
+def gen_wordcloud(field: str = "title", data_folder=pwd, json_path: str = "https://publications-covid19.scilifelab.se/publications.json", xsize: int = 5, ysize: int = 5, dpi: int = 150, maxwords: int = 200, shape: str = "square") -> io.BytesIO:
 
     """
     Generate a wordcloud file.
