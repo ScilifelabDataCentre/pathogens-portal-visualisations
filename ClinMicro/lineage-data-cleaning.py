@@ -31,9 +31,14 @@ def clean_and_calculate_percentages(data_path):
     strain_data["strains_weekly"] = strain_data.groupby("Year-Week").transform("size")
 
     # Lineage group calculations
-    strain_data["no_lineage5"] = strain_data.groupby(["Year-Week", "lineage_groups05"]).transform("size")
-    strain_data["percentage_lineage5"] = (
-        strain_data["no_lineage5"] / strain_data["strains_weekly"]
+    # strain_data["no_lineage5"] = strain_data.groupby(["Year-Week", "lineage_groups05"]).transform("size")
+    # strain_data["percentage_lineage5"] = (
+    #     strain_data["no_lineage5"] / strain_data["strains_weekly"]
+    # ) * 100
+    
+    strain_data["no_lineage6"] = strain_data.groupby(["Year-Week", "lineage_groups06"]).transform("size")
+    strain_data["percentage_lineage6"] = (
+        strain_data["no_lineage6"] / strain_data["strains_weekly"]
     ) * 100
 
     strain_data["no_lineage4"] = strain_data.groupby(["Year-Week", "lineage_groups04"]).transform("size")
@@ -47,7 +52,9 @@ def clean_and_calculate_percentages(data_path):
     ) * 100
     
     # drop column
-    strain_data = strain_data.drop(columns=["EPI_ISL_ID","lineage", "WHO_label", "lineage_full", "no_lineage1", "no_lineage4", "no_lineage5","date", "strains_weekly"])  
+    # strain_data = strain_data.drop(columns=["EPI_ISL_ID","lineage", "WHO_label", "lineage_full", "no_lineage1", "no_lineage4", "no_lineage5","date", "strains_weekly"])  
+    strain_data = strain_data.drop(columns=["EPI_ISL_ID","lineage", "WHO_label", "lineage_full", "no_lineage1", "no_lineage4", "no_lineage6","date", "strains_weekly"])  
+    
     # strain_data
     return strain_data
 
