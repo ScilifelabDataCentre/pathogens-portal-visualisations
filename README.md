@@ -30,6 +30,14 @@ This folder contains all of the scripts and associated files required to produce
 
 **Status:** Historic, data not updated anymore
 
+## PLP
+
+This folder contains the scripts that produce both visualisations on the [PLP Test project reporting page](https://www.pathogens.se/resources/integrative_outbreak_sim/) of the portal.
+It includes a scatter plot of labs activity for the first phase, and a timeline plot in a gantt chart style for the second phase.
+The data was supplied by the labs participating in the PLP Test project.
+
+**Status:** Historic, data is not updated
+
 ## Population_stats
 
 This repository contains the script that can be used to generate a summary of the Swedish population from publicly available data from https://www.scb.se/. The data is updated each quarter, but not on a consistent date. The script generates a summary excel file should be updated in blobserver [here](https://blobserver.dc.scilifelab.se/blob/SCB_pop_data.xlsx/info) for use in calculations related to the vaccinations and postcovid pages of the portal.
