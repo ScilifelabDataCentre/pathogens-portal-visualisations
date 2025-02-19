@@ -74,7 +74,7 @@ fig.update_xaxes(
     showgrid=True,
     linecolor="black",
     tickangle=45,
-    hoverformat="%b %d, %Y (week %W)",
+    hoverformat="%b %d, %Y (week %V)",
 )
 fig.update_yaxes(
     title="<b>RSV/PMMoV x 1000</b>",
