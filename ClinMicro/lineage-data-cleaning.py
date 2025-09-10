@@ -1,8 +1,6 @@
 
 import argparse
 import pandas as pd
-
-from datetime import datetime as dt
 from pathlib import Path
 
 
@@ -98,7 +96,7 @@ if __name__ == "__main__":
         # Save data to CSV
         cleaned_data.to_csv(output_file, index=False)
 
-        print(f"\nData cleaning and CSV generation complete!")
+        print("\nData cleaning and CSV generation complete!")
         print(f"Output saved to: {output_file}")
         
     except Exception as e:
