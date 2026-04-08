@@ -2,13 +2,16 @@
 cumulative number of publications in the covid publications datebase
 as well as the number added each month. It reads the.json directly from
 the database"""
+import json
+from pathlib import Path
+
 import pandas as pd
 import plotly.graph_objects as go
-import requests
 
 # get data
-res = requests.get("https://publications-covid19.scilifelab.se/publications.json")
-txt = res.json()
+data_path = Path(__file__).parent / "Swedish_COVID19_publications_data.json"
+with open(data_path) as f:
+    txt = json.load(f)
 df = pd.json_normalize(txt["publications"])
 df = df[["type", "published"]]
 
@@ -94,8 +97,8 @@ fig.update_yaxes(
 # fig.write_html('Count_by_today.html', include_plotlyjs=False, full_html=False)
 
 # Below for testing
-# fig.show()
-# fig.write_json("COVID_publication_count.json")
+fig.show()
+fig.write_json("COVID_publication_count.json")
 
 # Below for dynamic use
-print(fig.to_json())
+# print(fig.to_json())
