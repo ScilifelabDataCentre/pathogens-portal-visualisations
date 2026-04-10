@@ -3,12 +3,12 @@ the most recent 10 publications in the COVID-19
 publications database"""
 import datetime
 import json
-
-import requests
+from pathlib import Path
 
 # get data
-req = requests.get("https://publications-covid19.scilifelab.se/publications.json")
-data = req.json()
+data_path = Path(__file__).parent / "Swedish_COVID19_publications_data.json"
+with open(data_path) as f:
+    data = json.load(f)
 
 # keep 10 most recent, with date today or earlier
 today = str(datetime.date.today())
